@@ -4,9 +4,18 @@
 
 {{ form_errors(addressing_form) }}
 {{dump(user_data)}}
+<fieldset>
+    <div class="row">
+        <div class="col-md-6 address-container">
+            <div class="well">
+                <h4>{{ 'acme.order.shipping_address'|trans }}</h4>
+                {% include 'AcmeInscriptionBundle:Process/Form:_address.html.twig' with {'form': addressing_form, 'user_data': user_data} %}
+            </div>
+        </div>
+    </div>
+</fieldset>
 
-
-{{ form_widget(addressing_form) }}
+{# form_widget(addressing_form) #}
 
 <div class="form-actions">
     <button type="submit" class="btn btn-primary btn-lg">{{ 'acme.inscription.register'|trans }} <i class="icon-chevron-right"></i></button>
