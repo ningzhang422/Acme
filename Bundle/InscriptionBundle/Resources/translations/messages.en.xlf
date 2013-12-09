@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+           	<trans-unit id="1" resname="acme.inscription.new_customer">
+		        <source>acme.inscription.new_customer</source>
+		        <target>New Customer</target>
+		 	</trans-unit>
+		    <trans-unit id="2" resname="acme.inscription.register">
+		        <source>acme.inscription.register</source>
+		        <target>Register</target>
+		    </trans-unit>
+		    <trans-unit id="87e600739dd24c17844e39b4e26c7568" resname="acme.order.shipping_address">
+		        <source>acme.order.shipping_address</source>
+		        <target>Shipping address</target>
+		    </trans-unit>
+        </body>
+    </file>
+</xliff>

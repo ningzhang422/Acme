@@ -1,0 +1,18 @@
+
+<h1>Welcome to First step</h1>
+
+<a href="{{ path('sylius_flow_forward', {'scenarioAlias': 'acme_inscription', 'stepName': 'register'}) }}" class="btn btn-success">forward <i class="icon-forward icon-white"></i></a>
+
+<div class="col-md-6 checkout-new-customer">
+        <div class="well">
+            <form action="{{ path('sylius_flow_forward', {'scenarioAlias': 'acme_inscription','stepName': 'register'}) }}" method="post" novalidate class="form-horizontal">
+                <fieldset>
+                    <legend>{{ 'acme.inscription.new_customer'|trans }}</legend>
+                    {{ form_widget(registration_form) }}
+                </fieldset>
+                <div class="form-actions">
+                    <input type="submit" class="btn btn-success btn-block" value="{{ 'acme.inscription.register'|trans }}" />
+                </div>
+            </form>
+        </div>
+    </div>

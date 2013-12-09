@@ -1,0 +1,15 @@
+<h1>Welcome to second step</h1>
+
+<form method="post" action="{{ path('sylius_flow_forward', {'scenarioAlias': 'acme_inscription','stepName': 'addressing'}) }}" class="form-horizontal" novalidate>
+
+{{ form_errors(addressing_form) }}
+{{dump(user_data)}}
+
+
+{{ form_widget(addressing_form) }}
+
+<div class="form-actions">
+    <button type="submit" class="btn btn-primary btn-lg">{{ 'acme.inscription.register'|trans }} <i class="icon-chevron-right"></i></button>
+</div>
+
+</form>
