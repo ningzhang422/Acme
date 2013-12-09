@@ -2,6 +2,6 @@ These bundles are working for my site store who is based on Sylius(https://githu
 
 Bundles:
 
-InscriptionBundle
-ShopBundle
-WebBundle
+InscriptionBundle\r\n
+ShopBundle\r\n
+WebBundle\r\n
