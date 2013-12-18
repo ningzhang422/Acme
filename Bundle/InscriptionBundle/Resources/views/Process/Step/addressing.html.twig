@@ -9,7 +9,15 @@
         <div class="col-md-6 address-container">
             <div class="well">
                 <h4>{{ 'acme.order.shipping_address'|trans }}</h4>
-                {% include 'AcmeInscriptionBundle:Process/Form:_address.html.twig' with {'form': addressing_form, 'user_data': user_data} %}
+                {% include 'AcmeInscriptionBundle:Process/Form:_address.html.twig' with {'form': addressing_form.shippingAddress, 'user_data': user_data} %}
+                {{ form_row(addressing_form.differentBillingAddress, {'attr': {'class': 'sylius-different-billing-address-trigger'}}) }}
+            </div>
+        </div>
+        
+        <div class="col-md-6 hidden address-container" id="sylius-billing-address-container">
+            <div class="well">
+                <h4>{{ 'acme.order.billing_address'|trans }}</h4>
+                {% include 'SyliusWebBundle:Frontend/Form:_address.html.twig' with {'form': addressing_form.billingAddress} %}
             </div>
         </div>
     </div>

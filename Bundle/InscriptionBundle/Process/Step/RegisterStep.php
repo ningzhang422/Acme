@@ -79,7 +79,7 @@ class RegisterStep extends ControllerStep
      */
     protected function getRegistrationForm()
     {
-        return $this->get('fos_user.registration.form.factory')->createForm();
+        return $this->createForm('sylius_user');
     }
     
     

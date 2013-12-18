@@ -9,6 +9,7 @@ use FOS\UserBundle\Event\FilterUserResponseEvent;
 use FOS\UserBundle\Event\FormEvent;
 use FOS\UserBundle\Event\UserEvent;
 use FOS\UserBundle\FOSUserEvents;
+use Sylius\Bundle\CoreBundle\Model\UserInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,15 +24,18 @@ class AddressingStep extends ControllerStep
     {
         $request = $this->getRequest();
 
-        $form = $this->getAddressingForm();
+        // Create a new user
+        $userManager = $this->get('fos_user.user_manager');
+        $dispatcher = $this->get('event_dispatcher');
+        $user = $userManager->createUser();
+        $user->setEnabled(true);
+        
+        $form = $this->getAddressingForm($user);
 
         
         if ($request->isMethod('POST') && $form->bind($request)->isValid()) {
      	
-        	$userManager = $this->get('fos_user.user_manager');
-        	$dispatcher = $this->get('event_dispatcher');
-        	$user = $userManager->createUser();
-        	$user->setEnabled(true);
+        	
         	
         	$login  = $context->getStorage()->get('my_data')['email'];
         	$pass   = $context->getStorage()->get('my_data')['plainPassword']['first'];
@@ -45,9 +49,9 @@ class AddressingStep extends ControllerStep
         	$user->setEmail($login);
         	$user->setFirstName($firstName);
         	$user->setLastName($lastName);
-        	$user->addAddress($form->getData());
-        	$user->setShippingAddress($form->getData());
-        	$user->setBillingAddress($form->getData());
+        	//$user->addAddress($form->getData());
+        	//$user->setShippingAddress($form->getData());
+        	//$user->setBillingAddress($form->getData());
         	$userManager->updateUser($user);
         	    	
         	$event = new FormEvent($form, $request);
@@ -88,8 +92,8 @@ class AddressingStep extends ControllerStep
      *
      * @return FormInterface
      */
-    protected function getAddressingForm()
+    protected function getAddressingForm(UserInterface $user)
     {
-        return $this->get('form.factory')->create('sylius_address');
+        return $this->createForm('sylius_checkout_addressing', $user);
     }
 }
