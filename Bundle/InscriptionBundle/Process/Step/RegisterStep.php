@@ -79,7 +79,7 @@ class RegisterStep extends ControllerStep
      */
     protected function getRegistrationForm()
     {
-        return $this->createForm('sylius_user');
+        return $this->createForm('inscription_user');
     }
     
     
