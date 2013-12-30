@@ -67,6 +67,10 @@ class RegistrationFormType extends ProfileFormType
                 'label'  => 'sylius.form.user.different_billing_address',
                 'error_bubbling' => false
             ))
+            ->add('billingAddress', 'sylius_address', array(
+                'label' => 'sylius.form.user.billing_address',
+                'error_bubbling' => false
+            ))
             ->remove('username')
         ;
         
@@ -79,6 +83,17 @@ class RegistrationFormType extends ProfileFormType
     {
         $resolver->setDefaults(array(
             'data_class'         => $this->dataClass,
+            'validation_groups'  => function(FormInterface $form) {
+                $data = $form->getData();
+                $groups = array('Profile', 'sylius');
+                if ($data && !$data->getId()) {
+                    $groups[] = 'ProfileAdd';
+                }
+
+                return $groups;
+            },
+            'cascade_validation' => true,
+            'intention'          => 'profile',
         ));
     }
 
