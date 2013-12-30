@@ -2,15 +2,84 @@
 
 namespace Acme\Bundle\ShopBundle\Form;
 
+//use Symfony\Component\Form\FormBuilderInterface;
+//use Sylius\Bundle\CoreBundle\Form\Type\RegistrationFormType as BaseType;
+use FOS\UserBundle\Form\Type\ProfileFormType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Sylius\Bundle\CoreBundle\Form\Type\RegistrationFormType as BaseType;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
 
-class RegistrationFormType extends BaseType
+class RegistrationFormType extends ProfileFormType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    /** @var string */
+    private $dataClass;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct($dataClass)
     {
-        parent::buildForm($builder, $options); // Add default fields.
-        $builder->add('mobile', 'text', array('label' => 'acme.form.user.mobile'));
+        $this->dataClass = $dataClass;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+	public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->addEventListener(FormEvents::PRE_BIND, function (FormEvent $event) {
+                $data = $event->getData();
+
+                if (!array_key_exists('differentBillingAddress', $data) || false === $data['differentBillingAddress']) {
+                    $data['billingAddress'] = $data['shippingAddress'];
+
+                    $event->setData($data);
+                }
+            })
+            ->add('firstName', 'text', array(
+                'label' => 'sylius.form.user.first_name'
+            ))
+            ->add('lastName', 'text', array(
+                'label' => 'sylius.form.user.last_name'
+            ))
+            ->add('mobile', 'text', array('label' => 'acme.form.user.mobile'))
+        ;
+
+        $this->buildUserForm($builder, $options);
+
+        $builder
+            ->add('plainPassword', 'repeated', array(
+                'type' => 'password',
+                'options' => array('translation_domain' => 'FOSUserBundle'),
+                'first_options' => array('label' => 'form.password'),
+                'second_options' => array('label' => 'form.password_confirmation'),
+                'invalid_message' => 'fos_user.password.mismatch',
+            ))
+            ->add('shippingAddress', 'sylius_address', array(
+                'label' => 'sylius.form.user.shipping_address',
+                'error_bubbling' => false
+            ))
+            ->add('differentBillingAddress', 'checkbox', array(
+                'mapped' => false,
+                'label'  => 'sylius.form.user.different_billing_address',
+                'error_bubbling' => false
+            ))
+            ->remove('username')
+        ;
+        
+    }
+    
+/**
+     * {@inheritdoc}
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class'         => $this->dataClass,
+        ));
     }
 
     public function getName()
