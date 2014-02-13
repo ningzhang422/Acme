@@ -34,7 +34,7 @@ class RegistrationFormType extends ProfileFormType
                 $data = $event->getData();
 
                 if (!array_key_exists('differentBillingAddress', $data) || false === $data['differentBillingAddress']) {
-                    $data['billingAddress'] = $data['shippingAddress'];
+                    //$data['billingAddress'] = $data['shippingAddress'];
 
                     $event->setData($data);
                 }
@@ -49,6 +49,7 @@ class RegistrationFormType extends ProfileFormType
         ;
 
         $this->buildUserForm($builder, $options);
+        
 
         $builder
             ->add('plainPassword', 'repeated', array(
