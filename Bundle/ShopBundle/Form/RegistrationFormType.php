@@ -32,7 +32,7 @@ class RegistrationFormType extends ProfileFormType
         $builder
             ->addEventListener(FormEvents::PRE_BIND, function (FormEvent $event) {
                 $data = $event->getData();
-
+var_dump($data);
                 if (!array_key_exists('differentBillingAddress', $data) || false === $data['differentBillingAddress']) {
                     //$data['billingAddress'] = $data['shippingAddress'];
 
