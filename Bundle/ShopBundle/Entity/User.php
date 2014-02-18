@@ -29,4 +29,15 @@ class User extends BaseUser
   {
     return $this->mobile;
   }
+  
+	/**
+	* @ORM\prePersist
+	*/
+	public function upload()
+	{
+		var_dump($this);
+		if (null === $this->differentBillingAddress) {
+			$this->billingAddress = $this->shippingAddress;
+		}
+	}
 }

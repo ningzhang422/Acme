@@ -32,11 +32,11 @@ class RegistrationFormType extends ProfileFormType
         $builder
             ->addEventListener(FormEvents::PRE_BIND, function (FormEvent $event) {
                 $data = $event->getData();
-var_dump($data);
+
                 if (!array_key_exists('differentBillingAddress', $data) || false === $data['differentBillingAddress']) {
                     //$data['billingAddress'] = $data['shippingAddress'];
 
-                    $event->setData($data);
+                    //$event->setData($data);
                 }
             })
             ->add('firstName', 'text', array(
@@ -70,6 +70,7 @@ var_dump($data);
             ))
             ->add('billingAddress', 'sylius_address', array(
                 'label' => 'sylius.form.user.billing_address',
+            	'required' => false,
                 'error_bubbling' => false
             ))
             ->remove('username')
