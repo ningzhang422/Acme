@@ -9,6 +9,7 @@ use Sylius\Bundle\CoreBundle\Model\User as BaseUser;
 /**
  * @ORM\Entity
  * @ORM\Table(name="sylius_user")
+ * @ORM\HasLifecycleCallbacks();
  */
 class User extends BaseUser
 {
@@ -35,9 +36,10 @@ class User extends BaseUser
 	*/
 	public function upload()
 	{
-		var_dump($this);
-		if (null === $this->differentBillingAddress) {
+		//var_dump($this);
+		//if (null === $this->differentBillingAddress) {
 			$this->billingAddress = $this->shippingAddress;
-		}
+		//}
+		
 	}
 }
