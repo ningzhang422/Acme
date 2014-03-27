@@ -70,12 +70,12 @@ class AddressingStep extends CheckoutStep
         }else{
         	$order->setShippingAddress($usr->getShippingAddress());
         	$order->setBillingAddress($usr->getBillingAddress());
-        	//$this->dispatchCheckoutEvent(SyliusCheckoutEvents::ADDRESSING_PRE_COMPLETE, $order);
+        	$this->dispatchCheckoutEvent(SyliusCheckoutEvents::ADDRESSING_PRE_COMPLETE, $order);
 
             $this->getManager()->persist($order);
             $this->getManager()->flush();
 
-            //$this->dispatchCheckoutEvent(SyliusCheckoutEvents::ADDRESSING_COMPLETE, $order);
+            $this->dispatchCheckoutEvent(SyliusCheckoutEvents::ADDRESSING_COMPLETE, $order);
 
             return $this->complete();
         }

@@ -10,6 +10,10 @@
                 <source>sylius.account.home.mobile</source>
                 <target>Mobile Phone : </target>
             </trans-unit>
+            <trans-unit id="3" resname="acme.form.address.addresstitle">
+                <source>acme.form.address.addresstitle</source>
+                <target>Address Title : </target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
