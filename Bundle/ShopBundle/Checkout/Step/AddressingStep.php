@@ -33,11 +33,21 @@ class AddressingStep extends CheckoutStep
         $usr= $this->getUser();
         $arr1 = (array)$usr->getBillingAddress();
         $arr2 = (array)$usr->getShippingAddress();
-        //if (empty($arr1) && empty($arr2)){
+        if (empty($arr1) && empty($arr2)){
         	return $this->renderStep($context, $order, $form);
-        //}else{
-        //	return $this->complete();
-        //}
+        }else{
+        	
+        	$order->setShippingAddress($usr->getShippingAddress());
+        	$order->setBillingAddress($usr->getBillingAddress());
+        	$this->dispatchCheckoutEvent(SyliusCheckoutEvents::ADDRESSING_PRE_COMPLETE, $order);
+
+            $this->getManager()->persist($order);
+            $this->getManager()->flush();
+
+            $this->dispatchCheckoutEvent(SyliusCheckoutEvents::ADDRESSING_COMPLETE, $order);
+
+            return $this->complete();
+        }
     }
 
     /**
@@ -53,20 +63,20 @@ class AddressingStep extends CheckoutStep
         $arr1 = (array)$usr->getBillingAddress();
         $arr2 = (array)$usr->getShippingAddress();
         if (empty($arr1) && empty($arr2)){
-        $form = $this->createCheckoutAddressingForm($order);
-
-        if ($request->isMethod('POST') && $form->submit($request)->isValid()) {
-            $this->dispatchCheckoutEvent(SyliusCheckoutEvents::ADDRESSING_PRE_COMPLETE, $order);
-
-            $this->getManager()->persist($order);
-            $this->getManager()->flush();
-
-            $this->dispatchCheckoutEvent(SyliusCheckoutEvents::ADDRESSING_COMPLETE, $order);
-
-            return $this->complete();
-        }
-
-        return $this->renderStep($context, $order, $form);
+	        $form = $this->createCheckoutAddressingForm($order);
+	
+	        if ($request->isMethod('POST') && $form->submit($request)->isValid()) {
+	            $this->dispatchCheckoutEvent(SyliusCheckoutEvents::ADDRESSING_PRE_COMPLETE, $order);
+	
+	            $this->getManager()->persist($order);
+	            $this->getManager()->flush();
+	
+	            $this->dispatchCheckoutEvent(SyliusCheckoutEvents::ADDRESSING_COMPLETE, $order);
+	
+	            return $this->complete();
+	        }
+	
+	        return $this->renderStep($context, $order, $form);
         }else{
         	$order->setShippingAddress($usr->getShippingAddress());
         	$order->setBillingAddress($usr->getBillingAddress());
