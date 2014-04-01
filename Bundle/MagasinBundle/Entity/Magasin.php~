@@ -126,27 +126,4 @@ class Magasin
     {
         return $this->longitude;
     }
-
-    /**
-     * Set address
-     *
-     * @param \Sylius\Bundle\AddressingBundle\Model\Address $address
-     * @return Magasin
-     */
-    public function setAddress(\Sylius\Bundle\AddressingBundle\Model\Address $address = null)
-    {
-        $this->address = $address;
-
-        return $this;
-    }
-
-    /**
-     * Get address
-     *
-     * @return \Sylius\Bundle\AddressingBundle\Model\Address 
-     */
-    public function getAddress()
-    {
-        return $this->address;
-    }
 }

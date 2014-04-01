@@ -1,6 +1,6 @@
 <?php
 
-namespace Acme\MagasinBundle\DependencyInjection;
+namespace Acme\Bundle\MagasinBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

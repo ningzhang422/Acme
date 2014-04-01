@@ -1,0 +1,37 @@
+sylius_backend_magasin_index:
+    pattern: /
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.magasin:indexAction
+        _sylius:
+            template: AcmeWebBundle:Backend/Magasin:index.html.twig
+            sortable: true
+            sorting:
+                code: desc
+
+sylius_backend_magasin_create:
+    pattern: /new
+    methods: [GET, POST]
+    defaults:
+        _controller: sylius.controller.magasin:createAction
+        _sylius:
+            template: AcmeWebBundle:Backend/Magasin:create.html.twig
+            redirect: sylius_backend_magasin_index
+
+sylius_backend_magasin_update:
+    pattern: /{id}/edit
+    methods: [GET, PUT]
+    defaults:
+        _controller: sylius.controller.magasin:updateAction
+        _sylius:
+            template: AcmeWebBundle:Backend/Magasin:update.html.twig
+            redirect: sylius_backend_magasin_index
+
+sylius_backend_magasin_delete:
+    pattern: /{id}/delete
+    methods: [DELETE]
+    defaults:
+        _controller: sylius.controller.magasin:deleteAction
+        _sylius:
+            template: AcmeWebBundle:Backend/Misc:delete.html.twig
+            redirect: sylius_backend_magasin_index
