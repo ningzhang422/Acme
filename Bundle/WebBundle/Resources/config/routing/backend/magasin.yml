@@ -7,7 +7,7 @@ sylius_backend_magasin_index:
             template: AcmeWebBundle:Backend/Magasin:index.html.twig
             sortable: true
             sorting:
-                code: desc
+                name: desc
 
 sylius_backend_magasin_create:
     pattern: /new
@@ -33,5 +33,5 @@ sylius_backend_magasin_delete:
     defaults:
         _controller: sylius.controller.magasin:deleteAction
         _sylius:
-            template: AcmeWebBundle:Backend/Misc:delete.html.twig
+            template: SyliusWebBundle:Backend/Misc:delete.html.twig
             redirect: sylius_backend_magasin_index

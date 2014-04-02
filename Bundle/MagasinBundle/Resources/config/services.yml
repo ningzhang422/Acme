@@ -1,7 +1,9 @@
 parameters:
-#    acme_magasin.example.class: Acme\MagasinBundle\Example
+     sylius.model.magasin.class: Acme\Bundle\MagasinBundle\Entity\Magasin
 
 services:
-#    acme_magasin.example:
-#        class: %acme_magasin.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+     sylius.form.type.magasin:
+         class: Acme\Bundle\MagasinBundle\Form\Type\MagasinType
+         arguments: [%sylius.model.magasin.class%]
+         tags: 
+            - { name: form.type, alias: sylius_magasin }

@@ -46,6 +46,27 @@ class Magasin
    	* @ORM\OneToOne(targetEntity="Sylius\Bundle\AddressingBundle\Model\Address", cascade={"persist"})
    	*/
   	private $address;
+  	
+  	/**
+   	* @ORM\Column(name="enabled", type="boolean")
+   	*/
+  	private $enabled;
+  	
+  	/**
+   	* @ORM\Column(name="createdAt", type="date")
+   	*/
+  	private $createdAt;
+  	
+  	/**
+   	* @ORM\Column(name="updatedAt", type="date")
+   	*/
+  	private $updatedAt;
+  	
+	public function __construct()
+	  {
+	    $this->enabled = true;
+	    $this->createdAt = new \DateTime();
+	  }
 
 
     /**
@@ -125,5 +146,51 @@ class Magasin
     public function getLongitude()
     {
         return $this->longitude;
+    }
+
+    /**
+     * Set address
+     *
+     * @param \Sylius\Bundle\AddressingBundle\Model\Address $address
+     * @return Magasin
+     */
+    public function setAddress(\Sylius\Bundle\AddressingBundle\Model\Address $address = null)
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Get address
+     *
+     * @return \Sylius\Bundle\AddressingBundle\Model\Address 
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * Set enabled
+     *
+     * @param boolean $enabled
+     * @return Magasin
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * Get enabled
+     *
+     * @return boolean 
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
     }
 }

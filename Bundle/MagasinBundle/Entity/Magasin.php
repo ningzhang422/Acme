@@ -43,9 +43,32 @@ class Magasin
     private $longitude;
     
     /**
-   	* @ORM\OneToOne(targetEntity="Sylius\Bundle\AddressingBundle\Model\Address", cascade={"persist"})
+   	* @ORM\OneToOne(targetEntity="Acme\Bundle\ShopBundle\Entity\Address", cascade={"persist"})
+   	* @ORM\JoinColumn(nullable=false)
    	*/
   	private $address;
+  	
+  	/**
+   	* @ORM\Column(name="enabled", type="boolean")
+   	*/
+  	private $enabled;
+  	
+  	/**
+   	* @ORM\Column(name="createdAt", type="date")
+   	*/
+  	private $createdAt;
+  	
+  	/**
+   	* @ORM\Column(name="updatedAt", type="date")
+   	*/
+  	private $updatedAt;
+  	
+	public function __construct()
+	  {
+	    $this->enabled = true;
+	    $this->createdAt = new \DateTime();
+	    $this->updatedAt = new \DateTime();
+	  }
 
 
     /**
@@ -148,5 +171,74 @@ class Magasin
     public function getAddress()
     {
         return $this->address;
+    }
+
+    /**
+     * Set enabled
+     *
+     * @param boolean $enabled
+     * @return Magasin
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * Get enabled
+     *
+     * @return boolean 
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return Magasin
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return Magasin
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
     }
 }

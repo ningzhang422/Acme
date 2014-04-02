@@ -42,6 +42,10 @@
         <source>sylius.backend.menu.main.magasins</source>
         <target>Magasins</target>
       </trans-unit>
+      <trans-unit id="a8832620f479f6022e0cf9c2b3464398" resname="sylius.backend.menu.sidebar.magasins">
+        <source>sylius.backend.menu.sidebar.magasins</source>
+        <target>Magasins</target>
+      </trans-unit>
       <trans-unit id="d38ec9ab0caf4fec0e9d90fadaddbdff" resname="sylius.backend.menu.main.new_order">
         <source>sylius.backend.menu.main.new_order</source>
         <target>Add new order</target>
