@@ -21,7 +21,8 @@ class User extends BaseUser
   protected $mobile;
   
   /**
-   	* @ORM\OneToOne(targetEntity="Acme\Bundle\MagasinBundle\Entity\Magasin")
+   	* @ORM\OneToOne(targetEntity="Acme\Bundle\MagasinBundle\Entity\Magasin", cascade={"persist"})
+   	* @ORM\JoinColumn(nullable=false)
    	*/
   protected $magasin;
 
@@ -35,29 +36,6 @@ class User extends BaseUser
   {
     return $this->mobile;
   }
-  
-/**
-     * Set magasin
-     *
-     * @param \Acme\Bundle\MagasinBundle\Entity\Magasin $magasin
-     * @return Magasin
-     */
-    public function setMagasin(\Acme\Bundle\MagasinBundle\Entity\Magasin $magasin = null)
-    {
-        $this->magasin = $magasin;
-
-        return $this;
-    }
-
-    /**
-     * Get magasin
-     *
-     * @return \Acme\Bundle\MagasinBundle\Entity\Magasin 
-     */
-    public function getMagasin()
-    {
-        return $this->magasin;
-    }
   
 	/**
 	* @ORM\prePersist

@@ -1,41 +1,27 @@
 <?php
 
 namespace Acme\Bundle\ShopBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
 
-use Sylius\Bundle\CoreBundle\Model\User as BaseUser;
+use Sylius\Bundle\TaxonomiesBundle\Model\Taxonomy as BaseTaxonomy;
+
+/**
+ * Model for taxonomies.
+ *
+ * @author Paweł Jędrzejewski <pjedrzejewski@diweb.pl>
+ */
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="sylius_user")
- * @ORM\HasLifecycleCallbacks();
+ * @ORM\Table(name="sylius_taxonomy")
  */
-class User extends BaseUser
+class Taxonomy extends BaseTaxonomy
 {
-  /**
-     * @var string
-     *
-     * @ORM\Column(name="moblile", type="string", length=10)
-     */
-  protected $mobile;
-  
-  /**
+    /**
    	* @ORM\OneToOne(targetEntity="Acme\Bundle\MagasinBundle\Entity\Magasin")
    	*/
-  protected $magasin;
-
-  
-  public function setMobile($mobile)
-  {
-    $this->mobile = $mobile;
-  }
-  
-  public function getMobile()
-  {
-    return $this->mobile;
-  }
-  
+  	protected $magasin;
+  	
 /**
      * Set magasin
      *
@@ -58,16 +44,4 @@ class User extends BaseUser
     {
         return $this->magasin;
     }
-  
-	/**
-	* @ORM\prePersist
-	*/
-	public function upload()
-	{
-		//var_dump($this);
-		//if (null === $this->differentBillingAddress) {
-			$this->billingAddress = $this->shippingAddress;
-		//}
-		
-	}
 }
