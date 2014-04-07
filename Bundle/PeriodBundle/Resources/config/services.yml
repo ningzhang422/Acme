@@ -1,0 +1,9 @@
+parameters:
+     sylius.model.period.class: Acme\Bundle\PeriodBundle\Entity\Period
+
+services:
+     sylius.form.type.period:
+         class: Acme\Bundle\PeriodBundle\Form\Type\PeriodType
+         arguments: [%sylius.model.period.class%]
+         tags: 
+            - { name: form.type, alias: sylius_period }

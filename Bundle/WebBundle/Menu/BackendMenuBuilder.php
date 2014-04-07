@@ -256,6 +256,11 @@ class BackendMenuBuilder extends MenuBuilder
             'route' => 'sylius_backend_magasin_index',
             'labelAttributes' => array('icon' => 'glyphicon glyphicon-flag'),
         ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.magasins', $section)));
+        
+        $child->addChild('periods', array(
+            'route' => 'sylius_backend_period_index',
+            'labelAttributes' => array('icon' => 'glyphicon glyphicon-flag'),
+        ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.periods', $section)));
 
         $child->addChild('payment_methods', array(
             'route' => 'sylius_backend_payment_method_index',

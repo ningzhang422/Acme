@@ -1,0 +1,7 @@
+<fieldset>
+    {{ form_row(form.name, {'attr': {'class': 'input-lg'}}) }}
+    {{ form_row(form.latitude, {'attr': {'class': 'input-lg'}}) }}
+    {{ form_row(form.longitude, {'attr': {'class': 'input-lg'}}) }}
+    {{ form_widget(form.address) }}
+</fieldset>
+{{ form_widget(form._token) }}

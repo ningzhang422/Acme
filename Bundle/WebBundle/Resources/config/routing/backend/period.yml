@@ -1,0 +1,37 @@
+sylius_backend_period_index:
+    pattern: /
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.period:indexAction
+        _sylius:
+            template: AcmeWebBundle:Backend/Period:index.html.twig
+            sortable: true
+            sorting:
+                name: desc
+
+sylius_backend_period_create:
+    pattern: /new
+    methods: [GET, POST]
+    defaults:
+        _controller: sylius.controller.period:createAction
+        _sylius:
+            template: AcmeWebBundle:Backend/Period:create.html.twig
+            redirect: sylius_backend_period_index
+
+sylius_backend_period_update:
+    pattern: /{id}/edit
+    methods: [GET, PUT]
+    defaults:
+        _controller: sylius.controller.period:updateAction
+        _sylius:
+            template: AcmeWebBundle:Backend/Period:update.html.twig
+            redirect: sylius_backend_period_index
+
+sylius_backend_period_delete:
+    pattern: /{id}/delete
+    methods: [DELETE]
+    defaults:
+        _controller: sylius.controller.period:deleteAction
+        _sylius:
+            template: SyliusWebBundle:Backend/Misc:delete.html.twig
+            redirect: sylius_backend_period_index
