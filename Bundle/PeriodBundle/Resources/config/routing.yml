@@ -1,3 +1,3 @@
-acme_period_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: AcmePeriodBundle:Default:index }
+HelloTheWorld:
+    path:     /hello-world
+    defaults: { _controller: AcmePeriodBundle:Planning:index }
