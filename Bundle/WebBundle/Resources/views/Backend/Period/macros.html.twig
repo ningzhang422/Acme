@@ -20,14 +20,16 @@
             <tr id="{{ period.id }}">
                 <td>{{ period.name }}</td>
                 <td>
-                    
+                    {{ period.startTime|date('H:i:s') }}
                 </td>
-                <td></td>
-                <td>{{ period.shipping_category }}</td>
+                <td>
+                	{{ period.endTime|date('H:i:s') }}
+                </td>
+                <td>{{ period.category }}</td>
                 <td>
                     <div class="pull-right">
-                    {{ buttons.edit(path('sylius_backend_period_update', {'id': magasin.id})) }}
-                    {{ buttons.delete(path('sylius_backend_period_delete', {'id': magasin.id})) }}
+                    {{ buttons.edit(path('sylius_backend_period_update', {'id': period.id})) }}
+                    {{ buttons.delete(path('sylius_backend_period_delete', {'id': period.id})) }}
                    </div>
                 </td>
             </tr>

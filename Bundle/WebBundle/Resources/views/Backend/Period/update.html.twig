@@ -17,9 +17,9 @@
 
 {{ form_errors(form) }}
 
-<form action="{{ path('sylius_backend_magasin_update', {'id': magasin.id}) }}" method="post" class="form-horizontal" novalidate>
+<form action="{{ path('sylius_backend_period_update', {'id': period.id}) }}" method="post" class="form-horizontal" novalidate>
     <input type="hidden" name="_method" value="PUT">
-    {% include 'SyliusWebBundle:Backend/Magasin:_form.html.twig' %}
+    {{ form_widget(form) }}
     {{ update() }}
 </form>
 {% endblock %}

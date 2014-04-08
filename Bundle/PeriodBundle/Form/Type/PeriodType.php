@@ -40,7 +40,7 @@ class PeriodType extends AbstractType
 			    'input'  => 'datetime',
     'widget' => 'choice',
 			))
-            ->add('shipping_category', 'sylius_shipping_category_choice', array(
+            ->add('category', 'sylius_shipping_category_choice', array(
                 'required' => false,
                 'label'    => 'sylius.form.shipping_method.category'
             ))

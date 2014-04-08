@@ -46,7 +46,7 @@ class Period
    	* @ORM\ManyToOne(targetEntity="Sylius\Bundle\ShippingBundle\Model\ShippingCategory")
    	* @ORM\JoinColumn(nullable=false)
    	*/
-    private $shipping_category;
+    protected $category;
 
 
     /**
@@ -136,9 +136,9 @@ class Period
      * @param \Sylius\Bundle\ShippingBundle\Model\ShippingCategory $shippingCategory
      * @return Period
      */
-    public function setShippingCategory(\Sylius\Bundle\ShippingBundle\Model\ShippingCategory $shippingCategory)
+    public function setCategory(\Sylius\Bundle\ShippingBundle\Model\ShippingCategory $category)
     {
-        $this->shipping_category = $shippingCategory;
+        $this->category = $category;
 
         return $this;
     }
@@ -148,8 +148,8 @@ class Period
      *
      * @return \Sylius\Bundle\ShippingBundle\Model\ShippingCategory 
      */
-    public function getShippingCategory()
+    public function getCategory()
     {
-        return $this->shipping_category;
+        return $this->category;
     }
 }
