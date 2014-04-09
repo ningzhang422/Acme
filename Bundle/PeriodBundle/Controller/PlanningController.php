@@ -16,7 +16,26 @@ class PlanningController extends Controller
     
     public function indexAction()
     {
-    	return $this->render('AcmePeriodBundle:Period:index.html.twig');
+    	$em = $this->getDoctrine()->getManager();
+        $request = $this->get('request');
+        if($request->query->get('selected_date') == null){
+        	$date = new \DateTime();
+        }else{
+        	$date = strtotime($request->query->get('selected_date'));
+        }
+        
+        $year = $date->format('Y'); //to start calendar on current year
+        $month = $date->format('m'); //to start calendar on current month
+        $day = $date->format('d');
+        
+    	return $this->render('AcmePeriodBundle:Period:index.html.twig', array(
+            'year' => $year,
+            'month' => $month,
+            'day' => $day,
+    		'selected_date' => $date,
+    		'start_at' => $date->modify('first day of this month'),
+    		'end_at' => $date->modify('last day of this month'),
+        ));
     }
 
     

@@ -1,3 +1,4 @@
-HelloTheWorld:
-    path:     /hello-world
+sylius_backend_planning_index:
+    path:     /planning
+    methods: [GET]
     defaults: { _controller: AcmePeriodBundle:Planning:index }

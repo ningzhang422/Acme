@@ -12,13 +12,49 @@
 {% endblock %}
 
 {% block content %}
-<h1>Hello World !</h1>
 
-    <p>
-      Le Hello World est un grand classique en programmation.
-      Il signifie énormément, car cela veut dire que vous avez
-      réussi à exécuter le programme pour accomplir une tâche simple :
-      afficher ce hello world !
-    </p>
+<div class="calendar_wrapper">
+    <div id="calId" class="calendar">
+        <table class="tab_calendar" align="center">
+            <tr>
+                <td class="title_calendar" colspan="7" width="100%">
+                    <span id="calId_title"></span>
+                </td>
+            </tr>
+            <tr>
+                <td  class="cell_jour" >
+                <span>Lun</span>
+                </td>
+                <td  class="cell_jour" >
+                <span>Mar</span>
+                </td>
+                <td  class="cell_jour" >
+                <span>Mer</span>
+                </td>
+                <td  class="cell_jour" >
+                <span>Jeu</span>
+                </td>
+                <td  class="cell_jour" >
+                <span>Ven</span>
+                </td>
+                <td  class="cell_jour" >
+                <span>Sam</span>
+                </td>
+                <td  class="cell_jour" >
+                <span>Dim</span>
+                </td>
+            </tr>
+            {% for i in 1..6 %}
+                <tr>
+                    {% for j in 1..7 %}
+                        {% set total = (i-1)*7+j %}
+                        <td class="cell_calendar"><a id="calId_cell_{{ total }}" href="#">1</a></td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </table>
+    </div>
+</div>
+
 
 {% endblock %}
