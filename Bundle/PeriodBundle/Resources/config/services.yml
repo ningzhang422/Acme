@@ -7,3 +7,7 @@ services:
          arguments: [%sylius.model.period.class%]
          tags: 
             - { name: form.type, alias: sylius_period }
+     acme.twig.period_helper:
+         class: Acme\Bundle\PeriodBundle\Twig\AcmePeriodExtension
+         tags:
+            - { name: twig.extension }

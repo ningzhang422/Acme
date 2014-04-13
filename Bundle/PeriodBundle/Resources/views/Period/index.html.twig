@@ -1,3 +1,6 @@
+{% set beginning_of_month = start_at %}
+{% set ending_of_month = end_at %}
+
 {% extends 'SyliusWebBundle:Backend:layout.html.twig' %}
 
 {% import 'SyliusResourceBundle:Macros:buttons.html.twig' as buttons %}
@@ -12,49 +15,96 @@
 {% endblock %}
 
 {% block content %}
-
-<div class="calendar_wrapper">
-    <div id="calId" class="calendar">
-        <table class="tab_calendar" align="center">
-            <tr>
-                <td class="title_calendar" colspan="7" width="100%">
-                    <span id="calId_title"></span>
-                </td>
-            </tr>
-            <tr>
-                <td  class="cell_jour" >
-                <span>Lun</span>
-                </td>
-                <td  class="cell_jour" >
-                <span>Mar</span>
-                </td>
-                <td  class="cell_jour" >
-                <span>Mer</span>
-                </td>
-                <td  class="cell_jour" >
-                <span>Jeu</span>
-                </td>
-                <td  class="cell_jour" >
-                <span>Ven</span>
-                </td>
-                <td  class="cell_jour" >
-                <span>Sam</span>
-                </td>
-                <td  class="cell_jour" >
-                <span>Dim</span>
-                </td>
-            </tr>
-            {% for i in 1..6 %}
-                <tr>
-                    {% for j in 1..7 %}
-                        {% set total = (i-1)*7+j %}
-                        <td class="cell_calendar"><a id="calId_cell_{{ total }}" href="#">1</a></td>
-                    {% endfor %}
-                </tr>
-            {% endfor %}
-            </table>
-    </div>
+<div id="calendar">
+<table width="100%" class="fixed-width monthly" id="planning_table">
+<thead>
+    <tr>
+      <th class="week_th"></th>
+      <th>Lundi</th>
+      <th>Mardi</th>
+      <th>Mercredi</th>
+      <th>Jeudi</th>
+      <th>Vendredi</th>
+      <th>Samedi</th>
+      <th>Dimanche</th>
+    </tr>
+</thead>
+<tbody>
+    <tr id="nothing-0">
+    {% set week_number = beginning_of_month|date("Y-m-d")|weeknumber %}
+    {% set echo_week_number = 'S' ~ week_number %}
+    {% set started_at_position = beginning_of_month|date("Y-m-d")|cwday %}
+    {% set get_first_day = '-'~(started_at_position - 1)~' days' %}
+    {% set date = beginning_of_month|date("Y-m-d") %}
+    {% set date_before = beginning_of_month|date_modify(get_first_day)|date("Y-m-d") %}
+    	<td class="week_td" style="vertical-align: center;">
+                {{echo_week_number}}
+        </td>
+        {% for i in 1..started_at_position-1 %}
+    	<td bgcolor="#736B6B" height="150" abbr="-" rel="" id="{{i}}">
+			<p class="day_number">{{ date_before|date("d") }}</p>
+		</td>
+		{% set date_before = date_before|date_modify("+1 day")|date("Y-m-d") %}
+		{% endfor %}
+		{% for i in started_at_position..7 %}
+		<td height="150" abbr="-" rel="" id="{{i}}">
+			<p class="day_number">{{ date|date("d") }}</p>
+		</td>
+      	{% set date = date|date_modify("+1 day")|date("Y-m-d") %}
+      	{% endfor %}
+    </tr>
+    
+    
+    {% for i in 1..4 if date|date_modify("+7 day")|date("Y-m-d") <= ending_of_month|date("Y-m-d") %}
+    {% set wnumber = date|date("Y-m-d")|weeknumber %}
+    {% set echo_wnumber = 'S' ~ wnumber %}
+    <tr id="nothing-0">
+        <td class="week_td">
+                {{echo_wnumber}}
+        </td>
+        {% for i in 1..7 %}
+        	<td height="150" abbr="-" rel="" id ="">
+        		<p class="day_number">{{ date|date("d") }}</p>
+        	</td>
+        	{% set date = date|date_modify("+1 day")|date("Y-m-d") %}
+        {% endfor %}
+    </tr>
+    {% endfor %}
+    
+    {% set fwnumber = date|date("Y-m-d")|weeknumber %}
+    {% set echo_fwnumber = 'S' ~ fwnumber %}
+    <tr id="nothing-0">
+        <td class="week_td">
+                {{echo_fwnumber}}
+        </td>
+        
+        {% for i in 1..7 %}
+        	{% if date|date("Y-m-d") <= ending_of_month|date("Y-m-d") %}
+        		<td height="150" abbr="-" rel="" id="">
+        		<p class="day_number">{{ date|date("d") }}</p>
+		      	
+		      	</td>
+        	{% else %}
+        		<td bgcolor="#736B6B" height="150" abbr="-" rel="" id="">
+        		<p class="day_number">{{ date|date("d") }}</p>
+        		
+        		</td>
+        	{% endif %}
+        {% set date = date|date_modify("+1 day")|date("Y-m-d") %}
+        {% endfor %}
+    </tr>
+    
+</tbody>
+</table>
 </div>
 
+{% endblock %}
 
+{% block javascripts %}
+            {{ parent() }}
+			{% javascripts output='assets/compiled/backend.js'
+                '@AcmePeriodBundle/Resources/assets/js/plannings.js'
+            %}
+                <script type="text/javascript" src="{{ asset_url }}"></script>
+            {% endjavascripts %}
 {% endblock %}
