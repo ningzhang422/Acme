@@ -1,5 +1,6 @@
 parameters:
      sylius.model.period.class: Acme\Bundle\PeriodBundle\Entity\Period
+     sylius.model.creneau.class: Acme\Bundle\PeriodBundle\Entity\Creneau
 
 services:
      sylius.form.type.period:
@@ -7,6 +8,19 @@ services:
          arguments: [%sylius.model.period.class%]
          tags: 
             - { name: form.type, alias: sylius_period }
+            
+     sylius.form.type.creneau:
+         class: Acme\Bundle\PeriodBundle\Form\Type\CreneauType
+         arguments: [%sylius.model.creneau.class%]
+         tags: 
+            - { name: form.type, alias: sylius_creneau }
+            
+     sylius.form.type.periodchoice:
+         class: Acme\Bundle\PeriodBundle\Form\Type\PeriodEntityType
+         arguments: [%sylius.model.period.class%]
+         tags: 
+            - { name: form.type, alias: acme_period_choice }
+            
      acme.twig.period_helper:
          class: Acme\Bundle\PeriodBundle\Twig\AcmePeriodExtension
          tags:

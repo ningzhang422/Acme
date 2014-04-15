@@ -1,4 +1,8 @@
 sylius_backend_planning_index:
-    path:     /planning
+    path:     /
     methods: [GET]
     defaults: { _controller: AcmePeriodBundle:Planning:index }
+sylius_backend_creneau_create:
+    pattern: /new
+    methods: [GET, POST]
+    defaults: { _controller: AcmePeriodBundle:Planning:create }

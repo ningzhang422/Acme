@@ -3,6 +3,7 @@ namespace Acme\Bundle\PeriodBundle\Controller;
 
 
 use Acme\Bundle\PeriodBundle\Entity\Creneau;
+use Acme\Bundle\PeriodBundle\Form\Type\CreneauType;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,6 +33,29 @@ class PlanningController extends Controller
     		'start_at' => $date->modify('first day of this month')->format('Y-m-d'),
     		'end_at' => $date->modify('last day of this month')->format('Y-m-d'),
         ));
+    }
+    
+    public function createAction()
+    {
+    	$creneau = new Creneau;
+	  	$form = $this->createForm(new CreneauType, $creneau);
+	
+	  $request = $this->get('request');
+	  if ($request->getMethod() == 'POST') {
+	    $form->bind($request);
+	
+	    if ($form->isValid()) {
+	      $em = $this->getDoctrine()->getManager();
+	      $em->persist($creneau);
+	      $em->flush();
+	
+	      return $this->redirect($this->generateUrl('sylius_backend_planning_index'));
+	    }
+	  }
+	
+	  return $this->render('AcmePeriodBundle:Period:create.html.twig', array(
+	    'form' => $form->createView(),
+	  ));
     }
 
     

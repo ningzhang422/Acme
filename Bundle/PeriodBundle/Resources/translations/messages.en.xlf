@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="e1eaef329d355a008d8fddf6c6bb301b" resname="acme.form.creneau.period">
+        		<source>acme.form.creneau.period</source>
+        		<target>Period</target>
+      		</trans-unit>
+      		<trans-unit id="e1eaef329d355a008d8fddf6c6bb302b" resname="acme.form.crenau.reserve">
+        		<source>acme.form.crenau.reserve</source>
+        		<target>Reserve</target>
+      		</trans-unit>
+      		<trans-unit id="e1eaef329d355a008d8fddf6c6bb303b" resname="acme.form.crenau.capacite">
+        		<source>acme.form.crenau.capacite</source>
+        		<target>Capacité</target>
+      		</trans-unit>
+      		<trans-unit id="e1eaef329d355a008d8fddf6c6bb304b" resname="acme.form.crenau.frais">
+        		<source>acme.form.crenau.frais</source>
+        		<target>Frais</target>
+      		</trans-unit>
+      		<trans-unit id="e1eaef329d355a008d8fddf6c6bb305b" resname="acme.form.crenau.estindisponible">
+        		<source>acme.form.crenau.estindisponible</source>
+        		<target>Indisponible?</target>
+      		</trans-unit>
+      		<trans-unit id="e1eaef329d355a008d8fddf6c6bb306b" resname="acme.form.crenau.estferie">
+        		<source>acme.form.crenau.estferie</source>
+        		<target>Férié?</target>
+      		</trans-unit>
+        </body>
+    </file>
+</xliff>

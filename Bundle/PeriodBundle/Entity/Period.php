@@ -48,6 +48,15 @@ class Period
    	*/
     protected $category;
 
+	
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __toString()
+    {
+        return $this->name;
+    }
 
     /**
      * Get id
