@@ -8,6 +8,7 @@ use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\HttpFoundation\Response;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -35,7 +36,7 @@ class PlanningController extends Controller
         ));
     }
     
-    public function createAction()
+    public function createAction(Request $request)
     {
     	$creneau = new Creneau;
 	  	$form = $this->createForm(new CreneauType, $creneau);
@@ -43,15 +44,27 @@ class PlanningController extends Controller
 	  $request = $this->get('request');
 	  if ($request->getMethod() == 'POST') {
 	    $form->bind($request);
-	
-	    if ($form->isValid()) {
-	      $em = $this->getDoctrine()->getManager();
-	      $em->persist($creneau);
-	      $em->flush();
-	
-	      return $this->redirect($this->generateUrl('sylius_backend_planning_index'));
+	    if ($request->isXmlHttpRequest()) {
+		    if ($form->isValid()) {
+		      $em = $this->getDoctrine()->getManager();
+		      $em->persist($creneau);
+		      $em->flush();
+		
+		      return $this->redirect($this->generateUrl('sylius_backend_planning_index'));
+		    }else{
+		    	// On rŽcupre le service validator
+			    $validator = $this->get('validator');
+			        
+			    // On dŽclenche la validation
+			    $liste_erreurs = $validator->validate($creneau);
+			
+			    return new Response(print_r($liste_erreurs, true));
+			  
+		    }
 	    }
 	  }
+	  
+	 
 	
 	  return $this->render('AcmePeriodBundle:Period:create.html.twig', array(
 	    'form' => $form->createView(),

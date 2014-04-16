@@ -12,7 +12,7 @@
       		</trans-unit>
       		<trans-unit id="e1eaef329d355a008d8fddf6c6bb303b" resname="acme.form.crenau.capacite">
         		<source>acme.form.crenau.capacite</source>
-        		<target>Capacité</target>
+        		<target>Capacite</target>
       		</trans-unit>
       		<trans-unit id="e1eaef329d355a008d8fddf6c6bb304b" resname="acme.form.crenau.frais">
         		<source>acme.form.crenau.frais</source>
@@ -20,11 +20,15 @@
       		</trans-unit>
       		<trans-unit id="e1eaef329d355a008d8fddf6c6bb305b" resname="acme.form.crenau.estindisponible">
         		<source>acme.form.crenau.estindisponible</source>
-        		<target>Indisponible?</target>
+        		<target>Indisponible</target>
       		</trans-unit>
       		<trans-unit id="e1eaef329d355a008d8fddf6c6bb306b" resname="acme.form.crenau.estferie">
         		<source>acme.form.crenau.estferie</source>
-        		<target>Férié?</target>
+        		<target>Ferie</target>
+      		</trans-unit>
+      		<trans-unit id="e1eaef329d355a008d8fddf6c6bb307b" resname="acme.form.crenau.fraisoffert">
+        		<source>acme.form.crenau.fraisoffert</source>
+        		<target>Frais offert</target>
       		</trans-unit>
         </body>
     </file>

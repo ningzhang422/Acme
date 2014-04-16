@@ -2,6 +2,8 @@
 
 namespace Acme\Bundle\PeriodBundle\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,6 +27,7 @@ class Creneau
      * @var integer
      *
      * @ORM\Column(name="reserve", type="integer")
+     * @Assert\NotBlank()
      */
     private $reserve;
 
@@ -32,6 +35,7 @@ class Creneau
      * @var integer
      *
      * @ORM\Column(name="capacite", type="integer")
+     * @Assert\NotBlank()
      */
     private $capacite;
 
@@ -60,6 +64,7 @@ class Creneau
      * @var boolean
      *
      * @ORM\Column(name="fraisoffert", type="boolean")
+     * @Assert\NotBlank()
      */
     private $fraisoffert;
 
@@ -80,9 +85,19 @@ class Creneau
     /**
    	* @ORM\ManyToOne(targetEntity="Acme\Bundle\PeriodBundle\Entity\Period")
    	* @ORM\JoinColumn(nullable=false)
+   	* @Assert\NotBlank()
    	*/
     protected $period;
 
+    
+	/**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+        $this->updateAt = new \DateTime();
+    }
 
     /**
      * Get id
