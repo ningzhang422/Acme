@@ -17,8 +17,17 @@ class CreneauType extends AbstractType
     {
         $builder
             ->add('period', 'acme_period_choice', array(
-                'required' => false,
+                'required' => true,
                 'label'    => 'acme.form.creneau.period'
+            ))
+            ->add('performedAt', 'date', array(
+                'required' => true,
+                'label'    => 'acme.form.creneau.performedAt',
+                'attr'     => array(
+                    'placeholder' => 'acme.form.creneau.performedAt',
+            		'class'	=> 'datepicker'
+                )
+                
             ))
             ->add('reserve', 'integer', array(
                 'label' => 'acme.form.crenau.reserve'

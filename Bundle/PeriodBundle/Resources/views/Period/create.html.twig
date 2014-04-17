@@ -2,7 +2,31 @@
 {{ form_errors(form) }}
 
 <form action="{{ path('sylius_backend_creneau_create') }}" method="post" class="form-horizontal" novalidate>
-    {{ form_widget(form) }}
+
+
+     	{{ form_widget(form) }}
+  
+
+
+
+    
     <input type="submit" class="btn btn-primary" />
 </form>
 
+<script>
+$(document).ready( 
+$( "form.form-horizontal" ).on( "submit", function( event ) {
+			    			event.preventDefault();
+			    			$.ajax({
+			                    type: 'POST',
+			                    url: $(this).attr('action'),
+			                    data: $(this).serializeArray(),              
+			                    success: function(data) {
+			                    	$('#form-modal .modal-body').html(data);
+			                    }
+			                 });	
+			    			})
+);
+
+
+</script>

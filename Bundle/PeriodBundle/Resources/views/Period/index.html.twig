@@ -15,6 +15,7 @@
 {% endblock %}
 
 {% block content %}
+
 <div id="calendar">
 <table width="100%" class="fixed-width monthly" id="planning_table">
 <thead>
@@ -65,6 +66,15 @@
         {% for i in 1..7 %}
         	<td height="150" abbr="-" rel="{{ path(app.request.attributes.get('_route'))~'new' }}" id ="">
         		<p class="day_number">{{ date|date("d") }}</p>
+        		<ul>
+				  {% for c in listecreneaus %}
+				  	{% if c.performedAt|date('Y-m-d') == date|date('Y-m-d')%}
+				    <li>{{ c.performedAt|date('Y-m-d') }}</li>
+				    {% endif %}
+				  {% endfor %}
+				</ul>
+        		
+        		
         	</td>
         	{% set date = date|date_modify("+1 day")|date("Y-m-d") %}
         {% endfor %}
@@ -82,7 +92,7 @@
         	{% if date|date("Y-m-d") <= ending_of_month|date("Y-m-d") %}
         		<td height="150" abbr="-" rel="{{ path(app.request.attributes.get('_route'))~'new' }}" id="">
         		<p class="day_number">{{ date|date("d") }}</p>
-		      	
+		      		
 		      	</td>
         	{% else %}
         		<td bgcolor="#736B6B" height="150" abbr="-" rel="{{ path(app.request.attributes.get('_route'))~'new' }}" id="">

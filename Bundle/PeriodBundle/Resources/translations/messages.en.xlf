@@ -30,6 +30,11 @@
         		<source>acme.form.crenau.fraisoffert</source>
         		<target>Frais offert</target>
       		</trans-unit>
+      		<trans-unit id="e1eaef329d355a008d8fddf6c6bb317b" resname="acme.form.creneau.performedAt">
+        		<source>acme.form.creneau.performedAt</source>
+        		<target>Day</target>
+      		</trans-unit>
+      		
         </body>
     </file>
 </xliff>

@@ -67,6 +67,14 @@ class Creneau
      * @Assert\NotBlank()
      */
     private $fraisoffert;
+    
+    /**
+	 * @var date $performedAt
+	 *
+	 * @ORM\Column(name="performedAt", type="date")
+	 * @Assert\NotBlank()
+	 */
+	private $performedAt;
 
     /**
      * @var \DateTime
@@ -314,5 +322,30 @@ class Creneau
     public function getPeriod()
     {
         return $this->period;
+    }
+
+
+
+    /**
+     * Set performedAt
+     *
+     * @param \DateTime $performedAt
+     * @return Creneau
+     */
+    public function setPerformedAt($performedAt)
+    {
+        $this->performedAt = $performedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get performedAt
+     *
+     * @return \DateTime 
+     */
+    public function getPerformedAt()
+    {
+        return $this->performedAt;
     }
 }

@@ -19,18 +19,7 @@ $(document).ready( function() {
 			    			
 			    		})
 			    		
-			    		$( "form.form-horizontal" ).on( "submit", function( event ) {
-			    			event.preventDefault();
-			    			$.ajax({
-			                    type: 'POST',
-			                    url: url_c,
-			                    data: $( this ).serializeArray(),              
-			                    success: function(data) {
-			                       alert('success !!!' + data);
-			                    }
-			                 });	
-			    			//console.log( $( this ).serializeArray() );
-			    			});
+			    		
 			        }
 			 });  
 	})

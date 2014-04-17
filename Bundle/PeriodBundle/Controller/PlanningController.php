@@ -27,12 +27,18 @@ class PlanningController extends Controller
         	$date = new \DateTime($request->query->get('selected_date'));
         }
         
+        $repository = $this->getDoctrine()
+                   ->getManager()
+                   ->getRepository('AcmePeriodBundle:Creneau');
+
+		$listeCreneaus = $repository->findAll();
        
         
     	return $this->render('AcmePeriodBundle:Period:index.html.twig', array(
     		'selected_date' => $date,
     		'start_at' => $date->modify('first day of this month')->format('Y-m-d'),
     		'end_at' => $date->modify('last day of this month')->format('Y-m-d'),
+    		'listecreneaus' => $listeCreneaus,
         ));
     }
     
@@ -44,24 +50,15 @@ class PlanningController extends Controller
 	  $request = $this->get('request');
 	  if ($request->getMethod() == 'POST') {
 	    $form->bind($request);
-	    if ($request->isXmlHttpRequest()) {
+	    
 		    if ($form->isValid()) {
 		      $em = $this->getDoctrine()->getManager();
 		      $em->persist($creneau);
 		      $em->flush();
 		
 		      return $this->redirect($this->generateUrl('sylius_backend_planning_index'));
-		    }else{
-		    	// On rcupre le service validator
-			    $validator = $this->get('validator');
-			        
-			    // On dclenche la validation
-			    $liste_erreurs = $validator->validate($creneau);
-			
-			    return new Response(print_r($liste_erreurs, true));
-			  
 		    }
-	    }
+	   
 	  }
 	  
 	 
