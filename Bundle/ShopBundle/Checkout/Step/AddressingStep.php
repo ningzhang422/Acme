@@ -11,12 +11,7 @@ use Sylius\Bundle\CoreBundle\Model\OrderInterface;
 use Sylius\Bundle\FlowBundle\Process\Context\ProcessContextInterface;
 use Symfony\Component\Form\FormInterface;
 
-/**
- * The addressing step of checkout.
- * User enters the shipping and shipping address.
- *
- * @author Paweł Jędrzejewski <pjedrzejewski@diweb.pl>
- */
+
 class AddressingStep extends CheckoutStep
 {
     /**
