@@ -17,7 +17,7 @@ class Shipment extends BaseShipment
      * @ORM\Column(name="creneau_id", type="integer")
    	 * @ORM\ManyToOne(targetEntity="Acme\Bundle\PeriodBundle\Entity\Creneau")
    	 */
-    private $creneau;
+    protected $creneau;
     
 	/**
      * Set creneau
