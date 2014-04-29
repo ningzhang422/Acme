@@ -14,8 +14,8 @@ use Sylius\Bundle\CoreBundle\Model\Shipment as BaseShipment;
 class Shipment extends BaseShipment
 {
     /**
-     * @ORM\Column(name="creneau_id", type="integer")
    	 * @ORM\ManyToOne(targetEntity="Acme\Bundle\PeriodBundle\Entity\Creneau")
+   	 * @ORM\JoinColumn(name="creneau_id", referencedColumnName="id")
    	 */
     protected $creneau;
     

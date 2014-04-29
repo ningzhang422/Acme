@@ -50,7 +50,11 @@ class ShippingStep extends CheckoutStep
 
         $form = $this->createCheckoutShippingForm($order);
 
+
+
         if ($request->isMethod('POST') && $form->submit($request)->isValid()) {
+     
+        	
             $this->dispatchCheckoutEvent(SyliusCheckoutEvents::SHIPPING_PRE_COMPLETE, $order);
 
             $this->getManager()->persist($order);

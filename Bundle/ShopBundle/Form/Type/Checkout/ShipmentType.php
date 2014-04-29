@@ -42,8 +42,7 @@ class ShipmentType extends AbstractType
                 $form = $event->getForm();
                 $shipment = $event->getData();
 
-            // Cette condition est importante, on en reparle plus loin
-		      // var_dump($shipment);
+            
                 $form->add('method', 'sylius_shipping_method_choice', array(
                     'label'       => 'sylius.form.checkout.shipping_method',
                     'subject'     => $shipment,
@@ -55,6 +54,11 @@ class ShipmentType extends AbstractType
                 ));
                 
             })
+            ->add('creneau', 'entity', array(
+                'class' => 'AcmePeriodBundle:Creneau',
+            	'expanded' => false,
+            	'multiple' => false,
+            ))
         ;
     }
 

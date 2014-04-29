@@ -106,6 +106,14 @@ class Creneau
         $this->createdAt = new \DateTime();
         $this->updateAt = new \DateTime();
     }
+    
+	/**
+     * {@inheritdoc}
+     */
+    public function __toString()
+    {
+        return $this->performedAt->format('Y-m-d');
+    }
 
     /**
      * Get id
