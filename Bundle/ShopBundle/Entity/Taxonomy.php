@@ -2,7 +2,8 @@
 
 namespace Acme\Bundle\ShopBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Sylius\Bundle\TaxonomiesBundle\Model\Taxonomy as BaseTaxonomy;
 
 /**
@@ -21,6 +22,7 @@ class Taxonomy extends BaseTaxonomy
    	* @ORM\OneToOne(targetEntity="Acme\Bundle\MagasinBundle\Entity\Magasin")
    	*/
   	protected $magasin;
+  	
   	
 /**
      * Set magasin

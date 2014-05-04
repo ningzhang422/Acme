@@ -25,3 +25,7 @@ services:
          class: Acme\Bundle\PeriodBundle\Twig\AcmePeriodExtension
          tags:
             - { name: twig.extension }
+     acme.listener.order_creneau:
+         class: Acme\Bundle\PeriodBundle\EventListener\OrderShippingCreneauListener
+         tags:
+            - { name: kernel.event_listener, event: acme.checkout.finalize.creneau, method: calculAvailability }
