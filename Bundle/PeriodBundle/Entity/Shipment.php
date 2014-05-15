@@ -5,7 +5,7 @@
 namespace Acme\Bundle\PeriodBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Sylius\Bundle\CoreBundle\Model\Shipment as BaseShipment;
+use Sylius\Component\Core\Model\Shipment as BaseShipment;
 
 /**
  * @ORM\Entity

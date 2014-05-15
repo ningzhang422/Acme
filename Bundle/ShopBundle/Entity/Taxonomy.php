@@ -4,7 +4,7 @@ namespace Acme\Bundle\ShopBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Sylius\Bundle\TaxonomiesBundle\Model\Taxonomy as BaseTaxonomy;
+use Sylius\Component\Core\Model\Taxonomy as BaseTaxonomy;
 
 /**
  * Model for taxonomies.

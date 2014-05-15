@@ -4,7 +4,7 @@ namespace Acme\Bundle\ShopBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use Sylius\Bundle\CoreBundle\Model\User as BaseUser;
+use Sylius\Component\Core\Model\User as BaseUser;
 
 /**
  * @ORM\Entity

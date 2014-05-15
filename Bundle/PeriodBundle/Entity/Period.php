@@ -43,7 +43,7 @@ class Period
     private $name;
     
     /**
-   	* @ORM\ManyToOne(targetEntity="Sylius\Bundle\ShippingBundle\Model\ShippingCategory")
+   	* @ORM\ManyToOne(targetEntity="Sylius\Component\Shipping\Model\ShippingCategory")
    	* @ORM\JoinColumn(nullable=false)
    	*/
     protected $category;
