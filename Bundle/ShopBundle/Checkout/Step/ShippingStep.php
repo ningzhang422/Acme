@@ -6,9 +6,9 @@
 
 namespace Acme\Bundle\ShopBundle\Checkout\Step;
 
-use Sylius\Bundle\AddressingBundle\Model\ZoneInterface;
-use Sylius\Bundle\CoreBundle\Checkout\SyliusCheckoutEvents;
-use Sylius\Bundle\CoreBundle\Model\OrderInterface;
+use Sylius\Component\Addressing\Model\ZoneInterface;
+use Sylius\Component\Core\Model\OrderInterface;
+use Sylius\Component\Core\SyliusCheckoutEvents;
 use Sylius\Bundle\FlowBundle\Process\Context\ProcessContextInterface;
 use Symfony\Component\Form\FormInterface;
 

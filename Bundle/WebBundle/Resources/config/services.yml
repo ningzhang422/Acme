@@ -1,6 +1,11 @@
 parameters:
 #    acme_web.example.class: Acme\Bundle\WebBundle\Example
-
+    sylius.form.frontend.registration.type.class: Acme\Bundle\ShopBundle\Form\RegistrationFormType
+    sylius.form.frontend.profile.type.class: Acme\Bundle\ShopBundle\Form\ProfileFormType
+    fos_user.model.user.class: Acme\Bundle\ShopBundle\Entity\User
+    sylius.form.type.address.class: Acme\Bundle\ShopBundle\Form\Type\AddressType
+    sylius.form.type.shipping_method_choice.class: Acme\Bundle\ShopBundle\Form\Type\ShippingMethodChoiceType
+    sylius.menu_builder.backend.class: Acme\Bundle\WebBundle\Menu\BackendMenuBuilder
 services:
 #    acme_web.example:
 #        class: %acme_web.example.class%

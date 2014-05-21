@@ -101,6 +101,6 @@ class RegistrationFormType extends ProfileFormType
 
     public function getName()
     {
-        return 'acme_user_registration';
+        return 'sylius_user_registration';
     }
 }

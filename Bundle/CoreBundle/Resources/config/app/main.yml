@@ -72,7 +72,7 @@ fos_user:
             type: sylius_user_profile
     registration:
         form:
-            type: acme_user_registration
+            type: sylius_user_registration
 
 hwi_oauth:
     firewall_name: main

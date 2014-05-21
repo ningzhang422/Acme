@@ -12,9 +12,9 @@
 namespace Acme\Bundle\ShopBundle\Checkout\Step;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Sylius\Bundle\AddressingBundle\Matcher\ZoneMatcherInterface;
-use Sylius\Bundle\CartBundle\Provider\CartProviderInterface;
-use Sylius\Bundle\CoreBundle\Model\OrderInterface;
+use Sylius\Component\Addressing\Matcher\ZoneMatcherInterface;
+use Sylius\Component\Cart\Provider\CartProviderInterface;
+use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Bundle\FlowBundle\Process\Step\ControllerStep;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\GenericEvent;

@@ -16,7 +16,7 @@ class User extends BaseUser
   /**
      * @var string
      *
-     * @ORM\Column(name="moblile", type="string", length=10)
+     * @ORM\Column(name="mobile", type="string", length=10)
      */
   protected $mobile;
   

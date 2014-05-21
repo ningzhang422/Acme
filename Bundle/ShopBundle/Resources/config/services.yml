@@ -1,14 +1,6 @@
 parameters:
     # acme.entity.user.class: Acme\Bundle\ShopBundle\Entity\User
-
+    sylius.checkout_step.addressing.class: Acme\Bundle\ShopBundle\Checkout\Step\AddressingStep
+    sylius.checkout_step.shipping.class: Acme\Bundle\ShopBundle\Checkout\Step\ShippingStep
 services:
-    sylius.user.registration.form.type:
-        class: Acme\Bundle\ShopBundle\Form\RegistrationFormType
-        arguments: [%fos_user.model.user.class%]
-        tags: 
-           - { name: form.type, alias: acme_user_registration }
-    sylius.form.frontend.profile.type:
-        class: Acme\Bundle\ShopBundle\Form\ProfileFormType
-        arguments: [%fos_user.model.user.class%]
-        tags: 
-           - { name: form.type, alias: acme_user_profile }
+    

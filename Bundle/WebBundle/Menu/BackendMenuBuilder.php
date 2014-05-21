@@ -12,13 +12,13 @@
 namespace Acme\Bundle\WebBundle\Menu;
 
 use Knp\Menu\ItemInterface;
+use Sylius\Bundle\WebBundle\Event\MenuBuilderEvent;
 use Symfony\Component\HttpFoundation\Request;
-use Sylius\Bundle\WebBundle\Menu\MenuBuilder;
 
 /**
  * Main menu builder.
  *
- * @author Paweł Jędrzejewski <pjedrzejewski@diweb.pl>
+ * @author Paweł Jędrzejewski <pawel@sylius.org>
  */
 class BackendMenuBuilder extends MenuBuilder
 {
@@ -61,6 +61,8 @@ class BackendMenuBuilder extends MenuBuilder
             'route' => 'fos_user_security_logout'
         ))->setLabel($this->translate('sylius.backend.logout'));
 
+        $this->eventDispatcher->dispatch(MenuBuilderEvent::BACKEND_MAIN, new MenuBuilderEvent($this->factory, $menu));
+
         return $menu;
     }
 
@@ -89,6 +91,8 @@ class BackendMenuBuilder extends MenuBuilder
         $this->addCustomersMenu($menu, $childOptions, 'sidebar');
         $this->addContentMenu($menu, $childOptions, 'sidebar');
         $this->addConfigurationMenu($menu, $childOptions, 'sidebar');
+
+        $this->eventDispatcher->dispatch(MenuBuilderEvent::BACKEND_SIDEBAR, new MenuBuilderEvent($this->factory, $menu));
 
         return $menu;
     }
@@ -123,17 +127,17 @@ class BackendMenuBuilder extends MenuBuilder
         ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.stockables', $section)));
 
         $child->addChild('options', array(
-            'route' => 'sylius_backend_option_index',
+            'route' => 'sylius_backend_product_option_index',
             'labelAttributes' => array('icon' => 'glyphicon glyphicon-th'),
         ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.options', $section)));
 
-        $child->addChild('properties', array(
-            'route' => 'sylius_backend_property_index',
+        $child->addChild('product_attributes', array(
+            'route' => 'sylius_backend_product_attribute_index',
             'labelAttributes' => array('icon' => 'glyphicon glyphicon-list-alt'),
-        ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.properties', $section)));
+        ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.attributes', $section)));
 
         $child->addChild('prototypes', array(
-            'route' => 'sylius_backend_prototype_index',
+            'route' => 'sylius_backend_product_prototype_index',
             'labelAttributes' => array('icon' => 'glyphicon glyphicon-compressed'),
         ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.prototypes', $section)));
     }
@@ -251,21 +255,6 @@ class BackendMenuBuilder extends MenuBuilder
             'route' => 'sylius_backend_locale_index',
             'labelAttributes' => array('icon' => 'glyphicon glyphicon-flag'),
         ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.locales', $section)));
-        
-        $child->addChild('magasins', array(
-            'route' => 'sylius_backend_magasin_index',
-            'labelAttributes' => array('icon' => 'glyphicon glyphicon-flag'),
-        ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.magasins', $section)));
-        
-        $child->addChild('periods', array(
-            'route' => 'sylius_backend_period_index',
-            'labelAttributes' => array('icon' => 'glyphicon glyphicon-flag'),
-        ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.periods', $section)));
-        
-        $child->addChild('plannings', array(
-            'route' => 'sylius_backend_planning_index',
-            'labelAttributes' => array('icon' => 'glyphicon glyphicon-flag'),
-        ))->setLabel($this->translate(sprintf('sylius.backend.menu.%s.plannings', $section)));
 
         $child->addChild('payment_methods', array(
             'route' => 'sylius_backend_payment_method_index',
