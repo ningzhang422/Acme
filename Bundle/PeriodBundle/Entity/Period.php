@@ -142,10 +142,10 @@ class Period
     /**
      * Set shipping_category
      *
-     * @param \Sylius\Bundle\ShippingBundle\Model\ShippingCategory $shippingCategory
+     * @param Sylius\Component\Shipping\Model\ShippingCategory $shippingCategory
      * @return Period
      */
-    public function setCategory(\Sylius\Bundle\ShippingBundle\Model\ShippingCategory $category)
+    public function setCategory(\Sylius\Component\Shipping\Model\ShippingCategory $category)
     {
         $this->category = $category;
 

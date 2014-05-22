@@ -127,6 +127,10 @@ sylius_backend_magasin:
 sylius_backend_period:
     resource: @AcmeWebBundle/Resources/config/routing/backend/period.yml
     prefix: /periods
+    
+sylius_backend_planning:
+    resource: @AcmePeriodBundle/Resources/config/routing.yml
+    prefix: /planning
 
 sylius_backend_block:
     resource: @SyliusWebBundle/Resources/config/routing/backend/block.yml

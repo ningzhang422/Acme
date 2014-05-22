@@ -96,7 +96,6 @@ sylius_payum: ~
 sylius_addressing:
     classes:
         address:
-            controller: Sylius\Bundle\CoreBundle\Controller\AddressController
             model: Acme\Bundle\ShopBundle\Entity\Address
 
 sylius_order:
@@ -138,6 +137,11 @@ sylius_resource:
             driver: doctrine/orm
             classes:
                 model: Acme\Bundle\MagasinBundle\Entity\Magasin
+                controller: Sylius\Bundle\ResourceBundle\Controller\ResourceController
+        sylius.period:
+            driver: doctrine/orm
+            classes:
+                model: Acme\Bundle\PeriodBundle\Entity\Period
                 controller: Sylius\Bundle\ResourceBundle\Controller\ResourceController
         sylius.block:
             driver: doctrine/phpcr-odm
