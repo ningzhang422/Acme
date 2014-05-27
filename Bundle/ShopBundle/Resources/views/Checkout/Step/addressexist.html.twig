@@ -2,11 +2,7 @@
 
 {% block javascripts %}
 {{ parent() }}
-{% javascripts output='assets/compiled/frontend_province.js'
-    '@SyliusWebBundle/Resources/assets/js/province-choices.js'
-%}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
-{% endjavascripts %}
+
 {% endblock %}
 
 {% block content %}
@@ -75,7 +71,7 @@
     </div>
 </fieldset>
 
-
+{{ form_widget(form._token) }}
 
 <div class="form-actions">
     <a href="{{ path('sylius_cart_summary') }}" class="btn btn-lg"><i class="icon-chevron-left"></i> {{ 'sylius.checkout.back'|trans }}</a> &nbsp;

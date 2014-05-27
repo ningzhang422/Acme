@@ -15,7 +15,7 @@ class Address extends BaseAddress
   /**
      * @var string
      *
-     * @ORM\Column(name="addressTitle", type="string")
+     * @ORM\Column(name="addressTitle", type="string", nullable=true)
      */
   protected $addressTitle;
 
