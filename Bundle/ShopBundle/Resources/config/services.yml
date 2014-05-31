@@ -1,8 +1,9 @@
 parameters:
     # acme.entity.user.class: Acme\Bundle\ShopBundle\Entity\User
     sylius.checkout_step.addressing.class: Acme\Bundle\ShopBundle\Checkout\Step\AddressingStep
+    sylius.checkout_form.shipping.class: Acme\Bundle\ShopBundle\Form\Type\Checkout\ShippingStepType
     sylius.checkout_step.shipping.class: Acme\Bundle\ShopBundle\Checkout\Step\ShippingStep
     sylius.checkout_form.shipment.class: Acme\Bundle\ShopBundle\Form\Type\Checkout\ShipmentType
-    sylius.checkout_form.shipping.class: Acme\Bundle\ShopBundle\Form\Type\Checkout\ShippingStepType
+    
 services:
     

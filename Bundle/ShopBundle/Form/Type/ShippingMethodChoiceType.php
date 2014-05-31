@@ -12,7 +12,7 @@
 namespace Acme\Bundle\ShopBundle\Form\Type;
 
 use Sylius\Component\Shipping\Calculator\Registry\CalculatorRegistryInterface;
-use Sylius\Component\Shipping\Model\ShippingMethodInterface;
+use Sylius\Component\Core\Model\ShippingMethodInterface;
 use Sylius\Component\Shipping\Resolver\MethodsResolverInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
@@ -66,6 +66,7 @@ class ShippingMethodChoiceType extends AbstractType
 
             return new ObjectChoiceList($methods);
         };
+        
 
         $resolver
             ->setDefaults(array(
@@ -105,6 +106,7 @@ class ShippingMethodChoiceType extends AbstractType
 
         $view->vars['shipping_costs'] = $shippingCosts;
         $view->vars['shipment_category_ids'] = $shipment_category_ids;
+        
     }
 
     /**
