@@ -4,6 +4,7 @@ parameters:
     sylius.checkout_form.shipping.class: Acme\Bundle\ShopBundle\Form\Type\Checkout\ShippingStepType
     sylius.checkout_step.shipping.class: Acme\Bundle\ShopBundle\Checkout\Step\ShippingStep
     sylius.checkout_form.shipment.class: Acme\Bundle\ShopBundle\Form\Type\Checkout\ShipmentType
+    sylius.checkout_step.finalize.class: Acme\Bundle\ShopBundle\Checkout\Step\FinalizeStep
     
 services:
     

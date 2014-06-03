@@ -1,8 +1,8 @@
 <?php
 namespace Acme\Bundle\PeriodBundle\EventListener;
 
-use Sylius\Bundle\CoreBundle\Model\OrderInterface;
-use Sylius\Bundle\CoreBundle\OrderProcessing\InventoryHandlerInterface;
+use Sylius\Component\Core\Model\OrderInterface;
+use Sylius\Component\Core\OrderProcessing\InventoryHandlerInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 
 class OrderShippingCreneauListener
