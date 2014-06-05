@@ -42,13 +42,13 @@
                 {{echo_week_number}}
         </td>
         {% for i in 1..started_at_position-1 %}
-    	<td bgcolor="#736B6B" height="150" abbr="-" rel="{{ path(app.request.attributes.get('_route'))~'new' }}" id="{{i}}">
+    	<td bgcolor="#736B6B" height="150" abbr="-" rel="{{ path(app.request.attributes.get('_route'))~'new' }}" id="{{i}}" class="click_td">
 			<p class="day_number">{{ date_before|date("d") }}</p>
 		</td>
 		{% set date_before = date_before|date_modify("+1 day")|date("Y-m-d") %}
 		{% endfor %}
 		{% for i in started_at_position..7 %}
-		<td height="150" abbr="-" rel="{{ path(app.request.attributes.get('_route'))~'new' }}" id="{{i}}">
+		<td height="150" abbr="-" rel="{{ path(app.request.attributes.get('_route'))~'new' }}" id="{{i}}"  class="click_td">
 			<p class="day_number">{{ date|date("d") }}</p>
 		</td>
       	{% set date = date|date_modify("+1 day")|date("Y-m-d") %}
@@ -64,7 +64,7 @@
                 {{echo_wnumber}}
         </td>
         {% for i in 1..7 %}
-        	<td height="150" abbr="-" rel="{{ path(app.request.attributes.get('_route'))~'new' }}" id ="">
+        	<td height="150" abbr="-" rel="{{ path(app.request.attributes.get('_route'))~'new' }}" id ="" class="click_td">
         		<p class="day_number">{{ date|date("d") }}</p>
         		<ul>
 				  {% for c in listecreneaus %}
@@ -90,12 +90,12 @@
         
         {% for i in 1..7 %}
         	{% if date|date("Y-m-d") <= ending_of_month|date("Y-m-d") %}
-        		<td height="150" abbr="-" rel="{{ path(app.request.attributes.get('_route'))~'new' }}" id="">
+        		<td height="150" abbr="-" rel="{{ path(app.request.attributes.get('_route'))~'new' }}" id="" class="click_td">
         		<p class="day_number">{{ date|date("d") }}</p>
 		      		
 		      	</td>
         	{% else %}
-        		<td bgcolor="#736B6B" height="150" abbr="-" rel="{{ path(app.request.attributes.get('_route'))~'new' }}" id="">
+        		<td bgcolor="#736B6B" height="150" abbr="-" rel="{{ path(app.request.attributes.get('_route'))~'new' }}" id="" class="click_td">
         		<p class="day_number">{{ date|date("d") }}</p>
         		
         		</td>

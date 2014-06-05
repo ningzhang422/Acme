@@ -1,7 +1,7 @@
 
 $(document).ready( function() {
 		var url_c;
-		$("table#planning_table td").click(function(e){     //function_td
+		$("table#planning_table td.click_td").click(function(e){     //function_td
 			url_c = $(this).attr('rel');
 			$.ajax({
 			        type: "GET",

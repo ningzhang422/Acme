@@ -56,7 +56,7 @@ class PlanningController extends Controller
 		      $em->persist($creneau);
 		      $em->flush();
 		
-		      return $this->redirect($this->generateUrl('sylius_backend_planning_index'));
+		      return new Response("good job"); //$this->redirect($this->generateUrl('sylius_backend_planning_index'));
 		    }
 	   
 	  }
