@@ -28,6 +28,10 @@ sylius_money:
     currency: %sylius.currency%
     locale: %sylius.locale%
 
+sylius_locale: ~
+
+sylius_currency: ~
+
 sylius_cart:
     resolver: sylius.cart_item_resolver.default
     classes:
