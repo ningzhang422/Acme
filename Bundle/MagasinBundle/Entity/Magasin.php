@@ -156,7 +156,7 @@ class Magasin
      * @param \Sylius\Bundle\AddressingBundle\Model\Address $address
      * @return Magasin
      */
-    public function setAddress(\Sylius\Bundle\AddressingBundle\Model\Address $address = null)
+    public function setAddress(\Acme\Bundle\ShopBundle\Entity\Address $address = null)
     {
         $this->address = $address;
 
