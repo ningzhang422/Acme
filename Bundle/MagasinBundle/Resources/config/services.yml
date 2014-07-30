@@ -1,5 +1,8 @@
 parameters:
      sylius.model.magasin.class: Acme\Bundle\MagasinBundle\Entity\Magasin
+     sylius.context.magasin.class: Acme\Bundle\CoreBundle\Context\MagasinContext
+     sylius.magasin_provider.class: Acme\Bundle\MagasinBundle\Provider\MagasinProvider
+     sylius.event_listener.magasin.class: Acme\Bundle\MagasinBundle\EventListener\MagasinListener
 
 services:
      sylius.form.type.magasin:
@@ -7,3 +10,11 @@ services:
          arguments: [%sylius.model.magasin.class%]
          tags: 
             - { name: form.type, alias: sylius_magasin }
+     sylius.context.magasin:
+         class: %sylius.context.magasin.class%
+         arguments: [@session,@security.context,@service_container,@sylius.manager.user]
+     sylius.event_listener.magasin:
+         class: %sylius.event_listener.magasin.class%
+         arguments: [@sylius.context.magasin]
+         tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest}

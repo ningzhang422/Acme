@@ -30,5 +30,5 @@ interface MagasinContextInterface
      *
      * @param LocaleInterface $locale
      */
-    public function setMagasin($magasin);
+    public function setMagasin($magasin_id);
 }
