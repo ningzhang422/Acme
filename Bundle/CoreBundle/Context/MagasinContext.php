@@ -30,10 +30,10 @@ class MagasinContext extends BaseMagasinContext
 
     public function getDefaultMagasin()
     {
-    	$repository = $this->container->get('sylius.repository.magasin');
-    	$magasin = $repository->find(1);
+    	//$repository = $this->container->get('sylius.repository.magasin');
+    	//$magasin = $repository->find(1);
     	//var_dump($magasin);
-        return $magasin->getId();
+        return null;
     }
 
     public function getMagasin()

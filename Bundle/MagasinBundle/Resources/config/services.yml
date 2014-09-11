@@ -15,6 +15,6 @@ services:
          arguments: [@session,@security.context,@service_container,@sylius.manager.user]
      sylius.event_listener.magasin:
          class: %sylius.event_listener.magasin.class%
-         arguments: [@sylius.context.magasin]
+         arguments: [@sylius.context.magasin,@router]
          tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest}

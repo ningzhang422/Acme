@@ -6,6 +6,8 @@ use Acme\Bundle\MagasinBundle\Context\MagasinContextInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
 
 
 class MagasinListener implements EventSubscriberInterface
@@ -14,13 +16,15 @@ class MagasinListener implements EventSubscriberInterface
      * @var MagasinContextInterface
      */
     protected $magasinContext;
+    protected $router;
 
     /**
      * @param LocaleContextinterface $localeContext
      */
-    public function __construct(MagasinContextInterface $magasinContext)
+    public function __construct(MagasinContextInterface $magasinContext,$router)
     {
         $this->magasinContext = $magasinContext;
+        $this->router = $router;
     }
 
     /**
@@ -31,14 +35,24 @@ class MagasinListener implements EventSubscriberInterface
     public function onKernelRequest(GetResponseEvent $event)
     {
         $request = $event->getRequest();
-//var_dump($this->container->get('sylius.context.magasin'));
+        
         if (!$request->hasPreviousSession()) {
             return;
         }
-        $this->magasinContext->setMagasin($this->magasinContext->getDefaultMagasin());
-        //$this->magasinContext->setMagasin($this->container->get('sylius.context.magasin')->getDefaultMagasin());
+        //$this->magasinContext->setMagasin($this->magasinContext->getDefaultMagasin());
+        //var_dump($this->magasinContext->getMagasin());
+        if($this->magasinContext->getMagasin() == null){
+        	$route = 'acme_magasin_homepage';
 
-        //$request->setMagasin($this->magasinContext->getMagasin() ?: $this->magasinContext->getDefaultMagasin());
+			if ($route === $event->getRequest()->get('_route')) {
+			    return;
+			}
+			
+			$url = $this->router->generate($route);
+			$response = new RedirectResponse($url);
+			$event->setResponse($response);
+        }
+        
     }
 
     public static function getSubscribedEvents()
