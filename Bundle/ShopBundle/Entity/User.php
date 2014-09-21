@@ -60,7 +60,7 @@ class User extends BaseUser
     }
   
 	/**
-	* @ORM\prePersist
+	* @ORM\PrePersist
 	*/
 	public function upload()
 	{

@@ -17,7 +17,7 @@
 {% block content %}
 
 <div id="calendar">
-<table width="100%" class="fixed-width monthly" id="planning_table">
+<table width="100%" border=2 style="table-layout: fixed;" class="fixed-width monthly" id="planning_table">
 <thead>
     <tr>
       <th class="week_th"></th>
@@ -41,12 +41,14 @@
     	<td class="week_td" style="vertical-align: center;">
                 {{echo_week_number}}
         </td>
+		{% if started_at_position != 1 %}
         {% for i in 1..started_at_position-1 %}
     	<td bgcolor="#736B6B" height="150" abbr="-" rel="{{ path(app.request.attributes.get('_route'))~'new' }}" id="{{i}}" class="click_td">
 			<p class="day_number">{{ date_before|date("d") }}</p>
 		</td>
 		{% set date_before = date_before|date_modify("+1 day")|date("Y-m-d") %}
 		{% endfor %}
+		{% endif %}
 		{% for i in started_at_position..7 %}
 		<td height="150" abbr="-" rel="{{ path(app.request.attributes.get('_route'))~'new' }}" id="{{i}}"  class="click_td">
 			<p class="day_number">{{ date|date("d") }}</p>

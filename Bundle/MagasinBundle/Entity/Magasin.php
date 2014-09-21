@@ -64,12 +64,16 @@ class Magasin
   	private $updatedAt;
   	
 	public function __construct()
-	  {
+	{
 	    $this->enabled = true;
 	    $this->createdAt = new \DateTime();
 	    $this->updatedAt = new \DateTime();
-	  }
+	}
 
+	public function __toString()
+    {
+        return $this->name;
+    }
 
     /**
      * Get id

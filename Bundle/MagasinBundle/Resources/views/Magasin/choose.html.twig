@@ -1,0 +1,15 @@
+<br>
+<br>
+<br>
+<center>
+<h3>Selectionnez notre magasins auprès de chez vous</h3>
+
+<div class="well">
+  <form action="{{ path('acme_magasin_homepage') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <input type="submit" class="btn btn-primary" value="Selectionnez votre magasin "/>
+	
+	{{ form_rest(form) }}
+  </form>
+</div>
+</center>
