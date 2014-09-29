@@ -40,8 +40,9 @@ class MagasinListener implements EventSubscriberInterface
             return;
         }
         //$this->magasinContext->setMagasin($this->magasinContext->getDefaultMagasin());
-        //var_dump($this->magasinContext->getMagasin());
+        $this->magasinContext->setMagasin(1);
         if($this->magasinContext->getMagasin() == null){
+		
         	$route = 'acme_magasin_homepage';
 
 			if ($route === $event->getRequest()->get('_route')) {

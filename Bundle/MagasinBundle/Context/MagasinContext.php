@@ -29,7 +29,7 @@ class MagasinContext implements MagasinContextInterface
     public function __construct(SessionInterface $session, $defaultMagasin)
     {
         $this->session = $session;
-        $this->defaultMagasin = $defaultMagasin;
+        $this->defaultMagasin = 1; //$defaultMagasin;
     }
 
     /**

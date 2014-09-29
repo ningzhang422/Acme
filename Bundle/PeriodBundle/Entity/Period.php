@@ -47,6 +47,12 @@ class Period
    	* @ORM\JoinColumn(nullable=false)
    	*/
     protected $category;
+	
+	/**
+   	* @ORM\ManyToOne(targetEntity="Sylius\Component\Shipping\Model\ShippingMethod")
+   	* @ORM\JoinColumn(nullable=true)
+   	*/
+    protected $method;
 
 	
 
@@ -160,5 +166,28 @@ class Period
     public function getCategory()
     {
         return $this->category;
+    }
+	
+	/**
+     * Set shipping_method
+     *
+     * @param Sylius\Component\Shipping\Model\ShippingMethod $shippingMethod
+     * @return Period
+     */
+    public function setMethod(\Sylius\Component\Shipping\Model\ShippingMethod $method)
+    {
+        $this->method = $method;
+
+        return $this;
+    }
+
+    /**
+     * Get shipping_method
+     *
+     * @return \Sylius\Bundle\ShippingBundle\Model\ShippingMethod
+     */
+    public function getMethod()
+    {
+        return $this->method;
     }
 }

@@ -36,6 +36,11 @@ class PeriodType extends AbstractType
                 'required' => false,
                 'label'    => 'sylius.form.shipping_method.category'
             ))
+			->add('method', 'entity', array(
+					  'class'    => 'Sylius\Component\Shipping\Model\ShippingMethod',
+					  'property' => 'name',
+					  'multiple' => false
+					))
         ;
 
     }

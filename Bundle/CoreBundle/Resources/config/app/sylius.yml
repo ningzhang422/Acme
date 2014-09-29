@@ -38,6 +38,12 @@ sylius_cart:
 
 sylius_settings: ~
 
+sylius_content:
+    driver: doctrine/phpcr-odm
+    classes:
+        static_content:
+            repository: Sylius\Bundle\ContentBundle\Doctrine\ODM\PHPCR\StaticContentRepository
+
 sylius_taxonomy:
     classes:
         taxonomy:
@@ -155,15 +161,6 @@ sylius_resource:
             classes:
                 model: Acme\Bundle\PeriodBundle\Entity\Period
                 controller: Sylius\Bundle\ResourceBundle\Controller\ResourceController
-        sylius.block:
-            driver: doctrine/phpcr-odm
-            classes:
-                model: Symfony\Cmf\Bundle\BlockBundle\Doctrine\Phpcr\SimpleBlock
-        sylius.page:
-            driver: doctrine/phpcr-odm
-            classes:
-                model: Symfony\Cmf\Bundle\ContentBundle\Doctrine\Phpcr\StaticContent
-                repository: Sylius\Bundle\CoreBundle\Doctrine\ODM\PHPCR\PageRepository
 
 sylius_pricing:
     forms:
@@ -185,7 +182,7 @@ sylius_search:
         - Sylius\Component\Product\Accessor\ProductAccessor
     filters:
         pre_search_filter:
-            enabled: true
+            enabled: false
             taxonomy: category
         facet_groups:
             search_set:
