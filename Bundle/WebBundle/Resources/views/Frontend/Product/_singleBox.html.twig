@@ -1,0 +1,41 @@
+<div class="product-box">
+    
+    <a href="{{ path(product) }}" data-toggle="modal" data-target="#modal_product">
+        <img class="img-rounded img-responsive" src="{{ product.image ? product.image.path|imagine_filter('sylius_medium') : 'http://placehold.it/262x255' }}" alt="{{ product.name }}" />
+        
+       {# <button class="btn btn-success btn-xs pull-right"><i class="icon-shopping-cart icon-white"></i> {{ 'sylius.add_to_cart'|trans }}</button>#}
+    </a>
+    <a href="{{ path(product) }}" data-toggle="modal" data-target="#modal_product"><h6>{{ product.name|truncate(18) }}</h6></a>
+    <div id="articleBlocDroiteMenuVignette" class="row">
+    	<div class="col-md-3" id="box_prix">
+    		<span class="label label-primary">{{ sylius_calculate_price(product.masterVariant)|sylius_price }}</span>
+    	</div>
+    	<div class="col-md-9">
+	    	{% if not product.hasOptions %}
+	            <div class="pull-right cart_botton">
+		            {% if not sylius_inventory_is_available(product.masterVariant) %}
+		                <br />
+		                <span class="label label-important">{{ 'sylius.out_of_stock'|trans }}</span>
+		            {% else %}
+		            	{% if acme_product_is_in_cart(product) %}
+		            		{% include 'AcmeWebBundle:Frontend/Product:_form_product_update.html.twig'%}
+		            	{% else %}
+			                <form action="{{ path('dp_ajax_add', {'id': product.id}) }}" method="post" class="clearfix add_item_into_cart" id="{{ 'form_product_' ~ product.id }}">
+			                    {% set form = sylius_cart_form({'product': product}) %}
+			                    {{ form_widget(form.quantity, {'attr': {'class': 'center-text hide'}, 'empty_value': '1'}) }}
+			                    {{ form_widget(form._token) }}
+			                    {#<button type="submit" class="btn btn-success"><i class="icon-shopping-cart icon-white"></i> </button>#}
+			                	<input type='image' src='{{ asset('/bundles/syliusweb/img/picto_panier.png') }}' />
+			                </form>
+			            {% endif %}
+		            {% endif %}
+	            </div>
+	        {% else %}
+	        	<div class="pull-right">
+		            <img src='{{ asset('/bundles/syliusweb/img/picto_blank.png') }}' />
+	            </div>
+	        {% endif %}
+        </div>
+     </div>
+</div>
+

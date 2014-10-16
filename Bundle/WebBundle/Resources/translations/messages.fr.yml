@@ -1,0 +1,7 @@
+sylius:
+  frontend:
+    menu:
+      main:
+        rayons: Rayons
+        topic: Actualités
+        promotion: Promotions

@@ -7,4 +7,14 @@ parameters:
     sylius.checkout_step.finalize.class: Acme\Bundle\ShopBundle\Checkout\Step\FinalizeStep
     
 services:
-    
+    acme.product.checker.helper:
+        class: Acme\Bundle\ShopBundle\Templating\Helper\ProductCheckerHelper
+        arguments: [@sylius.cart_provider,@form.factory]
+        tags:
+           -   { name: templating.helper, alias: product_checker_helper }
+
+    acme.product.checker:
+        class: Acme\Bundle\ShopBundle\Twig\ProductCheckerExtension
+        arguments: [@acme.product.checker.helper]
+        tags:
+            -  { name: twig.extension }

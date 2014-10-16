@@ -1,0 +1,16 @@
+{% for item in cart.items %}
+	{% set product_cart = item.variant.product %}
+		{% if product_cart == product %}
+            <form action="{{ path('dp_ajax_update', {'id': item.id}) }}" method="post" novalidate id="{{'item-'~item.id}}">
+				{% set form = acme_product_form_is_in_cart({'product': product}) %}
+				{{ form_widget(form.quantity,{'attr': {'class': 'center-text input_quantity hide'}, 'empty_value': '1'}) }}
+				<div class="articleNormal" id="articleBDMenu3Vignette">
+                <img src="{{ asset('/bundles/syliusweb/img/picto_moins.png') }}" alt="" class="TemplateImgPictoMoins panierImg  " style="display: inline;">
+                <span style="display: inline;" quantitemaxpanier="99" qte="1" compteurincrement="0" incremente="1" minimum="1" libelletypeproduit="1" typeunitevente="g" class="qteProduit qteProduitTemplateAffichage champCourt">1</span>
+                <img src="{{ asset('/bundles/syliusweb/img/picto_plus.png') }}" alt="" class="TemplateImgPictoPlus panierImg  "></div>
+				{{ form_widget(form._token) }}
+				{#<button type="submit" class="btn btn-primary btn-lg"><i class="icon-save"></i> {{ 'sylius.cart.summary.save'|trans }}</button>
+				<input type='image' src='{{ asset('/bundles/syliusweb/img/picto_plus.png') }}' />#}
+			</form>
+        {% endif %}
+    {% endfor %}

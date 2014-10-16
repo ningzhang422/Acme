@@ -5,6 +5,7 @@ parameters:
     fos_user.model.user.class: Acme\Bundle\ShopBundle\Entity\User
     sylius.form.type.address.class: Acme\Bundle\ShopBundle\Form\Type\AddressType
     sylius.form.type.shipping_method_choice.class: Acme\Bundle\ShopBundle\Form\Type\ShippingMethodChoiceType
+    sylius.menu_builder.frontend.class: Acme\Bundle\WebBundle\Menu\FrontendMenuBuilder
 
 services:
     acme_reports.menu_builder:
@@ -13,3 +14,29 @@ services:
             - { name: kernel.event_listener, event: sylius.menu_builder.backend.main, method: addBackendMenuItems }
             - { name: kernel.event_listener, event: sylius.menu_builder.backend.sidebar, method: addBackendMenuItems }
 
+    acme.menu.frontend.cart:
+        class: Knp\Menu\MenuItem 
+        factory_service: sylius.menu_builder.frontend
+        factory_method: createCartMenu
+        arguments: ["@request"]
+        scope: request
+        tags:
+            - { name: knp_menu.menu, alias: sylius.frontend.cart }
+
+    acme.menu.frontend.promotions:
+        class: Knp\Menu\MenuItem 
+        factory_service: sylius.menu_builder.frontend
+        factory_method: createPromotionsMenu
+        arguments: ["@request"]
+        scope: request
+        tags:
+            - { name: knp_menu.menu, alias: sylius.frontend.promotions }
+            
+    acme.menu.frontend.taxonomies:
+        class: Knp\Menu\MenuItem 
+        factory_service: sylius.menu_builder.frontend
+        factory_method: createTaxonomiesSidebarMenu
+        arguments: ["@request"]
+        scope: request
+        tags:
+            - { name: knp_menu.menu, alias: sylius.frontend.taxonomies.sidebar }

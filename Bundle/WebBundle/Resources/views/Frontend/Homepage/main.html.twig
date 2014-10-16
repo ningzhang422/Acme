@@ -1,11 +1,80 @@
-{% extends 'SyliusWebBundle:Frontend:layout.html.twig' %}
+{% extends 'SyliusWebBundle:Frontend:layout_home.html.twig' %}
 
-{% block content %}
-<div class="jumbotron">
-    <h1>{{ 'sylius.homepage.splash.headline'|trans }} {{magasin}}</h1>
-    <p class="lead">{{ 'sylius.homepage.splash.subheadline'|trans }} </p>
+{% block container %}
+<div class="container-fluid">
+	<center>
+	<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+	{#
+	  <!-- Indicators -->
+	  <ol class="carousel-indicators">
+	    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+	    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+	  </ol>
+	#}
+	  <!-- Wrapper for slides -->
+	  <div class="carousel-inner">
+	    <div class="item active">
+	      <img src="{{ asset('bundles/syliusweb/img/bg_product1.jpg') }}" class="swan" alt="Image"/>
+	      <div class="carousel-caption">
+	        ...
+	      </div>
+	    </div>
+	    <div class="item">
+	      <img src="{{ asset('bundles/syliusweb/img/bg_product2.jpg') }}" class="swan" alt="Image"/>
+	      <div class="carousel-caption">
+	        ...
+	      </div>
+	    </div>
+	  </div>
+
+	</div>
+	</center>
 </div>
+<div class="container" id="container_contenu_home">
+      
+        <div class="row">
+            <div class="col-md-8">
+                {% block content %}
+					<div class="page-header">
+					  <h1>{{ 'sylius.homepage.splash.headline'|trans }} {{magasin}}</h1>
+					</div>
+					<div class="panel panel-info">
+					  <div class="panel-heading">
+					    <h2 class="panel-title">Je decouvre les selections</h2>
+					  </div>
+					  <div class="panel-body">
+					    {{ render(url('sylius_partial_product_latest', {'limit': 9, 'template': 'SyliusWebBundle:Frontend/Product:latest.html.twig'})) }}
+					  </div>
+					</div>
+					
+                	
+                {% endblock %}
+            </div>
+        
+            <div class="col-md-4" id="sidebar">
+                {% block sidebar %}
+                
 
-{{ render(url('sylius_partial_product_latest', {'limit': 9, 'template': 'SyliusWebBundle:Frontend/Product:latest.html.twig'})) }}
+                {% include 'SyliusSearchBundle::filter_form.html.twig' %}<br>
 
+                {{ render(url('sylius_partial_product_latest', {'limit': 5, 'template': 'SyliusWebBundle:Frontend/Product:latestSidebar.html.twig'})) }}
+                {{ sonata_block_render({'name': '/cms/blocks/contact'}) }}
+
+                    
+                {% endblock %}
+            </div>
+            
+        </div>
+        {#
+        <hr>
+        <div class="row">
+            {% for i in 1..3 %}
+                <div class="col-md-4">
+                    {{ sonata_block_render({'name': '/cms/blocks/block-' ~ i}) }}
+                </div>
+            {% endfor %}
+        </div>
+        <hr>
+        #}
+        </div>
 {% endblock %}
