@@ -1,10 +1,34 @@
-<div class="product-box">
+<div class="recette-box">
     
-    <a href="{{ path('sylius_recette_show', {'slug': recette.slug}) }}">
-        <img class="img-rounded img-responsive" src="/media/image/{{recette.path}}" alt="{{ recette.name }}" />
-    </a>
-    <a href="{{ path('sylius_recette_show', {'slug': recette.slug}) }}" class="popup_a"><h6>{{ recette.name|truncate(18) }}</h6></a>
-    <div id="articleBlocDroiteMenuVignette" class="row">
-    	
-    </div>
+    
+    <div class="jm-item second">
+		<div class="jm-item-wrapper">
+			<div class="jm-item-image">
+				<img class="img-thumbnail " src="/media/image/{{recette.path}}" alt="{{ recette.name }}" />
+				<div class="jm-item-description">
+				    <p><h4>{{ recette.name|truncate(20) }}</h4></p>
+				    <span class="glyphicon glyphicon-tag">    {{ recette.typeCuisine|truncate(20) }}</span><br><br>
+				    <span class="glyphicon glyphicon-time">    {{ recette.preparation|truncate(20) }}</span><br><br>
+				    <p>
+				    	{% for i in (1..recette.difficulte) %}
+				    		<span class="glyphicon glyphicon-star"></span>
+				    	{% endfor %}
+				    	{% if(recette.difficulte != 5) %}
+				    		{% for i in (1..(5-recette.difficulte)) %}
+					    		<span class="glyphicon glyphicon-star-empty"></span>
+					    	{% endfor %}
+				    	{% endif %}
+				    	{{ 'sylius.frontend.homepage.difficulte'|trans }} : {{ recette.difficulte|truncate(20) }} / 5
+				    
+				    </p>
+				    
+				    
+				    <div class="jm-item-button"><a href="{{ path('sylius_recette_show', {'slug': recette.slug}) }}"><span class="glyphicon glyphicon-search"></span></a></div>
+				</div>
+			</div>
+			<div class="jm-item-title">{{ recette.name|truncate(18) }}</div>
+		</div>
+	</div>
 </div>
+
+

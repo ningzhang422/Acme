@@ -1,20 +1,39 @@
 {% extends 'SyliusWebBundle:Frontend:layout.html.twig' %}
 
 {% block content %}
-
+<a href="{{ path('sylius_recette')}}" class="">
+<button type="button" class="btn btn-default pull-right">{{ 'sylius.recette.retour'|trans }}</button>
+</a>
 <div class="row">
     <div class="col-md-3">
-        <a href="{# path(recette) #}" class="thumbnail">
+        <a href="#" class="thumbnail">
             <img src="/media/image/{{recette.path}}" alt="{{ recette.name }}" />
         </a>
     </div>
     <div class="col-md-9">
-        <a href="{# path(recette) #}" class="btn btn-link"><h3>{{ recette.name }}</h3></a>
-        <p>{{ recette.short_description|default('sylius.product.no_description')|trans|raw }}</p>
+        <h3>{{ recette.name }}</h3> 
+        
+        <p class="glyphicon glyphicon-user">    {{ recette.nbPersonnes }} {{ 'sylius.frontend.homepage.people'|trans }}</p><br>
+        <p class="glyphicon glyphicon-tag">    {{ recette.typeCuisine }}</p><br>
+	    <p class="glyphicon glyphicon-time">    {{ recette.preparation }} {{ 'sylius.frontend.homepage.preparation'|trans }}, {{ recette.cuisson }} {{ 'sylius.frontend.homepage.cuisson'|trans }}</p><br>
+	    <p>
+	    	{% for i in (1..recette.difficulte) %}
+	    		<span class="glyphicon glyphicon-star"></span>
+	    	{% endfor %}
+	    	{% if(recette.difficulte != 5) %}
+	    		{% for i in (1..(5-recette.difficulte)) %}
+		    		<span class="glyphicon glyphicon-star-empty"></span>
+		    	{% endfor %}
+	    	{% endif %}
+	    	{{ 'sylius.frontend.homepage.difficulte'|trans }} : {{ recette.difficulte|truncate(20) }} / 5
+	    
+	    </p>
+	    
+	    
     </div>
 </div>
 
-<hr>
+<h2 class="title"><span class='glyphicon glyphicon-th'></span> {{ 'sylius.recette.banteau_1'|trans }}</h2>
 <div class="row">
     <div class="col-md-12">
         {% if recette.products|length > 0 %}
@@ -23,6 +42,8 @@
         {% endif %}
     </div>
 </div>
-<hr>
+
+<h2 class="title"><span class='glyphicon glyphicon-glass'></span> {{ 'sylius.recette.banteau_2'|trans }}</h2>
+<p>{{ recette.description }}</p>
 {% endblock %}
     

@@ -19,6 +19,10 @@ sylius:
       banteau_1: Je découvre les sélections
       banteau_2: J'en profite
       banteau_3: De la chaleur à votre table
+      difficulte: Difficulté
+      people: Personnes
+      preparation: Pour préparer
+      cuisson: Pour le faire cuire
   form:
     recette:
       name: Nom de la recette
@@ -37,6 +41,9 @@ sylius:
     index_header: Recette n°
     create_header: Créer une recette ici
     index_by_recette_header: Nous vous proposons %nb_recette% recettes asiatiques
+    banteau_1: INGRÉDIENTS PRINCIPAUX
+    banteau_2: PRÉPARATION
+    retour: Tous les recette
 acme:
   form:
     address:
