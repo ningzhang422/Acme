@@ -25,7 +25,7 @@
                 <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
             {% endstylesheets %}
 
-            {% include "CmfCreateBundle::includecssfiles.html.twig" %}
+            {# include "CmfCreateBundle::includecssfiles.html.twig" #}
         {% endblock %}
 
         <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -45,11 +45,11 @@
     						</li>
     					</ul>
     				{% endif %}
-						{{ knp_menu_render('sylius.frontend.main', {'template': 'SyliusWebBundle:Frontend:menu.html.twig'}) }}
+						{{ knp_menu_render('sylius.frontend.main', {'template': 'SyliusWebBundle::menu.html.twig'}) }}
 					</div>
 					
 					<div class="masthead pull-right cartmenu">
-						{{ knp_menu_render('sylius.frontend.cart', {'template': 'SyliusWebBundle:Frontend:menu.html.twig'}) }}
+						{{ knp_menu_render('sylius.frontend.cart', {'template': 'SyliusWebBundle::menu.html.twig'}) }}
 					</div>
 					{#
 					<div class="locale-menu masthead pull-right">
@@ -85,32 +85,24 @@
 						                <a id="navbar-brand-id" class="navbar-brand glyphicon glyphicon-home" href="/"></a>
 						            </div>
 						            <!-- Collect the nav links, forms, and other content for toggling -->
-						            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-						                <ul id="mainMenu" class="nav navbar-nav">
+						            <div class="collapse navbar-collapse row nopadding" id="bs-example-navbar-collapse-1">
+						                <ul id="mainMenu" class="nav navbar-nav col-md-8 nopadding">
 						                    <li class="dropdown">
 						                        <a href="#" data-toggle="dropdown" class="dropdown-toggle">{{ 'sylius.frontend.menu.main.rayons'|trans }} <b class="caret"></b></a>
 						                        {{ knp_menu_render('sylius.frontend.taxonomies', {'template': 'SyliusWebBundle:Frontend:menu.html.twig'}) }}
 						                    </li>
 						                    <li class="dropdown">
 						                        <a href="#" data-toggle="dropdown" class="dropdown-toggle">{{ 'sylius.frontend.menu.main.topic'|trans }} <b class="caret"></b></a>
-						                        
-						                        
-							                    <ul class="dropdown-menu">
-							                    {% for child in cmf_children(cmf_find('/cms/pages')) %}
-							                        <li>
-							                            <a href="{{ path(child) }}">{{ child.title|striptags }}</a>
-							                        </li>
-							                    {% endfor %}
-							                    </ul>
+						                        {{ knp_menu_render('sylius.frontend.topic', {'template': 'SyliusWebBundle:Frontend:menu_topic.html.twig'}) }}
 						                    </li>
 						                    <li class="dropdown">
 						                        <a href="#" data-toggle="dropdown" class="dropdown-toggle">{{ 'sylius.frontend.menu.main.promotion'|trans }} <b class="caret"></b></a>
 						                        {{ knp_menu_render('sylius.frontend.promotions', {'template': 'SyliusWebBundle:Frontend:menu.html.twig'}) }}
 						                    </li>
 						                </ul>
-						                <ul class="nav navbar-nav navbar-right">
+						                <ul class="nav navbar-nav navbar-right col-md-3 nopadding">
 						                    <li>
-						                    	{% render controller('sylius.controller.search:formAction', {'request':app.request}) %}
+						                    	
 						                    </li>
 						                </ul>
 						            </div><!-- /.navbar-collapse -->
@@ -121,6 +113,7 @@
 		{% block centercontrainer %}
 		
 		{% endblock %}
+        
         {% block gallery %}
             {# Gallery modal #}
             {% include 'SyliusWebBundle::gallery.html.twig' %}
@@ -133,8 +126,9 @@
 
         {% block footer %}
             <div class="footer">
+            <div id="footer_barre"></div>
                 <p class="text-muted">
-                    &copy; Sylius, 2011 - {{ 'now'|date('Y') }}.
+                    &copy; Asia 06, 2011 - {{ 'now'|date('Y') }}.
                 </p>
                 {{ knp_menu_render('sylius.frontend.social', {'template': 'SyliusWebBundle:Frontend:menu.html.twig'}) }}
             </div>
@@ -143,10 +137,12 @@
         {% block javascripts %}
             <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
             <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.min.js"></script>
+            
         {% javascripts output='assets/compiled/frontend.js'
             'bundles/syliusweb/js/jquery.blueimp-gallery.min.js'
             'bundles/syliusweb/js/confirm-modal.js'
             'bundles/syliusweb/js/frontend.js'
+            'bundles/syliusweb/js/province-choices.js'
         %}
             <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}

@@ -1,0 +1,9 @@
+parameters:
+     sylius.model.recette.class: Acme\Bundle\RecetteBundle\Entity\Recette
+
+services:
+     sylius.form.type.recette:
+         class: Acme\Bundle\RecetteBundle\Form\Type\RecetteType
+         arguments: [%sylius.model.recette.class%]
+         tags: 
+            - { name: form.type, alias: sylius_recette }

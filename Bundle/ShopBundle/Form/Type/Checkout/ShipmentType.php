@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Acme\Bundle\PeriodBundle\Entity\CreneauRepository;
 
 /**
  * Order shipments type.
@@ -44,20 +45,40 @@ class ShipmentType extends AbstractType
                 $shipment = $event->getData();
 
                 $form->add('method', 'sylius_shipping_method_choice', array(
-                    'label'       => 'sylius.form.checkout.shipping_method',
-                    'subject'     => $shipment,
-                    'criteria'    => $criteria,
-                    'expanded'    => true,
+	                    'label'       => 'sylius.form.checkout.shipping_method',
+	                    'subject'     => $shipment,
+	                    'criteria'    => $criteria,
+	                    'expanded'    => true,
+	                    'constraints' => array(
+	                        $notBlank
+	                    )
+	                ))
+	                ->add('creneau', 'sylius_shipping_creneau_choice', array(
+	                    'label'       => 'sylius.form.checkout.shipment_creneau',
+	                    'subject'     => $shipment,
+	                    'criteria'    => $criteria,
+	                    'expanded'    => true,
+	                    'constraints' => array(
+	                        $notBlank
+	                    )
+		            ));
+            })
+            
+            /*
+            ->add('creneau', 'entity', array(
+                'class' => 'AcmePeriodBundle:Creneau',
+            	'expanded' => true,
+            	'multiple' => false,
+            	'query_builder' => function(CreneauRepository $er)
+				            {
+				            	return $er->findInSevenDaysByCurrentDate();
+				            },
+    			'required' => true,
                     'constraints' => array(
                         $notBlank
                     )
-                ));
-            })
-            ->add('creneau', 'entity', array(
-                'class' => 'AcmePeriodBundle:Creneau',
-            	'expanded' => false,
-            	'multiple' => false,
-            ))
+            ))*/
+            
         ;
     }
 

@@ -119,13 +119,13 @@
     {% spaceless %}
         <div {{ block('widget_container_attributes') }}>
             {% for child in form %}
-            {% set div_id = 'category_id_'~shipment_category_ids[child.vars.value] %}
+            {% set div_id = 'method_id_'~shipment_category_ids[child.vars.value] %}
                 <div id='{{div_id}}'>
                     {% if shipping_costs[child.vars.value] is defined %}
                         <span class="pull-right text-muted">{{ shipping_costs[child.vars.value]|sylius_price }}</span>
                     {% endif %}
                     <label{% for attrname, attrvalue in child.vars.label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-                        {{ form_widget(child) }}
+                        {{ form_widget(child, { 'attr': {'class': 'shipping_method'} }) }}
                         {{ child.vars.label|trans({}, translation_domain) }}
                     </label>
                 </div>
@@ -133,3 +133,60 @@
         </div>
     {% endspaceless %}
 {% endblock %}
+
+{% block sylius_shipping_creneau_choice_widget %}
+    {% spaceless %}
+        <div {{ block('widget_container_attributes') }}>
+        {% for key, table in creneau_tables %}
+        	{% set table_id = 'planning_table_'~key%}
+        	<table width="100%" border=2 style="table-layout: fixed;" class="fixed-width weekly" id="{{table_id}}">
+				<thead>
+				    <tr>
+				    	<th class="week_th"></th>
+				    	<th>{{ "now"|date("d/m/Y") }}</th>
+				    	{% for i in 1..6 %}
+				    		<th>{{ "now"|date("Y-m-d")|date_modify("+"~i~" day")|date("d/m/Y") }}</th>
+				        {% endfor %}
+				    </tr>
+				</thead>
+				<tbody>
+					{% for key, value in table %}
+						<tr>
+							<td>{{key}}</td>
+							<td>
+								{% for child in form %}
+									{% if child.vars.label == value["now"|date("d/m/Y")]|default('') %}
+										{% if shipment_creneau_valide[child.vars.value] %}
+											{{ form_widget(child) }}
+										{% else %}
+											{{ form_widget(child, { 'attr': {'class': 'indisponible'} }) }}
+										{% endif %}
+									{% endif %}
+								{% endfor %}
+							</td>
+							{% for i in 1..6 %}
+				    		<td>
+				    			{% for child in form %}
+									{% if child.vars.label == value["now"|date("Y-m-d")|date_modify("+"~i~" day")|date("d/m/Y")]|default('') %}
+										{{ form_widget(child) }}
+									{% endif %}
+								{% endfor %}
+					        </td>
+					        {% endfor %}
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+        {% endfor %}
+        </div>
+    {% endspaceless %}
+{% endblock %}
+
+{#
+{% block radio_widget %}
+{% spaceless %}
+    <label  for="{{ id }}"><input type="radio" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />{{ label|trans }}</label>
+{% endspaceless %}
+{% endblock radio_widget %}
+
+#}

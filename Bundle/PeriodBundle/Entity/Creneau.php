@@ -96,6 +96,11 @@ class Creneau
    	* @Assert\NotBlank()
    	*/
     protected $period;
+    
+    /**
+   	 * @ORM\OneToMany(targetEntity="Acme\Bundle\PeriodBundle\Entity\Shipment", mappedBy="creneau")
+   	 */
+    protected $shipments;
 
     
 	/**
@@ -112,7 +117,7 @@ class Creneau
      */
     public function __toString()
     {
-        return $this->performedAt->format('Y-m-d');
+        return strval($this->id);
     }
 
     /**
@@ -356,4 +361,10 @@ class Creneau
     {
         return $this->performedAt;
     }
+    
+	
+	public function getShipments() 
+	{
+	    return $this->shipments;
+	}
 }

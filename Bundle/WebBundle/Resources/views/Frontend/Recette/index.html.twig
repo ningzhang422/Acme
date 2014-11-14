@@ -1,0 +1,19 @@
+{% extends 'SyliusWebBundle:Frontend:layout.html.twig' %}
+
+{% import 'SyliusWebBundle:Frontend/Macros:buttons.html.twig' as buttons %}
+{% from 'SyliusWebBundle:Frontend/Macros:misc.html.twig' import pagination %}
+{% from 'SyliusWebBundle:Frontend/Recette:macros.html.twig' import grid4 %}
+{% from 'SyliusWebBundle:Frontend/Recette:macros.html.twig' import grid %}
+
+
+{% block content %}
+<div class="page-header">
+    <h1>{{ 'sylius.recette.index_by_recette_header'|trans({'%nb_recette%': recettes|length})|raw }}</h1>
+</div>
+
+{{ pagination(recettes) }}
+{# list(products) #}
+{{ grid(recettes) }}
+{{ pagination(recettes) }}
+
+{% endblock %}

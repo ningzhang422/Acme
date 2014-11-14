@@ -50,6 +50,15 @@ sylius_magasin_choose:
     resource: @AcmeMagasinBundle/Resources/config/routing.yml
     prefix: /magasin
 
-sylius_search:
-    resource: @SyliusWebBundle/Resources/config/routing/frontend/search.yml
-    prefix: /search
+
+sylius_contact:
+    resource: @SyliusWebBundle/Resources/config/routing/frontend/contact.yml
+    prefix: /contact
+
+sylius_recette:
+    resource: @SyliusWebBundle/Resources/config/routing/frontend/recette.yml
+    prefix: /recette
+
+#sylius_search:
+#    resource: @SyliusWebBundle/Resources/config/routing/frontend/search.yml
+#    prefix: /search

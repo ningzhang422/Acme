@@ -1,0 +1,44 @@
+{% macro grid(recettes, size = 3) %}
+
+{% import 'SyliusWebBundle:Backend/Macros:alerts.html.twig' as alerts %}
+
+<div class="row">
+    {% for recette in recettes %}
+        <div class="col-md-{{ 12 / size }}">
+            {% include 'SyliusWebBundle:Frontend/Recette:_singleBox.html.twig' %}
+        </div>
+        {% if 0 == loop.index % size %}
+            </div>
+            <div class="row">
+        {% endif %}
+    {% else %}
+        <div class="col-md-12">
+            {{ alerts.info('sylius.product.no_results'|trans) }}
+        </div>
+    {% endfor %}
+</div>
+
+{% endmacro %}
+
+
+{% macro grid4(recettes, size = 4) %}
+
+{% import 'SyliusWebBundle:Backend/Macros:alerts.html.twig' as alerts %}
+
+<div class="row">
+    {% for recette in recettes %}
+        <div class="col-md-{{ 12 / size }}">
+            {% include 'SyliusWebBundle:Frontend/Recette:_singleBox.html.twig' %}
+        </div>
+        {% if 0 == loop.index % size %}
+            </div>
+            <div class="row">
+        {% endif %}
+    {% else %}
+        <div class="col-md-12">
+            {{ alerts.info('sylius.product.no_results'|trans) }}
+        </div>
+    {% endfor %}
+</div>
+
+{% endmacro %}

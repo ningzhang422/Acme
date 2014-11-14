@@ -4,7 +4,7 @@ namespace Acme\Bundle\ShopBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use Sylius\Component\Addressing\Model\Address as BaseAddress;
+use Sylius\Component\Core\Model\Address as BaseAddress;
 
 /**
  * @ORM\Entity

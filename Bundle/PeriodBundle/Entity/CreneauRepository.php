@@ -3,6 +3,7 @@
 namespace Acme\Bundle\PeriodBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Acme\Bundle\PeriodBundle\Entity\Period;
 
 /**
  * CreneauRepository
@@ -12,4 +13,23 @@ use Doctrine\ORM\EntityRepository;
  */
 class CreneauRepository extends EntityRepository
 {
+	public function findInSevenDaysByCurrentDate(Period $period)
+	{
+	  $qb = $this->createQueryBuilder('a');
+	  
+	  $now = date('Y-m-d');
+	  $start_date = strtotime($now);
+	  $end_date = date('Y-m-d',strtotime("+7 day", $start_date));
+	
+	  $qb->where('a.performedAt >= :date1 and a.performedAt <= :date2 and a.period = :period')
+	       ->setParameter('date1', $now)
+	       ->setParameter('date2', $end_date)
+	       ->setParameter('period', $period)
+	  ;
+	
+	  return $qb
+	    ->getQuery()
+	    ->getResult()
+	  ;
+	}
 }

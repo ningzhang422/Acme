@@ -20,9 +20,14 @@ services:
          arguments: [%sylius.model.period.class%]
          tags: 
             - { name: form.type, alias: acme_period_choice }
+
+     acme.period.repository:
+         class: Acme\Bundle\PeriodBundle\Entity\PeriodRepository
             
      acme.twig.period_helper:
          class: Acme\Bundle\PeriodBundle\Twig\AcmePeriodExtension
+         arguments: 
+            - @service_container
          tags:
             - { name: twig.extension }
      acme.listener.order_creneau:

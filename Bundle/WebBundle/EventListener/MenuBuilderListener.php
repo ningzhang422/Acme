@@ -23,5 +23,10 @@ class MenuBuilderListener
             'route' => 'sylius_backend_planning_index',
             'labelAttributes' => array('icon' => 'glyphicon glyphicon-stats'),
         ))->setLabel('Planning');
+        
+        $menu['configuration']->addChild('recettes', array(
+            'route' => 'sylius_backend_recette_index',
+            'labelAttributes' => array('icon' => 'glyphicon glyphicon-stats'),
+        ))->setLabel('Recette');
     }
 }

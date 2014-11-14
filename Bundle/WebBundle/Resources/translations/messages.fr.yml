@@ -5,3 +5,39 @@ sylius:
         rayons: Rayons
         topic: Actualités
         promotion: Promotions
+      sous_topic:
+        title: Nos boutiques
+    panier:
+      popover:
+        contenu: 1 article a été ajouté dans le panier.
+    planning:
+      title: Planning de commande
+      drive: DRIVE PIETON
+      livraison: LIVRAISON A DOMICILE
+      c_tarif: >> Consultez le planning et les tarifs
+    homepage:
+      banteau_1: Je découvre les sélections
+      banteau_2: J'en profite
+      banteau_3: De la chaleur à votre table
+  form:
+    recette:
+      name: Nom de la recette
+      file: Choisir un fichier photo
+      permalink: Permalink
+      description: Description
+      short_description: Petit Description
+      enabled: Active
+      nbPersonnes: Pour combien de personne ?
+      typeCuisine: Materiel principal
+      preparation: Combien de minutes pour préparer ?
+      cuisson: Combien de minutes pour cuire ?
+      difficulte: Difficulté(1-5)
+  recette:
+    create: Créer une recette
+    index_header: Recette n°
+    create_header: Créer une recette ici
+    index_by_recette_header: Nous vous proposons %nb_recette% recettes asiatiques
+acme:
+  form:
+    address:
+      addresstitle: Nom d'adresse

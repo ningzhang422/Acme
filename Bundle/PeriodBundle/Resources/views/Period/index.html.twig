@@ -68,10 +68,10 @@
         {% for i in 1..7 %}
         	<td height="150" abbr="-" rel="{{ path(app.request.attributes.get('_route'))~'new' }}" id ="" class="click_td">
         		<p class="day_number">{{ date|date("d") }}</p>
-        		<ul>
+        		<ul class='list-unstyled'>
 				  {% for c in listecreneaus %}
 				  	{% if c.performedAt|date('Y-m-d') == date|date('Y-m-d')%}
-				    <li>{{ c.performedAt|date('Y-m-d') }}</li>
+				    <li class="alert label-primary">{{ c.performedAt|date('Y-m-d') }}<br>place reste: {{c.capacite}}<br>place pris: {{c.reserve}}</li>
 				    {% endif %}
 				  {% endfor %}
 				</ul>
@@ -94,12 +94,24 @@
         	{% if date|date("Y-m-d") <= ending_of_month|date("Y-m-d") %}
         		<td height="150" abbr="-" rel="{{ path(app.request.attributes.get('_route'))~'new' }}" id="" class="click_td">
         		<p class="day_number">{{ date|date("d") }}</p>
-		      		
+		      		<ul class='list-unstyled'>
+				  {% for c in listecreneaus %}
+				  	{% if c.performedAt|date('Y-m-d') == date|date('Y-m-d')%}
+				    <li class="alert label-primary">{{ c.performedAt|date('Y-m-d') }}<br>place reste: {{c.capacite}}<br>place pris: {{c.reserve}}  par {% for s in c.shipments %} {{s.id}} {% endfor %}</li>
+				    {% endif %}
+				  {% endfor %}
+				</ul>
 		      	</td>
         	{% else %}
         		<td bgcolor="#736B6B" height="150" abbr="-" rel="{{ path(app.request.attributes.get('_route'))~'new' }}" id="" class="click_td">
         		<p class="day_number">{{ date|date("d") }}</p>
-        		
+        		<ul class='list-unstyled'>
+				  {% for c in listecreneaus %}
+				  	{% if c.performedAt|date('Y-m-d') == date|date('Y-m-d')%}
+				    <li class="alert label-primary">{{ c.performedAt|date('Y-m-d') }}<br>place reste: {{c.capacite}}<br>place pris: {{c.reserve}}</li>
+				    {% endif %}
+				  {% endfor %}
+				</ul>
         		</td>
         	{% endif %}
         {% set date = date|date_modify("+1 day")|date("Y-m-d") %}

@@ -3,6 +3,7 @@
 namespace Acme\Bundle\PeriodBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Acme\Bundle\PeriodBundle\Entity\Period;
 
 /**
  * PeriodRepository
@@ -12,4 +13,38 @@ use Doctrine\ORM\EntityRepository;
  */
 class PeriodRepository extends EntityRepository
 {
+	public function findAllOrderByMethod()
+	{
+	  $qb = $this->createQueryBuilder('a');
+	  
+	  $qb->orderBy('a.method', 'ASC')
+	  	 ->orderBy('a.startTime', 'ASC')
+	  ;
+	
+	  return $qb
+	    ->getQuery()
+	    ->getResult()
+	  ;
+	}
+	
+	public function findCreneausInSevenDaysByCurrentDate(Period $period)
+	{
+	  $qb = $this->createQueryBuilder('a');
+	  
+	  $now = date('Y-m-d');
+	  $start_date = strtotime($now);
+	  $end_date = date('Y-m-d',strtotime("+7 day", $start_date));
+	
+	  $qb-> innerJoin('a.creneaus','c')
+	  	->andWhere('c.performedAt >= :date1 and c.performedAt <= :date2 and c.period = :period')
+	       ->setParameter('date1', $now)
+	       ->setParameter('date2', $end_date)
+	       ->setParameter('period', $period)
+	  ;
+	
+	  return $qb
+	    ->getQuery()
+	    ->getResult()
+	  ;
+	}
 }

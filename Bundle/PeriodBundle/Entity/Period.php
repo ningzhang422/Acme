@@ -3,6 +3,8 @@
 namespace Acme\Bundle\PeriodBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Acme\Bundle\PeriodBundle\Entity\Creneau;
 
 /**
  * Period
@@ -54,6 +56,36 @@ class Period
    	*/
     protected $method;
 
+    /**
+   	 * @ORM\OneToMany(targetEntity="Acme\Bundle\PeriodBundle\Entity\Creneau", mappedBy="period")
+   	 */
+    protected $creneaus;
+    
+	/**
+     * Constructor.
+     */
+    public function __construct()
+    {
+
+        $this->creneaus = new ArrayCollection();
+    }
+    
+	public function addCreneau(Creneau $creneau)
+	{
+	    $this->creneaus[] = $creneau;
+	
+	    return $this;
+	}
+
+	public function removeCreneau(Creneau $creneau)
+	{
+	   	$this->creneaus->removeElement($creneau);
+	}
+	
+	public function getCreneaus() 
+	{
+	    return $this->creneaus;
+	}
 	
 
     /**

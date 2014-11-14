@@ -9,7 +9,6 @@ use Sylius\Component\Core\Model\User as BaseUser;
 /**
  * @ORM\Entity
  * @ORM\Table(name="sylius_user")
- * @ORM\HasLifecycleCallbacks();
  */
 class User extends BaseUser
 {
@@ -24,6 +23,8 @@ class User extends BaseUser
    	* @ORM\OneToOne(targetEntity="Acme\Bundle\MagasinBundle\Entity\Magasin")
    	*/
   protected $magasin;
+  
+
 
   
   public function setMobile($mobile)
@@ -59,15 +60,4 @@ class User extends BaseUser
         return $this->magasin;
     }
   
-	/**
-	* @ORM\PrePersist
-	*/
-	public function upload()
-	{
-		//var_dump($this);
-		//if (null === $this->differentBillingAddress) {
-			$this->billingAddress = $this->shippingAddress;
-		//}
-		
-	}
 }

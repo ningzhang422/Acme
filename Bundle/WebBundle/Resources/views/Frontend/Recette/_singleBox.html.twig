@@ -1,0 +1,10 @@
+<div class="product-box">
+    
+    <a href="{{ path('sylius_recette_show', {'slug': recette.slug}) }}">
+        <img class="img-rounded img-responsive" src="/media/image/{{recette.path}}" alt="{{ recette.name }}" />
+    </a>
+    <a href="{{ path('sylius_recette_show', {'slug': recette.slug}) }}" class="popup_a"><h6>{{ recette.name|truncate(18) }}</h6></a>
+    <div id="articleBlocDroiteMenuVignette" class="row">
+    	
+    </div>
+</div>

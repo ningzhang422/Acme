@@ -26,55 +26,55 @@
 	      </div>
 	    </div>
 	  </div>
-
 	</div>
 	</center>
 </div>
 <div class="container" id="container_contenu_home">
-      
         <div class="row">
             <div class="col-md-8">
                 {% block content %}
+                {#
 					<div class="page-header">
 					  <h1>{{ 'sylius.homepage.splash.headline'|trans }} {{magasin}}</h1>
 					</div>
-					<div class="panel panel-info">
-					  <div class="panel-heading">
-					    <h2 class="panel-title">Je decouvre les selections</h2>
-					  </div>
-					  <div class="panel-body">
-					    {{ render(url('sylius_partial_product_latest', {'limit': 9, 'template': 'SyliusWebBundle:Frontend/Product:latest.html.twig'})) }}
-					  </div>
-					</div>
-					
-                	
+				#}
+				<br>
+				<h2 class="title"><span class='glyphicon glyphicon-th'></span> {{ 'sylius.frontend.homepage.banteau_1'|trans }}</h2>
+				{{ render(url('sylius_partial_product_latest', {'limit': 9, 'template': 'SyliusWebBundle:Frontend/Product:latest.html.twig'})) }}
+				
                 {% endblock %}
             </div>
         
             <div class="col-md-4" id="sidebar">
+            	<br>
                 {% block sidebar %}
                 
 
-                {% include 'SyliusSearchBundle::filter_form.html.twig' %}<br>
-
+                {# include 'SyliusSearchBundle::filter_form.html.twig' #}
+				{% include 'AcmeWebBundle::planning.html.twig' %}
                 {{ render(url('sylius_partial_product_latest', {'limit': 5, 'template': 'SyliusWebBundle:Frontend/Product:latestSidebar.html.twig'})) }}
-                {{ sonata_block_render({'name': '/cms/blocks/contact'}) }}
-
-                    
+                
                 {% endblock %}
             </div>
             
         </div>
-        {#
-        <hr>
-        <div class="row">
-            {% for i in 1..3 %}
+        <div class="container row">
+        	<h2 class="title"><span class='glyphicon glyphicon-gift'></span> {{ 'sylius.frontend.homepage.banteau_2'|trans }}</h2>
+        	{% for i in 1..3 %}
                 <div class="col-md-4">
-                    {{ sonata_block_render({'name': '/cms/blocks/block-' ~ i}) }}
+                    {{ sonata_block_render({'name': '/cms/blocks/resto-' ~ i}) }}
                 </div>
             {% endfor %}
         </div>
-        <hr>
-        #}
+        <br>
+        <div class="container row">
+        	<h2 class="title"><span class='glyphicon glyphicon-cutlery'></span> {{ 'sylius.frontend.homepage.banteau_3'|trans }}</h2>
+        	<div class="col-md-3">
+                    {{ sonata_block_render({'name': '/cms/blocks/recettes'}) }}
+            </div>
+            <div class="col-md-9">
+        		{{ render(url('sylius_partial_recette_latest', {'limit': 3, 'template': 'SyliusWebBundle:Frontend/Recette:latest.html.twig'})) }}
+        	</div>
         </div>
+</div>
 {% endblock %}

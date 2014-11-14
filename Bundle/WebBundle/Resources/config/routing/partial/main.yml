@@ -4,3 +4,6 @@
 sylius_product:
     resource: @SyliusWebBundle/Resources/config/routing/partial/product.yml
     prefix: /product
+sylius_recette:
+    resource: @SyliusWebBundle/Resources/config/routing/partial/recette.yml
+    prefix: /recette

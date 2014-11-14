@@ -101,7 +101,7 @@ class ShippingMethodChoiceType extends AbstractType
 
             $calculator = $this->calculators->getCalculator($method->getCalculator());
             $shippingCosts[$choiceView->value] = $calculator->calculate($subject, $method->getConfiguration());
-            $shipment_category_ids[$choiceView->value] = $method->getCategory()->getId();
+            $shipment_category_ids[$choiceView->value] = $method->getId();
         }
 
         $view->vars['shipping_costs'] = $shippingCosts;

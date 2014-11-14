@@ -18,6 +18,9 @@ sylius_core:
                 controller: sylius.controller.product:indexByTaxonAction
                 sylius:
                     template: SyliusWebBundle:Frontend/Product:indexByTaxon.html.twig
+    classes:
+        user:
+           model: Acme\Bundle\ShopBundle\Entity\User 
 
 sylius_installer:
     classes:
@@ -27,6 +30,17 @@ sylius_installer:
 sylius_money:
     currency: %sylius.currency%
     locale: %sylius.locale%
+
+sylius_locale: ~
+
+sylius_currency: ~
+
+sylius_contact: ~
+
+sylius_api:
+    classes:
+        api_user:
+            model: %sylius.model.user.class%
 
 sylius_cart:
     resolver: sylius.cart_item_resolver.default
@@ -58,7 +72,7 @@ sylius_product:
     classes:
         product:
             model: Sylius\Component\Core\Model\Product
-            controller: Sylius\Bundle\CoreBundle\Controller\ProductController
+            controller: Acme\Bundle\CoreBundle\Controller\ProductController #Sylius\Bundle\CoreBundle\Controller\ProductController
             repository: Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductRepository
             form: Sylius\Bundle\CoreBundle\Form\Type\ProductType
 
@@ -86,13 +100,16 @@ sylius_shipping:
         shipment_item:
             model: Sylius\Component\Core\Model\InventoryUnit
         shipping_method:
-            model: Sylius\Component\Core\Model\ShippingMethod
+            model: Acme\Bundle\PeriodBundle\Entity\ShippingMethod #Sylius\Component\Core\Model\ShippingMethod
             form: Sylius\Bundle\CoreBundle\Form\Type\ShippingMethodType
 
 sylius_promotion:
     classes:
         promotion_subject:
             model: %sylius.model.order.class%
+        promotion_coupon:
+            model: Sylius\Component\Core\Model\Coupon
+            form: Sylius\Bundle\CoreBundle\Form\Type\CouponType
 
 sylius_inventory:
     backorders: %sylius.inventory.backorders_enabled%
@@ -116,12 +133,17 @@ sylius_payment:
 sylius_payum: ~
 
 sylius_addressing:
+    scopes:
+        shipping: shipping
+        content: content
+        price: price
     classes:
         address:
             controller: Sylius\Bundle\WebBundle\Controller\Frontend\Account\AddressController
             model: Acme\Bundle\ShopBundle\Entity\Address
 
 sylius_order:
+    guest_order: %sylius.order.allow_guest_order%
     classes:
         order:
             model: Sylius\Component\Core\Model\Order
@@ -130,6 +152,7 @@ sylius_order:
             form: Sylius\Bundle\CoreBundle\Form\Type\OrderType
         order_item:
             model: Sylius\Component\Core\Model\OrderItem
+            form: Sylius\Bundle\CoreBundle\Form\Type\OrderItemType
 
 sylius_sequence:
     generators:
@@ -161,53 +184,13 @@ sylius_resource:
             classes:
                 model: Acme\Bundle\PeriodBundle\Entity\Period
                 controller: Sylius\Bundle\ResourceBundle\Controller\ResourceController
+        sylius.recette:
+            driver: doctrine/orm
+            classes:
+                model: Acme\Bundle\RecetteBundle\Entity\Recette
+                controller: Sylius\Bundle\ResourceBundle\Controller\ResourceController
+                repository: Acme\Bundle\RecetteBundle\Entity\RecetteRepository
 
 sylius_pricing:
     forms:
         - sylius_product_variant
-
-
-sylius_search:
-    search_form_template: 'SyliusSearchBundle::search_form.html.twig'
-    driver: orm
-    orm_indexes:
-        product:
-            class: Sylius\Component\Core\Model\Product
-            mappings:
-                id: ~
-                name: ~
-                description: ~
-
-    custom_accessors:
-        - Sylius\Component\Product\Accessor\ProductAccessor
-    filters:
-        pre_search_filter:
-            enabled: false
-            taxonomy: category
-        facet_groups:
-            search_set:
-                values: [taxons, price, made_of, color]
-            categories_set:
-                values: [price, made_of, color]
-            all_set:
-                values: [taxons, price, made_of]
-        facets:
-            taxons:
-                display_name: 'Basic categories'
-                type: terms
-                value: ~
-            price:
-                display_name: 'Available prices'
-                type: range
-                values:
-                    - { from: 0, to: 2000}
-                    - { from: 2001, to: 5000}
-                    - { from: 5001, to: 10000}
-            made_of:
-                display_name: 'Material'
-                type: terms
-                value: ~
-            color:
-                display_name: 'Available colors'
-                type: terms
-                value: ~

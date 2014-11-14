@@ -1,5 +1,13 @@
 {# extends 'SyliusWebBundle:Frontend:layout.html.twig' #}
+<div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">{{ 'sylius.confirmation.title'|trans }}</h4>
+            </div>
 
+            <div class="modal-body">
+            
 {% set form = sylius_cart_form({'product': product}) %}
 
 {% block content %}
@@ -53,7 +61,7 @@
 </div>
 <hr>
 <div class="row">
-    <form action="{{ path('sylius_cart_item_add', {'id': product.id}) }}" method="post" class="clearfix form-horizontal">
+    {#<form action="{{ path('sylius_cart_item_add', {'id': product.id}) }}" method="post" class="clearfix form-horizontal">#}
     {% if product.hasVariants %}
         <div class="col-md-6">
             {% if product.isVariantSelectionMethodChoice %}
@@ -100,21 +108,77 @@
             {% endif %}
         </div>
     {% endif %}
-    <div class="col-md-6 pull-right">
-        {% if not product.hasVariants and not sylius_inventory_is_available(product.masterVariant) %}
-            <span class="label label-warning">{{ 'sylius.out_of_stock'|trans }}</span>
-        {% else %}
-            {{ form_row(form.quantity, {'attr': {'class': 'center-text'}, 'empty_value': '1'}) }}
-            {{ form_widget(form._token) }}
-            <br>
-            <br>
-            {% if sylius_is_restricted(product) %}
-            <button disabled="disabled" class="btn btn-success btn-lg btn-block"><i class="icon-shopping-cart icon-white icon-large"></i> {{ 'sylius.product_not_available_in_zone'|trans }}</button>
-            {% else %}
-                <button type="submit" class="btn btn-success btn-lg btn-block"><i class="icon-shopping-cart icon-white icon-large"></i> {{ 'sylius.add_to_cart'|trans }}</button>
-            {% endif %}
-        {% endif %}
-    </div>
-</form>
+    {% if not product.hasOptions %}
+	            <div class="col-md-6 pull-right cart_botton">
+		            {% if not sylius_inventory_is_available(product.masterVariant) %}
+		                <br />
+		                <span class="label label-important">{{ 'sylius.out_of_stock'|trans }}</span>
+		            {% else %}
+		            	{% if acme_product_is_in_cart(product) %}
+		            		{% include 'AcmeWebBundle:Frontend/Product:_form_product_update.html.twig'%}
+		            	{% else %}
+			                <form action="{{ path('dp_ajax_add', {'id': product.id}) }}" method="post" class="clearfix add_item_into_cart {{ 'form_product_' ~ product.id }}" id="{{ 'form_product_' ~ product.id }}">
+			                    {% set form = sylius_cart_form({'product': product}) %}
+			                    {{ form_widget(form.quantity, {'attr': {'class': 'center-text hide'}, 'empty_value': '1'}) }}
+			                    {{ form_widget(form._token) }}
+			                    {#<button type="submit" class="btn btn-success"><i class="icon-shopping-cart icon-white"></i> </button>#}
+			                	<input type='image' src='{{ asset('/bundles/syliusweb/img/picto_panier.png') }}' />
+			                </form>
+			            {% endif %}
+		            {% endif %}
+	            </div>
+	        {% else %}
+	        	<div class="col-md-6 pull-right">
+		            <img src='{{ asset('/bundles/syliusweb/img/picto_blank.png') }}' />
+	            </div>
+	        {% endif %}
+{#</form>#}
 </div>
 {% endblock %}
+</div>
+        </div>
+    </div>
+    
+
+<script>
+(function ( $ ) {
+    'use strict';
+
+$(document).ready(function() {
+        $('.input_quantity').each(function(index,el) {
+        	$(el).siblings('div').find('span').html($(el).val());
+    	});
+    	
+    	initAddRemoveClic('modal');
+    	
+        $('.modal .add_item_into_cart').each(function(index,el) {
+            //alert( this.id );
+        	$(this).submit(function(e) {
+                e.preventDefault();
+                var url = el.action;
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: $(this).serialize(),
+                    dataType: "html",
+                    success: function(msg){
+                        //console.log(msg);
+                    	var obj = jQuery.parseJSON( msg );
+                    	$('#cart_items_span').each(function(e,el){
+                    		  el.innerHTML  = obj.ajaxCart;
+                    		  $(el).parent('a').popover('show');
+                    		});
+                    	//console.log(el.id);
+                    	$("."+el.id).each(function(e,el){
+                    		$(el).replaceWith(obj.form_modif);
+                    	});
+                    	
+                    	initAddRemoveClic('modal',obj.item_id);
+                    }
+                });
+        	});
+        });
+});
+
+})( jQuery );
+</script>

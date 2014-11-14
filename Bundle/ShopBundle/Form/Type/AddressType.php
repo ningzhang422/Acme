@@ -27,6 +27,8 @@ class AddressType extends BaseType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options); // Add default fields.
-        $builder->add('addressTitle', 'text', array('label' => 'acme.form.address.addresstitle'));
+        // $builder->add('addressTitle', 'text', array('label' => 'acme.form.address.addresstitle'));
+        //$builder->remove('city');
+        //$builder->remove('postcode');
     }
 }

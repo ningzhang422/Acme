@@ -1,0 +1,9 @@
+acme.form.creneau.period: Period
+acme.form.crenau.reserve: Réserve
+acme.form.crenau.capacite: Capacité
+acme.form.crenau.frais: Frais
+acme.form.crenau.estindisponible: Indisponible
+acme.form.crenau.estferie: Férié
+acme.form.crenau.fraisoffert: Frais offert
+acme.form.creneau.performedAt: Day
+sylius.form.checkout.shipment_creneau: Creneau

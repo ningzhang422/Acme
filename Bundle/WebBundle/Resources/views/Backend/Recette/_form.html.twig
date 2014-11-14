@@ -1,0 +1,14 @@
+{% form_theme form 'SyliusWebBundle::forms.html.twig' %}
+
+<fieldset>
+    {{ form_row(form.name, {'attr': {'class': 'input-lg'}}) }}
+    {{ form_row(form.enabled) }}
+    {{ form_row(form.short_description, {'attr': {'class': 'input-lg'} }) }}
+    {{ form_row(form.slug, {'attr': {'class': 'input-lg'} }) }}
+    {{ form_row(form.file) }}
+    <img src='/media/image/{{recette.path}}' />
+    <br>
+    {{ form_row(form.description) }}
+</fieldset>
+
+{{ form_rest(form) }}

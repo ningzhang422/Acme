@@ -24,10 +24,7 @@
             
             <div class="col-md-9">
                 {% block content %}
-                	<div class="jumbotron">
-					    <h1>{{ 'sylius.homepage.splash.headline'|trans }} {{magasin}}</h1>
-					    <p class="lead">{{ 'sylius.homepage.splash.subheadline'|trans }} </p>
-					</div>
+                	
 					
 					{{ render(url('sylius_partial_product_latest', {'limit': 9, 'template': 'SyliusWebBundle:Frontend/Product:latest.html.twig'})) }}
                 	

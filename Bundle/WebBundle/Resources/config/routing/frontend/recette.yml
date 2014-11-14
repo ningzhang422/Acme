@@ -1,0 +1,15 @@
+sylius_recette:
+    path: /
+    defaults:
+        _controller: sylius.controller.recette:indexAction
+        _sylius:
+            template: SyliusWebBundle:Frontend/Recette:index.html.twig
+            redirect: sylius_recette
+            
+sylius_recette_show:
+    path: /{slug}
+    defaults:
+        _controller: sylius.controller.recette:showAction
+        _sylius:
+            template: SyliusWebBundle:Frontend/Recette:show.html.twig
+            redirect: sylius_recettes

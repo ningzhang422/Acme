@@ -18,3 +18,9 @@ services:
         arguments: [@acme.product.checker.helper]
         tags:
             -  { name: twig.extension }
+
+    acme.form.type.shipping_creneau_choice:
+        class: Acme\Bundle\ShopBundle\Form\Type\ShippingCreneauChoiceType
+        arguments: [@sylius.shipping_methods_resolver,@service_container]
+        tags:
+            - { name: form.type, alias: sylius_shipping_creneau_choice }

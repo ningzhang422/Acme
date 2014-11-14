@@ -15,7 +15,8 @@ use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 use Knp\Menu\Silex\Voter\RouteVoter;
 //use Knp\Menu\Silex\Voter\UriVoter;
-use Sylius\Bundle\MoneyBundle\Twig\MoneyExtension;
+//use Sylius\Bundle\MoneyBundle\Twig\MoneyExtension;
+use Sylius\Bundle\CurrencyBundle\Templating\Helper\CurrencyHelper;
 use Sylius\Component\Cart\Provider\CartProviderInterface;
 use Sylius\Component\Currency\Provider\CurrencyProviderInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
@@ -65,9 +66,9 @@ class FrontendMenuBuilder extends MenuBuilder
     /**
      * Money extension.
      *
-     * @var MoneyExtension
+     * @var currencyHelper
      */
-    protected $moneyExtension;
+    protected $currencyHelper;
 
     /**
      * Constructor.
@@ -91,7 +92,7 @@ class FrontendMenuBuilder extends MenuBuilder
         RepositoryInterface       $taxonomyRepository,
         RepositoryInterface       $promotionRepository,
         CartProviderInterface     $cartProvider,
-        MoneyExtension            $moneyExtension
+        CurrencyHelper            $currencyHelper
     )
     {
         parent::__construct($factory, $securityContext, $translator, $eventDispatcher);
@@ -100,7 +101,7 @@ class FrontendMenuBuilder extends MenuBuilder
         $this->taxonomyRepository = $taxonomyRepository;
         $this->promotionRepository = $promotionRepository;
         $this->cartProvider = $cartProvider;
-        $this->moneyExtension = $moneyExtension;
+        $this->currencyHelper = $currencyHelper;
     }
 
     /**
@@ -219,7 +220,7 @@ class FrontendMenuBuilder extends MenuBuilder
                 							'%items%' => $cartTotals['items']
             							)),
             							'cart_total_amount'=> $this->translate('sylius.frontend.menu.main.cart_total_amount', array(
-                							'%total%' => $this->moneyExtension->formatAmount($cartTotals['total'])
+                							'%total%' => $this->currencyHelper->convertAndFormatAmount($cartTotals['total'])
             							))
             		)
         ))->setLabel($this->translate('sylius.frontend.menu.main.cart'));
@@ -277,16 +278,124 @@ class FrontendMenuBuilder extends MenuBuilder
         $taxonomies = $this->taxonomyRepository->findByName('Category');
 
         foreach ($taxonomies as $taxonomy) {
-            $child = $menu->addChild('', $childOptions);
-
+            $child = $menu->addChild('child', $childOptions);
+			$sub_child = $menu->addChild('sub_child', $childOptions);
             if ($taxonomy->getRoot()->hasPath()) {
                 $child->setLabelAttribute('data-image', $taxonomy->getRoot()->getPath());
             }
 
             $this->createTaxonomiesMenuNode($child, $taxonomy->getRoot());
+            $this->createTaxonomiesSubMenuNode($sub_child, $taxonomy->getRoot());
+        }
+        return $menu;
+    }
+
+    private function createTaxonomiesMenuNode(ItemInterface $menu, TaxonInterface $taxon)
+    {
+        foreach ($taxon->getChildren() as $child) {
+        	if($child->getPath()) {
+                $childMenu->setLabelAttribute('data-image', $child->getPath());
+            }
+        	if($child->getChildren()->count() > 0) {
+	            $childMenu = $menu->addChild($child->getName(), array(
+	                'route'           => '',
+	                'labelAttributes' => array('icon' => 'icon-angle-right')
+	            ))->setExtras(['self' => strval($child->getId()) ]);
+        	}else{
+        		$childMenu = $menu->addChild($child->getName(), array(
+	                'route'           => $child,
+	                'labelAttributes' => array('icon' => 'icon-angle-right')
+	            ))->setExtras(['self' => strval($child->getId()) ]);
+        	}
+        }
+        
+    	
+    }
+    
+	private function createTaxonomiesSubMenuNode(ItemInterface $menu, TaxonInterface $taxon)
+    {
+        foreach ($taxon->getChildren() as $child) {
+        	if($child->getChildren()->count() > 0) {
+        		foreach ($child->getChildren() as $subchild) {
+		        	if($subchild->getChildren()->count() == 0) {
+			            $childMenu = $menu->addChild($subchild->getName(), array(
+			                'route'           => $subchild,
+			                'labelAttributes' => array('icon' => 'icon-angle-right')
+			            ))->setExtras(['parent' => strval($subchild->getParent()->getId()) ]);
+		        	}
+        		}
+        	}
+        }
+    }
+    
+
+    /**
+     * Builds frontend taxonomies menu.
+     *
+     * @param Request $request
+     *
+     * @return ItemInterface
+     */
+    public function createTopicMenu(Request $request)
+    {
+        $menu = $this->factory->createItem('', array(
+            'childrenAttributes' => array(
+                'class' => 'nav dropdown-menu',
+        		'id' => 'actualites-dropdown-menu'
+            )
+        ));
+
+        $childOptions = array(
+            'childrenAttributes' => array('class' => 'nav nav-list'),
+            'labelAttributes'    => array('class' => 'nav-header'),
+        );
+
+        $taxonomies = $this->taxonomyRepository->findByName('Actualites');
+
+        foreach ($taxonomies as $taxonomy) {
+            $child = $menu->addChild($taxonomy->getName(), $childOptions);
+			$imagechild = $menu->addChild('sub_child', $childOptions);
+            
+			if ($taxonomy->getRoot()->hasPath()) {
+                $imagechild->setLabelAttribute('data-image', $taxonomy->getRoot()->getPath());
+            }
+
+            $this->createTopicMenuNode($child, $taxonomy->getRoot());
+            $this->createImageTopicMenuNode($imagechild, $taxonomy->getRoot());
         }
 
         return $menu;
+    }
+
+    private function createTopicMenuNode(ItemInterface $menu, TaxonInterface $taxon)
+    {
+        foreach ($taxon->getChildren() as $child) {
+            $childMenu = $menu->addChild($child->getName(), array(
+                'route'           => $child,
+                'labelAttributes' => array('icon' => 'icon-angle-right')
+            ))->setExtras(['self' => strval($child->getId()) ]);
+            if ($child->getPath()) {
+                $childMenu->setLabelAttribute('data-image', $child->getPath());
+            }
+
+            $this->createTopicMenuNode($childMenu, $child);
+        }
+    }
+    
+	private function createImageTopicMenuNode(ItemInterface $menu, TaxonInterface $taxon)
+    {
+        foreach ($taxon->getChildren() as $child) {
+            $childMenu = $menu->addChild($child->getName(), array(
+                'route'           => $child,
+                'labelAttributes' => array('icon' => 'icon-angle-right')
+            ))->setExtras(['parent' => strval($child->getId())]);
+            
+            if ($child->getPath()) {
+                $childMenu->setLabelAttribute('data-image', $child->getPath());
+            }
+
+            $this->createImageTopicMenuNode($childMenu, $child);
+        }
     }
     
 	/**
@@ -314,30 +423,6 @@ class FrontendMenuBuilder extends MenuBuilder
 
         return $menu;
     }
-
-    private function createTaxonomiesMenuNode(ItemInterface $menu, TaxonInterface $taxon)
-    {
-        foreach ($taxon->getChildren() as $child) {
-        	
-        	if($child->getChildren()->count() > 0) {
-	            $childMenu = $menu->addChild($child->getName(), array(
-	                'route'           => '',
-	                'labelAttributes' => array('icon' => 'icon-angle-right')
-	            ));
-        	}else{
-        		$childMenu = $menu->addChild($child->getName(), array(
-	                'route'           => $child,
-	                'labelAttributes' => array('icon' => 'icon-angle-right')
-	            ));
-        	}
-            if ($child->getPath()) {
-                $childMenu->setLabelAttribute('data-image', $child->getPath());
-            }
-
-            $this->createTaxonomiesMenuNode($childMenu, $child);
-        }
-    }
-    
     
 	/**
      * Builds frontend taxonomies menu.
@@ -455,14 +540,14 @@ class FrontendMenuBuilder extends MenuBuilder
      */
     public function createAccountMenu(Request $request)
     {
-        $menu = $this->factory->createItem('root', array(
+        $menu = $this->factory->createItem($this->translate('sylius.frontend.menu.main.account'), array(
             'childrenAttributes' => array(
                 'class' => 'nav'
             )
         ));
 
         $childOptions = array(
-            'childrenAttributes' => array('class' => 'nav nav-list'),
+            'childrenAttributes' => array('class' => 'nav nav-list list'),
             'labelAttributes'    => array('class' => 'nav-header')
         );
 

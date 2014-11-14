@@ -1,0 +1,21 @@
+sylius:
+  frontend:
+    menu:
+      main:
+        rayons: Rayons
+        topic: Actualités
+        promotion: Promotions
+    panier:
+      popover:
+        contenu: 1 article a été ajouté dans le panier.
+    planning:
+      title: Planning de commande
+      drive: DRIVE PIETON
+      livraison: LIVRAISON A DOMICILE
+      c_tarif: >> Consultez le planning et les tarifs
+    homepage:
+      banteau_1: Je découvre les sélections
+acme:
+  form:
+    address:
+      addresstitle: Nom d'adresse

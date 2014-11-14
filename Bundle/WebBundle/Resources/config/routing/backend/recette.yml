@@ -1,0 +1,37 @@
+sylius_backend_recette_index:
+    pattern: /
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.recette:indexAction
+        _sylius:
+            template: AcmeWebBundle:Backend/Recette:index.html.twig
+            sortable: true
+            sorting:
+                name: desc
+
+sylius_backend_recette_create:
+    pattern: /new
+    methods: [GET, POST]
+    defaults:
+        _controller: sylius.controller.recette:createAction
+        _sylius:
+            template: AcmeWebBundle:Backend/Recette:create.html.twig
+            redirect: sylius_backend_recette_index
+
+sylius_backend_recette_update:
+    pattern: /{id}/edit
+    methods: [GET, PUT]
+    defaults:
+        _controller: sylius.controller.recette:updateAction
+        _sylius:
+            template: AcmeWebBundle:Backend/Recette:update.html.twig
+            redirect: sylius_backend_recette_index
+
+sylius_backend_recette_delete:
+    pattern: /{id}/delete
+    methods: [DELETE]
+    defaults:
+        _controller: sylius.controller.recette:deleteAction
+        _sylius:
+            template: SyliusWebBundle:Backend/Misc:delete.html.twig
+            redirect: sylius_backend_recette_index

@@ -59,8 +59,9 @@ class FinalizeStep extends CheckoutStep
         $this->dispatchCheckoutEvent(SyliusOrderEvents::PRE_CREATE, $order);
         $this->dispatchCheckoutEvent(SyliusCheckoutEvents::FINALIZE_PRE_COMPLETE, $order);
         $this->dispatchCheckoutEvent(AcmePeriodEvents::CRENEAU_AJUSTEMENT, $order);
-        $order->complete();
-
+        //$order->complete();
+		$this->get('sm.factory')->get($order, OrderTransitions::GRAPH)->apply(OrderTransitions::SYLIUS_CREATE, true);
+        
         $manager = $this->get('sylius.manager.order');
         $manager->persist($order);
         $manager->flush();

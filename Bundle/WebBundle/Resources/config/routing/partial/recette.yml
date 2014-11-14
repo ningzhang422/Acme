@@ -1,0 +1,9 @@
+sylius_partial_recette_latest:
+    pattern: /latest
+    defaults:
+        _controller: sylius.controller.recette:indexAction
+        _sylius:
+            paginate: false
+            method: findLatest
+            arguments: [$limit]
+            template: $template

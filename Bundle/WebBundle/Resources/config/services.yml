@@ -40,3 +40,12 @@ services:
         scope: request
         tags:
             - { name: knp_menu.menu, alias: sylius.frontend.taxonomies.sidebar }
+
+    acme.menu.frontend.actualites:
+        class: Knp\Menu\MenuItem 
+        factory_service: sylius.menu_builder.frontend
+        factory_method: createTopicMenu
+        arguments: ["@request"]
+        scope: request
+        tags:
+            - { name: knp_menu.menu, alias: sylius.frontend.topic }

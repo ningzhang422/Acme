@@ -76,7 +76,7 @@
 {% endif %}
 {% endblock %}
 
-{% block linkElement %}<a href="{{ item.uri }}"{{ _self.attributes(item.linkAttributes) }}>{{ block('label') }}</a>{% endblock %}
+{% block linkElement %}<a data-toggle="popover_self" date-trigger="manual" data-placement="bottom" data-delay='{"show":"5000", "hide":"3000"}' data-content="{{ 'sylius.frontend.panier.popover.contenu'|trans }}" href="{{ item.uri }}"{{ _self.attributes(item.linkAttributes) }}>{{ block('label') }}</a>{% endblock %}
 
 {% block spanElement %}<span{{ _self.attributes(item.labelAttributes) }}>{{ block('label') }}</span>{% endblock %}
 
