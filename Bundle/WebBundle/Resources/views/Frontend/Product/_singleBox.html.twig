@@ -1,31 +1,48 @@
 <div class="product-box">
-    
     <a href="{{ path(product) }}" class="popup_a">
         <img class="img-rounded img-responsive" src="{{ product.image ? product.image.path|imagine_filter('sylius_medium') : 'http://placehold.it/262x255' }}" alt="{{ product.name }}" />
-        
-       {# <button class="btn btn-success btn-xs pull-right"><i class="icon-shopping-cart icon-white"></i> {{ 'sylius.add_to_cart'|trans }}</button>#}
     </a>
-    <a href="{{ path(product) }}" class="popup_a"><h6>{{ product.name|truncate(18) }}</h6></a>
+    <a href="{{ path(product) }}" class="popup_a"><h6 style="padding:0 0 0 3px;">{{ product.name|truncate(18) }}</h6></a>
+    <p class="small" style="padding:0 0 0 3px;">
+	{% for attribute in product.attributes %}
+                <b>{{ attribute.presentation }}
+                    :</b> {{ attribute.value }}
+                <br>
+                {% endfor %}
+	
+	</p>
     <div id="articleBlocDroiteMenuVignette" class="row">
     	<div class="col-md-3" id="box_prix">
-    		<span class="label label-primary">{{ sylius_calculate_price(product.masterVariant)|sylius_price }}</span>
+    	<span class="label label-primary">{{ sylius_calculate_price(product.masterVariant)|sylius_price }}</span>
+    		{% for taxon in product.taxons %}
+				{% if taxon.getPermalink()|split('/')[1] == '50' %}
+					<span style="text-decoration: line-through;font-size:10px;padding:0 0 0 8px;">{{ (sylius_calculate_price(product.masterVariant)*2)|sylius_price  }}</span>
+				{% elseif taxon.getPermalink()|split('/')[1] == '70' %}
+					<span style="text-decoration: line-through;font-size:10px;padding:0 0 0 8px;">{{ (sylius_calculate_price(product.masterVariant)*3)|sylius_price  }}</span>
+				{% elseif taxon.getPermalink()|split('/')[1] == '30' %}
+					<span style="text-decoration: line-through;font-size:10px;padding:0 0 0 8px;">{{ (sylius_calculate_price(product.masterVariant) + (sylius_calculate_price(product.masterVariant)*(30/100)))|sylius_price  }}</span>
+				{% else %}
+			
+				{% endif %}
+			{% endfor %}
+    		
     	</div>
     	<div class="col-md-9 nopadding">
 	    	{% if not product.hasOptions %}
-	            <div class="pull-right cart_botton" data-toggle="tooltip" date-trigger="manual" data-placement="top" data-delay='{"show":"5000", "hide":"3000"}' data-content="{{ 'sylius.frontend.panier.popover.contenu'|trans }}" data-original-title="test" title="test">
+	            <div class="pull-right cart_botton" data-toggle="tooltip" date-trigger="manual" data-placement="top" data-delay='{"show":"5000", "hide":"3000"}' data-content="{{ 'sylius.frontend.panier.popover.contenu'|trans }}">
 		            {% if not sylius_inventory_is_available(product.masterVariant) %}
 		                <br />
 		                <span class="label label-important">{{ 'sylius.out_of_stock'|trans }}</span>
 		            {% else %}
 		            	{% if acme_product_is_in_cart(product) %}
-		            		{% include 'AcmeWebBundle:Frontend/Product:_form_product_update.html.twig'%}
+		            		{% include 'AcmeWebBundle:Frontend/Product:_form_product_update.html.twig' with {'product': product}%}
 		            	{% else %}
 			                <form action="{{ path('dp_ajax_add', {'id': product.id}) }}" method="post" class="clearfix add_item_into_cart {{ 'form_product_' ~ product.id }}" id="{{ 'form_product_' ~ product.id }}">
 			                    {% set form = sylius_cart_form({'product': product}) %}
 			                    {{ form_widget(form.quantity, {'attr': {'class': 'center-text hide'}, 'empty_value': '1'}) }}
 			                    {{ form_widget(form._token) }}
-			                    {#<button type="submit" class="btn btn-success"><i class="icon-shopping-cart icon-white"></i> </button>#}
-			                	<input style='padding:4px 0;' type='image' src='{{ asset('/bundles/syliusweb/img/picto_panier.png') }}' />
+			                    <button type="submit" class="btn btn-danger"><i class="icon-shopping-cart icon-white"></i> </button>
+			                	{#<input style='padding:4px 0;' type='image' src='{{ asset('/bundles/syliusweb/img/picto_panier.png') }}' />#}
 			                </form>
 			            {% endif %}
 		            {% endif %}
@@ -37,4 +54,22 @@
 	        {% endif %}
         </div>
      </div>
+
+    {% for taxon in product.taxons %}
+		{% if taxon.getPermalink()|split('/')[1] == 'top-des-ventes' %}
+			<img src="{{ asset('bundles/syliusweb/img/top-des-ventes.png') }}" alt="Asia 06" style="position:absolute; top:1px;left:1px;" />
+		{% elseif taxon.getPermalink()|split('/')[1] == 'toutes-nos-nouveautes' %}
+			<img src="{{ asset('bundles/syliusweb/img/toutes-nos-nouveautes.png') }}" alt="Asia 06" style="position:absolute; top:1px;left:1px;" />
+		{% elseif taxon.getPermalink()|split('/')[1] == '50' %}
+			<img src="{{ asset('bundles/syliusweb/img/50.png') }}" alt="Asia 06" style="position:absolute; top:1px;right:1px;" />
+			
+		{% elseif taxon.getPermalink()|split('/')[1] == '70' %}
+			<img src="{{ asset('bundles/syliusweb/img/70.png') }}" alt="Asia 06" style="position:absolute; top:1px;right:1px;" />
+			
+		{% elseif taxon.getPermalink()|split('/')[1] == '30' %}
+			<img src="{{ asset('bundles/syliusweb/img/30.png') }}" alt="Asia 06" style="position:absolute; top:1px;right:1px;" />
+		{% else %}
+	
+		{% endif %}
+	{% endfor %}
 </div>

@@ -45,7 +45,7 @@
     						</li>
     					</ul>
     				{% endif %}
-						{{ knp_menu_render('sylius.frontend.main', {'template': 'SyliusWebBundle::menu.html.twig'}) }}
+						{{ knp_menu_render('sylius.frontend.main', {'template': 'SyliusWebBundle:Frontend:login_register_menu.html.twig'}) }}
 					</div>
 					
 					<div class="masthead pull-right cartmenu">
@@ -63,12 +63,23 @@
 					<div class="clearfix"></div>
 				{% endblock %}
 			</div>
-			
+			<div class="header_bg">
 			<div class="header_logo">
 				
 				{% block header_logo %}
-					<a href="{{ path('sylius_homepage') }}" title="{{ 'sylius.logo'|trans }}"><img src="{{ asset('bundles/syliusweb/img/logo.png') }}" class="swan" /></span></a>
+<br>
+					<a href="{{ path('sylius_homepage') }}" title="{{ 'sylius.logo'|trans }}"><img src="{{ asset('bundles/syliusweb/img/logo.png') }}" width=250 height=75 class="swan" /></span></a>
 				{% endblock %}
+				{% block flashes %}
+		            {% for type in ['success', 'error', 'fos_user_success', 'notice'] %}
+		                {% for flash in app.session.flashbag.get(type) %}
+		                    <div class="alert alert-{{ type == 'fos_user_success' ? 'success' : type == 'error' ? 'danger' : type == 'notice' ? 'warning' : type }}">
+		                        <a class="close" data-dismiss="alert" href="#">×</a>
+		                        {{ flash|trans }}
+		                    </div>
+		                {% endfor %}
+		            {% endfor %}
+		        {% endblock %}
 			</div>
 			
 			<div class="container" id="container_header">
@@ -86,7 +97,7 @@
 						            </div>
 						            <!-- Collect the nav links, forms, and other content for toggling -->
 						            <div class="collapse navbar-collapse row nopadding" id="bs-example-navbar-collapse-1">
-						                <ul id="mainMenu" class="nav navbar-nav col-md-8 nopadding">
+						                <ul id="mainMenu" class="nav navbar-nav col-md-6 nopadding">
 						                    <li class="dropdown">
 						                        <a href="#" data-toggle="dropdown" class="dropdown-toggle">{{ 'sylius.frontend.menu.main.rayons'|trans }} <b class="caret"></b></a>
 						                        {{ knp_menu_render('sylius.frontend.taxonomies', {'template': 'SyliusWebBundle:Frontend:menu.html.twig'}) }}
@@ -97,17 +108,23 @@
 						                    </li>
 						                    <li class="dropdown">
 						                        <a href="#" data-toggle="dropdown" class="dropdown-toggle">{{ 'sylius.frontend.menu.main.promotion'|trans }} <b class="caret"></b></a>
-						                        {{ knp_menu_render('sylius.frontend.promotions', {'template': 'SyliusWebBundle:Frontend:menu.html.twig'}) }}
+						                        {{ knp_menu_render('sylius.frontend.promotions', {'template': 'SyliusWebBundle:Frontend:menu_promo.html.twig'}) }}
+						                    </li>
+						                    <li class="dropdown">
+						                        <a href="#" data-toggle="dropdown" class="dropdown-toggle">{{ 'sylius.frontend.menu.main.magasin'|trans }} </a>
+						                        
 						                    </li>
 						                </ul>
-						                <ul class="nav navbar-nav navbar-right col-md-3 nopadding">
-						                    <li>
-						                    	
+						                <ul class="nav navbar-nav navbar-right col-md-5 nopadding">
+						                    <li class="nofloat">
+                    							{% render controller('sylius.controller.search:formAction', {'request':app.request}) %}
 						                    </li>
+						                    
 						                </ul>
 						            </div><!-- /.navbar-collapse -->
 						        </div>
 						    </nav>
+			</div>
 			</div>
 		</div>
 		{% block centercontrainer %}
@@ -123,13 +140,55 @@
 
         {# Confirmation modal #}
         {% include 'SyliusWebBundle::confirm-modal.html.twig' %}
+        
+        {# Creneau modal #}
+        {% include 'SyliusWebBundle::creneau-modal.html.twig' %}
+        
+        {# Login modal #}
+        {% include 'SyliusWebBundle::login-modal.html.twig' %}
+        
+        {# Register modal #}
+        {% include 'SyliusWebBundle::register-modal.html.twig' %}
 
         {% block footer %}
-            <div class="footer">
+        
+            <div class="footer" style="background:#fff;">
             <div id="footer_barre"></div>
-                <p class="text-muted">
-                    &copy; Asia 06, 2011 - {{ 'now'|date('Y') }}.
-                </p>
+            
+            	<div class="container" style="background:#fff;">
+        			<div class="row" style="background:#fff;">
+            			<div class="col-md-3" style="background:#fff;height:150px;">
+            				<h3><span class="glyphicon glyphicon-map-marker"></span> {{ 'sylius.frontend.footer.societe'|trans }}</h3>
+							<p>Adresse xxx xxx xxx xxx xxxx</p><br>
+            				{{ knp_menu_render({'name': '/cms/menus/SuperAsia'}) }}
+            			</div>
+            			<div class="col-md-3" style="background:#fff;height:150px;">
+            				<h3><span class="glyphicon glyphicon-lock"></span> {{ 'sylius.frontend.footer.security'|trans }}</h3>
+            				<p>{{ 'sylius.frontend.footer.s_description'|trans }}</p>
+            				<div class="row">
+            					<div class="col-md-3">
+            						<img src="{{ asset('bundles/syliusweb/img/visa.png') }}" />
+            					</div>
+            					<div class="col-md-3">
+            						<img src="{{ asset('bundles/syliusweb/img/mastercard.png') }}" />
+            					</div>
+            					<div class="col-md-3">
+            						<img src="{{ asset('bundles/syliusweb/img/paypal.png') }}" />
+            					</div>
+            					<div class="col-md-3">
+            						<img src="{{ asset('bundles/syliusweb/img/CreditAgricole.png') }}" />
+            					</div>
+            				</div>
+            			</div>
+            			<div class="col-md-3" style="background:#fff;height:150px;">
+            				<h3><span class="glyphicon glyphicon-time"></span> {{ 'sylius.frontend.footer.livraison'|trans }}</h3>
+            				
+            			</div>
+            			<div class="col-md-3" style="background:#fff;height:150px;">
+            				<h3><span class="glyphicon glyphicon-comment"></span> {{ 'sylius.frontend.footer.aide'|trans }}</h3>
+            			</div>
+            		</div>
+            	</div>
                 {{ knp_menu_render('sylius.frontend.social', {'template': 'SyliusWebBundle:Frontend:menu.html.twig'}) }}
             </div>
         {% endblock %}
@@ -153,5 +212,22 @@
         )) %}
 #}
         {% endblock %}
+        <script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1494198420840742',
+      xfbml      : true,
+      version    : 'v2.2'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
     </body>
 </html>

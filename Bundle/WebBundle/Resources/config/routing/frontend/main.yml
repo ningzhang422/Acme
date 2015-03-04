@@ -58,7 +58,11 @@ sylius_contact:
 sylius_recette:
     resource: @SyliusWebBundle/Resources/config/routing/frontend/recette.yml
     prefix: /recette
+    
+sylius_creneau:
+    resource: @SyliusWebBundle/Resources/config/routing/frontend/creneau.yml
+    prefix: /creneau
 
-#sylius_search:
-#    resource: @SyliusWebBundle/Resources/config/routing/frontend/search.yml
-#    prefix: /search
+sylius_search:
+    resource: @SyliusWebBundle/Resources/config/routing/frontend/search.yml
+    prefix: /search

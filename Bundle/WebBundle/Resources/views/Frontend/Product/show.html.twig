@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">{{ 'sylius.confirmation.title'|trans }}</h4>
+            <h4 class="modal-title">{# 'sylius.confirmation.title'|trans #}</h4>
             </div>
 
             <div class="modal-body">
@@ -17,6 +17,23 @@
         <a href="{{ path(product) }}" class="thumbnail">
             <img src="{{ product.image ? product.image.path|imagine_filter('sylius_medium') : 'http://placehold.it/200x200' }}" alt="{{ product.name }}" />
         </a>
+        {% for taxon in product.taxons %}
+		{% if taxon.getPermalink()|split('/')[1] == 'top-des-ventes' %}
+			<img src="{{ asset('bundles/syliusweb/img/top-des-ventes.png') }}" alt="Asia 06" style="position:absolute; top:1px;left:1px;" />
+		{% elseif taxon.getPermalink()|split('/')[1] == 'toutes-nos-nouveautes' %}
+			<img src="{{ asset('bundles/syliusweb/img/toutes-nos-nouveautes.png') }}" alt="Asia 06" style="position:absolute; top:1px;left:1px;" />
+		{% elseif taxon.getPermalink()|split('/')[1] == '50' %}
+			<img src="{{ asset('bundles/syliusweb/img/50.png') }}" alt="Asia 06" style="position:absolute; top:1px;right:1px;" />
+			
+		{% elseif taxon.getPermalink()|split('/')[1] == '70' %}
+			<img src="{{ asset('bundles/syliusweb/img/70.png') }}" alt="Asia 06" style="position:absolute; top:1px;right:1px;" />
+			
+		{% elseif taxon.getPermalink()|split('/')[1] == '30' %}
+			<img src="{{ asset('bundles/syliusweb/img/30.png') }}" alt="Asia 06" style="position:absolute; top:1px;right:1px;" />
+		{% else %}
+	
+		{% endif %}
+	{% endfor %}
     </div>
     <div class="col-md-9">
         <a href="{{ path(product) }}" class="btn btn-link"><h3>{{ product.name }}</h3></a>
@@ -122,7 +139,8 @@
 			                    {{ form_widget(form.quantity, {'attr': {'class': 'center-text hide'}, 'empty_value': '1'}) }}
 			                    {{ form_widget(form._token) }}
 			                    {#<button type="submit" class="btn btn-success"><i class="icon-shopping-cart icon-white"></i> </button>#}
-			                	<input type='image' src='{{ asset('/bundles/syliusweb/img/picto_panier.png') }}' />
+			                	{#<input type='image' src='{{ asset('/bundles/syliusweb/img/picto_panier.png') }}' />#}
+			                	<button type="submit" class="btn btn-danger"><i class="icon-shopping-cart icon-white"></i> </button>
 			                </form>
 			            {% endif %}
 		            {% endif %}

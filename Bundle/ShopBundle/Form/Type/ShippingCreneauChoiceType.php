@@ -60,7 +60,6 @@ class ShippingCreneauChoiceType extends AbstractType
             return new ObjectChoiceList($creneaus);
         };
         
-
         $resolver
             ->setDefaults(array(
                 'choice_list' => $choiceList,
@@ -81,26 +80,28 @@ class ShippingCreneauChoiceType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-    	//var_dump($options);
         $subject = $options['subject'];
         
         $shipment_method_ids = array();
         $shipment_period_ids = array();
         $shipment_creneau_ids = array();
         $shipment_creneau_valide = array();
+        $shipment_method_types = array();
         $creneau_tables = array(); 
-
+        
         foreach ($view->vars['choices'] as $choiceView) {
         	
             $creneau = $choiceView->data;
 
-            $shipment_method_ids[$choiceView->value] = $creneau->getPeriod()->getCategory()->getId();
+            $shipment_method_ids[$choiceView->value] = $creneau->getPeriod()->getMethod()->getId();
+            
             $shipment_period_ids[$choiceView->value] = $creneau->getPeriod()->getStartTime()->format('H:i')."-".$creneau->getPeriod()->getEndTime()->format('H:i');
             $shipment_creneau_ids[$choiceView->value] = $creneau->getId();
             $shipment_creneau_dates[$choiceView->value] = $creneau->getPerformedAt()->format('d/m/Y');
             $shipment_creneau_valide[$choiceView->value] = $creneau->getCapacite() > $creneau->getReserve();
         	if(!isset($creneau_tables[$shipment_method_ids[$choiceView->value]])){
         		$creneau_tables[$shipment_method_ids[$choiceView->value]] = array( $shipment_period_ids[$choiceView->value] => array( $shipment_creneau_dates[$choiceView->value] => $shipment_creneau_ids[$choiceView->value]));
+        		$shipment_method_types[$shipment_method_ids[$choiceView->value]] = $creneau->getPeriod()->getMethod()->getIsdrive();
         	}else{
         		if(!isset($creneau_tables[$shipment_method_ids[$choiceView->value]][$shipment_period_ids[$choiceView->value]])){
         			$creneau_tables[$shipment_method_ids[$choiceView->value]][$shipment_period_ids[$choiceView->value]] = array( $shipment_creneau_dates[$choiceView->value] => $shipment_creneau_ids[$choiceView->value]);
@@ -115,9 +116,9 @@ class ShippingCreneauChoiceType extends AbstractType
         $view->vars['shipment_period_ids'] = $shipment_period_ids;
         $view->vars['shipment_creneau_ids'] = $shipment_creneau_ids;
         $view->vars['shipment_creneau_valide'] = $shipment_creneau_valide;
-       
 		
 		$view->vars['creneau_tables'] = $creneau_tables;
+        $view->vars['shipment_method_types'] = $shipment_method_types;
     }
 
     /**

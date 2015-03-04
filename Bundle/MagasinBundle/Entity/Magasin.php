@@ -157,7 +157,7 @@ class Magasin
     /**
      * Set address
      *
-     * @param \Sylius\Bundle\AddressingBundle\Model\Address $address
+     * @param \Acme\Bundle\ShopBundle\Entity\Address $address
      * @return Magasin
      */
     public function setAddress(\Acme\Bundle\ShopBundle\Entity\Address $address = null)
@@ -170,7 +170,7 @@ class Magasin
     /**
      * Get address
      *
-     * @return \Sylius\Bundle\AddressingBundle\Model\Address 
+     * @return \Acme\Bundle\ShopBundle\Entity\Address
      */
     public function getAddress()
     {

@@ -228,6 +228,33 @@ class FrontendMenuBuilder extends MenuBuilder
     	return $menu;
     }
     
+    public function createCartSidebarMenu(Request $request)
+    {
+    	
+        
+        
+
+        
+    	if ($this->cartProvider->hasCart()) {
+        	$cart = $this->cartProvider->getCart();
+        	
+        	$menu = $this->factory->createItem($this->translate('sylius.frontend.menu.main.cart'), array(
+	            'childrenAttributes' => array(
+	                'class' => 'nav nav-list cart_sidebar'
+	            )
+	        ))->setExtras(['quantity' => 'Total: ','price' => $cart->getTotal()]);
+        	
+        	
+        	
+        	foreach ($cart->getItems() as $item) {
+        		$menu->addChild($item->getProduct()->getName(), array(
+            		'uri' => '#'))->setExtras(['quantity' => 'x'.$item->getQuantity(),'price' => $item->getTotal(),'product' => $item->getProduct()->getImage()]);
+        	}
+        }
+        
+    	return $menu;
+    }
+    
     /**
      * Builds frontend currency menu.
      *
@@ -308,8 +335,6 @@ class FrontendMenuBuilder extends MenuBuilder
 	            ))->setExtras(['self' => strval($child->getId()) ]);
         	}
         }
-        
-    	
     }
     
 	private function createTaxonomiesSubMenuNode(ItemInterface $menu, TaxonInterface $taxon)
@@ -407,7 +432,7 @@ class FrontendMenuBuilder extends MenuBuilder
      */
     public function createPromotionsMenu(Request $request)
     {
-        $menu = $this->factory->createItem('root', array(
+        /*$menu = $this->factory->createItem('root', array(
             'childrenAttributes' => array(
                 'class' => 'nav dropdown-menu'
             )
@@ -419,6 +444,33 @@ class FrontendMenuBuilder extends MenuBuilder
 
         foreach ($promotions as $promotion) {
             $menu->addChild($promotion->getName());
+        }
+
+        return $menu;*/
+    	$menu = $this->factory->createItem('', array(
+            'childrenAttributes' => array(
+                'class' => 'nav dropdown-menu',
+        		'id' => 'actualites-dropdown-menu'
+            )
+        ));
+
+        $childOptions = array(
+            'childrenAttributes' => array('class' => 'nav nav-list'),
+            'labelAttributes'    => array('class' => 'nav-header'),
+        );
+
+        $taxonomies = $this->taxonomyRepository->findByName('Promotion');
+
+        foreach ($taxonomies as $taxonomy) {
+            $child = $menu->addChild($taxonomy->getName(), $childOptions);
+			$imagechild = $menu->addChild('sub_child', $childOptions);
+            
+			if ($taxonomy->getRoot()->hasPath()) {
+                $imagechild->setLabelAttribute('data-image', $taxonomy->getRoot()->getPath());
+            }
+
+            $this->createTopicMenuNode($child, $taxonomy->getRoot());
+            $this->createImageTopicMenuNode($imagechild, $taxonomy->getRoot());
         }
 
         return $menu;

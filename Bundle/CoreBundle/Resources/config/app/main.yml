@@ -23,17 +23,26 @@ knp_gaufrette:
             adapter: %sylius.uploader.filesystem%
 
 liip_imagine:
-    data_root: %kernel.root_dir%/../web/media/image
+    loaders:
+        default:
+            filesystem:
+                data_root: %kernel.root_dir%/../web/media/image
     filter_sets:
         sylius_small:
+            format: jpg
+            quality: 100
             filters:
-                thumbnail: { size: [120, 90], mode: outbound }
+                thumbnail: { size: [100, 111], mode: outbound }
         sylius_medium:
+            format: jpg
+            quality: 100
             filters:
-                thumbnail: { size: [240, 180], mode: outbound }
+                thumbnail: { size: [200, 223], mode: outbound }
         sylius_large:
+            format: jpg
+            quality: 100
             filters:
-                thumbnail: { size: [640, 480], mode: outbound }
+                thumbnail: { size: [760, 846], mode: outbound }
 
 knp_snappy:
     pdf:

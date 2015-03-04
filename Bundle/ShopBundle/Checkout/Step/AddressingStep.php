@@ -8,6 +8,7 @@ namespace Acme\Bundle\ShopBundle\Checkout\Step;
 
 use Sylius\Bundle\FlowBundle\Process\Context\ProcessContextInterface;
 use Sylius\Component\Core\Model\OrderInterface;
+use Sylius\Component\Core\Model\UserInterface;
 use Sylius\Component\Core\SyliusCheckoutEvents;
 use Symfony\Component\Form\FormInterface;
 
@@ -23,11 +24,12 @@ class AddressingStep extends CheckoutStep
 
         $this->dispatchCheckoutEvent(SyliusCheckoutEvents::ADDRESSING_INITIALIZE, $order);
 
-        $form = $this->createCheckoutAddressingForm($order);
+        $form = $this->createCheckoutAddressingForm($order, $this->getUser());
 		
         $usr= $this->getUser();
         $arr1 = (array)$usr->getBillingAddress();
         $arr2 = (array)$usr->getShippingAddress();
+        
         if (empty($arr1) && empty($arr2)){
         	return $this->renderStep($context, $order, $form);
         }else{
@@ -54,16 +56,24 @@ class AddressingStep extends CheckoutStep
 
         $order = $this->getCurrentCart();
         $this->dispatchCheckoutEvent(SyliusCheckoutEvents::ADDRESSING_INITIALIZE, $order);
-        $usr= $this->getUser();
-        $arr1 = (array)$usr->getBillingAddress();
-        $arr2 = (array)$usr->getShippingAddress();
+        $user= $this->getUser();
+        $arr1 = (array)$user->getBillingAddress();
+        $arr2 = (array)$user->getShippingAddress();
         if (empty($arr1) && empty($arr2)){
-	        $form = $this->createCheckoutAddressingForm($order);
+        	
+        	
+        	
+	        $form = $this->createCheckoutAddressingForm($order, $this->getUser());
 	
-	        if ($request->isMethod('POST') && $form->submit($request)->isValid()) {
+	        if ($form->handleRequest($request)->isValid()) {
 	            $this->dispatchCheckoutEvent(SyliusCheckoutEvents::ADDRESSING_PRE_COMPLETE, $order);
 	
 	            $this->getManager()->persist($order);
+	            $this->getManager()->flush();
+	            
+	            $user->setShippingAddress($order->getShippingAddress());
+	        	$user->setBillingAddress($order->getBillingAddress());
+	        	$this->getManager()->persist($user);
 	            $this->getManager()->flush();
 	
 	            $this->dispatchCheckoutEvent(SyliusCheckoutEvents::ADDRESSING_COMPLETE, $order);
@@ -95,8 +105,8 @@ class AddressingStep extends CheckoutStep
         ));
     }
 
-    protected function createCheckoutAddressingForm(OrderInterface $order)
+	protected function createCheckoutAddressingForm(OrderInterface $order, UserInterface $user = null)
     {
-        return $this->createForm('sylius_checkout_addressing', $order);
+        return $this->createForm('sylius_checkout_addressing', $order, array('user' => $user));
     }
 }

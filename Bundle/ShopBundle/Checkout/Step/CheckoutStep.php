@@ -12,10 +12,10 @@
 namespace Acme\Bundle\ShopBundle\Checkout\Step;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use Sylius\Bundle\FlowBundle\Process\Step\ControllerStep;
 use Sylius\Component\Addressing\Matcher\ZoneMatcherInterface;
 use Sylius\Component\Cart\Provider\CartProviderInterface;
 use Sylius\Component\Core\Model\OrderInterface;
-use Sylius\Bundle\FlowBundle\Process\Step\ControllerStep;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Security\Core\Exception\AuthenticationCredentialsNotFoundException;
@@ -23,22 +23,10 @@ use Symfony\Component\Security\Core\Exception\AuthenticationCredentialsNotFoundE
 /**
  * Base class for checkout steps.
  *
- * @author Paweł Jędrzejewski <pjedrzejewski@diweb.pl>
+ * @author Paweł Jędrzejewski <pawel@sylius.org>
  */
 abstract class CheckoutStep extends ControllerStep
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function complete()
-    {
-        $this->dispatchCheckoutEvent('sylius_checkout_'.$this->getName().'.completed', $this->getCurrentCart());
-
-        $this->getManager()->flush();
-
-        return parent::complete();
-    }
-
     /**
      * Get cart provider.
      *

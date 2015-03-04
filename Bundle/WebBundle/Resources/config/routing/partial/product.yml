@@ -10,3 +10,23 @@ sylius_partial_product_latest:
             method: findLatest
             arguments: [$limit]
             template: $template
+            
+sylius_partial_product_promotions:
+    pattern: /promotions
+    defaults:
+        _controller: sylius.controller.product:promotionsAction
+        
+sylius_partial_product_promotions5:
+    pattern: /promotions5
+    defaults:
+        _controller: sylius.controller.product:promotions5Action
+        
+sylius_partial_product_top_ventes:
+    pattern: /top_ventes
+    defaults:
+        _controller: sylius.controller.product:topVentesAction
+        
+sylius_partial_product_new_products:
+    pattern: /new_products
+    defaults:
+        _controller: sylius.controller.product:newProductsAction

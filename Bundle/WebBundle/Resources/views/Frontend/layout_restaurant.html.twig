@@ -1,0 +1,36 @@
+{% extends 'SyliusWebBundle:Frontend:centerLaylout.html.twig' %}
+{% block centercontrainer %}
+<div class="container" id="container_contenu">
+    {% block topbar %}
+    <ol class="breadcrumb">
+	  <li><a href="/">Accueil</a></li><li><span>{{ 'sylius.frontend.homepage.banteau_2'|trans }}</span></li>
+	
+	</ol>
+	{% endblock %}
+	
+        <div class="row">
+            <div class="col-md-3" id="sidebar">
+                {% block sidebar %}
+                
+                {{ knp_menu_render('sylius.frontend.taxonomies.sidebar', {'template': 'SyliusWebBundle:Frontend:menu_taxonomies.html.twig'}) }}
+
+                {# include 'SyliusSearchBundle::filter_form.html.twig' #}<br>
+
+                {# render(url('sylius_partial_product_latest', {'limit': 5, 'template': 'SyliusWebBundle:Frontend/Product:latestSidebar.html.twig'})) #}
+                {# sonata_block_render({'name': '/cms/blocks/contact'}) #}
+
+                    
+                {% endblock %}
+            </div>
+            
+            <div class="col-md-9">
+                {% block content %}
+                
+                	
+                {% endblock %}
+            </div>
+        </div>
+        
+       
+</div>       
+{% endblock %}

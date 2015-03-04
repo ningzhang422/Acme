@@ -1,7 +1,7 @@
 parameters:
 #    acme_web.example.class: Acme\Bundle\WebBundle\Example
-    sylius.form.frontend.registration.type.class: Acme\Bundle\ShopBundle\Form\RegistrationFormType
-    sylius.form.frontend.profile.type.class: Acme\Bundle\ShopBundle\Form\ProfileFormType
+    #sylius.form.frontend.registration.type.class: Acme\Bundle\ShopBundle\Form\RegistrationFormType
+    #sylius.form.frontend.profile.type.class: Acme\Bundle\ShopBundle\Form\ProfileFormType
     fos_user.model.user.class: Acme\Bundle\ShopBundle\Entity\User
     sylius.form.type.address.class: Acme\Bundle\ShopBundle\Form\Type\AddressType
     sylius.form.type.shipping_method_choice.class: Acme\Bundle\ShopBundle\Form\Type\ShippingMethodChoiceType
@@ -22,6 +22,15 @@ services:
         scope: request
         tags:
             - { name: knp_menu.menu, alias: sylius.frontend.cart }
+            
+    acme.menu.frontend.cartitems:
+        class: Knp\Menu\MenuItem 
+        factory_service: sylius.menu_builder.frontend
+        factory_method: createCartSidebarMenu
+        arguments: ["@request"]
+        scope: request
+        tags:
+            - { name: knp_menu.menu, alias: sylius.frontend.cart.sidebar }
 
     acme.menu.frontend.promotions:
         class: Knp\Menu\MenuItem 

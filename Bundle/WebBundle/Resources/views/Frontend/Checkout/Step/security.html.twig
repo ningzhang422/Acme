@@ -1,0 +1,111 @@
+{% extends 'SyliusWebBundle:Frontend:layout_checkout.html.twig' %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{{ 'sylius.checkout.security.header'|trans|raw }}</h1>
+</div>
+
+{% include 'SyliusWebBundle:Frontend/Checkout:_progressBar.html.twig' %}
+
+<div class="row nopadding">
+<div class="row form-vertical col-md-9 nopadding">
+    <div class="col-md-6 checkout-existing-customer">
+        <div class="well">
+        <div id="fos_user_login_form">
+    <div class="alert alert-danger" style="display: none;" id="alert_message">
+       
+    </div>
+            <form action="{{ path('fos_user_security_check') }}" method="post" class="form-horizontal">
+                <fieldset>
+                    <legend><h2 class="title">{{ 'sylius.checkout.security.existing_customer'|trans }}</h2></legend>
+                    <div class="form-group">
+                        <label for="username" class="control-label">{{ 'sylius.form.login.email'|trans }}</label>
+                        <div class="controls col-lg-12">
+                            <input type="text" id="username" name="_username" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                    <label for="password" class="control-label">{{ 'sylius.form.login.password'|trans }}</label>
+                        <div class="controls col-lg-12">
+                            <input type="password" id="password" name="_password" class="form-control" />
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="form-actions">
+                    <input type="submit" id="_submit" class="btn btn-primary btn-block" name="login" value="{{ 'sylius.checkout.security.login'|trans }}" />
+                </div>
+            </form>
+           </div>
+        </div>
+    </div>
+    <div class="col-md-6 checkout-new-customer">
+        {% if guest_form is not empty %}
+        <div class="well">
+            <form action="{{ path(context.process.forwardRoute, {'stepName': context.currentStep.name}) }}" method="post" novalidate class="form-horizontal">
+                <fieldset>
+                    <legend>{{ 'sylius.checkout.security.guest'|trans }}</legend>
+                    {{ form_widget(guest_form) }}
+                </fieldset>
+                <div class="form-actions">
+                    <input type="submit" class="btn btn-success btn-block" value="{{ 'sylius.checkout.security.proceed_order'|trans }}" />
+                </div>
+            </form>
+        </div>
+        {% endif %}
+        <div class="well">
+            <form action="{{ path(context.process.forwardRoute, {'stepName': context.currentStep.name}) }}" method="post" novalidate class="form-horizontal">
+                <fieldset>
+                    <legend><h2 class="title">{{ 'sylius.checkout.security.new_customer'|trans }}</h2></legend>
+                    {{ form_widget(registration_form) }}
+                </fieldset>
+                <div class="form-actions">
+                    <input type="submit" class="btn btn-success btn-block" value="{{ 'sylius.checkout.security.register'|trans }}" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{{ parent() }}
+</div>
+
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script>
+$(document).ready(function() {
+	
+        
+     $('#_submit').click(function(e){
+            e.preventDefault();
+            var form = $('#_submit').parents('form').first();
+            
+            $.ajax({
+                type        : form.attr('method'),
+                url         : '{{ path("fos_user_security_check") }}',
+                data        : form.serialize(),
+                dataType    : "json",
+                success     : function(data, status, object) {
+                	//console.log(data);
+                    if (data.success == false) {
+	                    $('#alert_message').prepend('<div />').html(data.message);
+	                    $('#alert_message').show();
+	                } else {
+	                    window.location.href=window.location.href;
+	                }
+                },
+                error: function(data, status, object){
+                	if (data.success == false) {
+	                    $('.modal-body').prepend('<div />').html(data.message);
+	                } else {
+	                    //window.location.href = data.targetUrl;
+	                }
+                }
+            });
+        });
+  
+});
+
+
+</script>
+{% endblock %}

@@ -51,7 +51,7 @@ class Period
     protected $category;
 	
 	/**
-   	* @ORM\ManyToOne(targetEntity="Sylius\Component\Shipping\Model\ShippingMethod")
+   	* @ORM\ManyToOne(targetEntity="Acme\Bundle\PeriodBundle\Entity\ShippingMethod")
    	* @ORM\JoinColumn(nullable=true)
    	*/
     protected $method;
@@ -203,10 +203,10 @@ class Period
 	/**
      * Set shipping_method
      *
-     * @param Sylius\Component\Shipping\Model\ShippingMethod $shippingMethod
-     * @return Period
+     * @param \Acme\Bundle\PeriodBundle\Entity\ShippingMethod
+     * @return method
      */
-    public function setMethod(\Sylius\Component\Shipping\Model\ShippingMethod $method)
+    public function setMethod(\Acme\Bundle\PeriodBundle\Entity\ShippingMethod $method)
     {
         $this->method = $method;
 
@@ -216,7 +216,7 @@ class Period
     /**
      * Get shipping_method
      *
-     * @return \Sylius\Bundle\ShippingBundle\Model\ShippingMethod
+     * @return \Acme\Bundle\PeriodBundle\Entity\ShippingMethod
      */
     public function getMethod()
     {

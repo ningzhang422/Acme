@@ -21,6 +21,9 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Sylius\Component\Cart\Model\CartInterface;
+use Sylius\Component\Cart\Provider\CartProviderInterface;
 
 /**
  * A select form which allows the user to select
@@ -41,17 +44,28 @@ class ShippingMethodChoiceType extends AbstractType
      * @var CalculatorRegistryInterface
      */
     protected $calculators;
+    
+    protected $container;
+    /**
+     * Cart provider.
+     *
+     * @var CartProviderInterface
+     */
+    protected $cartProvider;
 
     /**
      * Constructor.
      *
      * @param MethodsResolverInterface    $resolver
      * @param CalculatorRegistryInterface $calculators
+     * @param ContainerInterface		  $container
      */
-    public function __construct(MethodsResolverInterface $resolver, CalculatorRegistryInterface $calculators)
+    public function __construct(MethodsResolverInterface $resolver, CalculatorRegistryInterface $calculators, ContainerInterface $container,CartProviderInterface $cartProvider)
     {
         $this->resolver = $resolver;
         $this->calculators = $calculators;
+        $this->container = $container;
+        $this->cartProvider = $cartProvider;
     }
 
     /**
@@ -91,8 +105,10 @@ class ShippingMethodChoiceType extends AbstractType
         $subject = $options['subject'];
         $shippingCosts = array();
         $shipment_category_ids = array();
+        $shipment_method_types = array();
 
         foreach ($view->vars['choices'] as $choiceView) {
+        	
             $method = $choiceView->data;
 
             if (!$method instanceof ShippingMethodInterface) {
@@ -102,10 +118,18 @@ class ShippingMethodChoiceType extends AbstractType
             $calculator = $this->calculators->getCalculator($method->getCalculator());
             $shippingCosts[$choiceView->value] = $calculator->calculate($subject, $method->getConfiguration());
             $shipment_category_ids[$choiceView->value] = $method->getId();
+            $shipment_method_types[$choiceView->value] = $method->getIsdrive();
         }
 
         $view->vars['shipping_costs'] = $shippingCosts;
         $view->vars['shipment_category_ids'] = $shipment_category_ids;
+        $view->vars['shipment_method_types'] = $shipment_method_types;
+        $repository = $this->container->get('sylius.repository.magasin');
+
+		$magasin = $repository->find($this->container->get('sylius.context.magasin')->getMagasin())->getAddress();
+        $view->vars['magasin'] = $magasin;
+        
+        $view->vars['cart'] = $this->cartProvider->getCart();
         
     }
 

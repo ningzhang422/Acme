@@ -1,0 +1,31 @@
+{% extends 'SyliusWebBundle:Frontend:centerLaylout.html.twig' %}
+{% block centercontrainer %}
+<div class="container" id="container_contenu">
+    {% block topbar %}
+    <ol class="breadcrumb">
+	  <li><a href="/">Accueil</a></li><li><a href="#">Rechercher</a></li>
+	</ol>
+	{% endblock %}
+	
+        <div class="row">
+            
+            <div class="col-md-12">
+                {% block content %}
+                
+                	<div class="col-md-3" id="sidebar">
+		                {% block sidebar %}
+		                	{% if facets is not empty %}
+			                
+                			{% include 'SyliusSearchBundle::filter_form.html.twig' %} 
+                			{% else %}
+                			{{ knp_menu_render('sylius.frontend.taxonomies.sidebar', {'template': 'SyliusWebBundle:Frontend:menu_taxonomies.html.twig'}) }}
+                			{% endif %}
+		                {% endblock %}
+		            </div>
+                {% endblock %}
+            </div>
+        </div>
+        
+       
+</div>       
+{% endblock %}

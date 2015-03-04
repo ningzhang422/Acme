@@ -1,6 +1,6 @@
 {% for item in cart.items %}
 	{% set product_cart = item.variant.product %}
-		{% if product_cart == product %}
+		{% if product_cart.id == product.id %}
             <form action="{{ path('dp_ajax_update', {'id': item.id}) }}" method="post" novalidate id="{{'item-'~item.id}}">
 				{% set form = acme_product_form_is_in_cart({'product': product}) %}
 				{{ form_widget(form.quantity,{'attr': {'class': 'center-text input_quantity hide'}, 'empty_value': '1'}) }}

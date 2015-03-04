@@ -1,0 +1,12 @@
+{% if block.filter %}
+    {% set filter = block.filter %}
+{% else %}
+    {% set filter = "cmf_block" %}
+{% endif %}
+
+{% block block %}
+   
+        <a href="{{ block.image.id | imagine_filter(filter) }}" title="{{ block.label|default('') }}" data-link="{{ block.linkUrl }}">
+      		<img class="img-thumbnail" src="{{ block.image.id | imagine_filter('slideshow_large') }}" alt="{{ block.label }}" />
+        </a>
+{% endblock %}

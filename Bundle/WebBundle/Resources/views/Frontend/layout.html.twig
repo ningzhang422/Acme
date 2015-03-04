@@ -3,7 +3,7 @@
 <div class="container" id="container_contenu">
     {% block topbar %}
     <ol class="breadcrumb">
-	  <li><a href="/">Accueil</a></li>
+	  <li><a href="/">Accueil</a></li><li><span>{{ 'sylius.frontend.menu.main.rayons'|trans }}</span></li>
 	</ol>
 	{% endblock %}
 	
@@ -24,10 +24,7 @@
             
             <div class="col-md-9">
                 {% block content %}
-                	
-					
 					{{ render(url('sylius_partial_product_latest', {'limit': 9, 'template': 'SyliusWebBundle:Frontend/Product:latest.html.twig'})) }}
-                	
                 {% endblock %}
             </div>
         </div>

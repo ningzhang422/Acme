@@ -2,45 +2,33 @@
 
 {% block container %}
 <div class="container-fluid">
-	<center>
-	<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-	{#
-	  <!-- Indicators -->
-	  <ol class="carousel-indicators">
-	    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-	    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-	  </ol>
-	#}
-	  <!-- Wrapper for slides -->
-	  <div class="carousel-inner">
-	    <div class="item active">
-	      <img src="{{ asset('bundles/syliusweb/img/bg_product1.jpg') }}" class="swan" alt="Image"/>
-	      <div class="carousel-caption">
-	        ...
-	      </div>
-	    </div>
-	    <div class="item">
-	      <img src="{{ asset('bundles/syliusweb/img/bg_product2.jpg') }}" class="swan" alt="Image"/>
-	      <div class="carousel-caption">
-	        ...
-	      </div>
-	    </div>
-	  </div>
-	</div>
-	</center>
+	{{ sonata_block_render({'name': '/cms/blocks/slide19'}) }}
 </div>
+
 <div class="container" id="container_contenu_home">
         <div class="row">
             <div class="col-md-8">
                 {% block content %}
-                {#
-					<div class="page-header">
-					  <h1>{{ 'sylius.homepage.splash.headline'|trans }} {{magasin}}</h1>
-					</div>
-				#}
 				<br>
 				<h2 class="title"><span class='glyphicon glyphicon-th'></span> {{ 'sylius.frontend.homepage.banteau_1'|trans }}</h2>
-				{{ render(url('sylius_partial_product_latest', {'limit': 9, 'template': 'SyliusWebBundle:Frontend/Product:latest.html.twig'})) }}
+				
+				<ul class="nav nav-tabs" role="tablist" id="myTab">
+				  <li role="presentation" class="active"><a href="#nos_selections" aria-controls="nos_selections" role="tab" data-toggle="tab">{{ 'sylius.frontend.menu.sous_topic.nos_select'|trans }}</a></li>
+				  <li role="presentation"><a href="#promotions" aria-controls="promotions" role="tab" data-toggle="tab">{{ 'sylius.frontend.menu.main.promotion'|trans }}</a></li>
+				  <li role="presentation"><a href="#top_ventes" aria-controls="top_ventes" role="tab" data-toggle="tab">{{ 'sylius.frontend.menu.sous_topic.top_vente'|trans }}</a></li>
+				  <li role="presentation"><a href="#new_products" aria-controls="new_products" role="tab" data-toggle="tab">{{ 'sylius.frontend.menu.sous_topic.new_product'|trans }}</a></li>
+				  
+				</ul>
+				
+				<div class="tab-content padding-top5">
+				  <div role="tabpanel" class="tab-pane active" id="nos_selections">{{ render(url('sylius_partial_product_latest', {'limit': 12, 'template': 'SyliusWebBundle:Frontend/Product:latest.html.twig'})) }}</div>
+				  <div role="tabpanel" class="tab-pane" id="promotions">{{ render(url('sylius_partial_product_promotions')) }}</div>
+				  <div role="tabpanel" class="tab-pane" id="top_ventes">{{ render(url('sylius_partial_product_top_ventes')) }}</div>
+				  <div role="tabpanel" class="tab-pane" id="new_products">{{ render(url('sylius_partial_product_new_products')) }}</div>
+				  
+				</div>
+			
+				
 				
                 {% endblock %}
             </div>
@@ -52,7 +40,39 @@
 
                 {# include 'SyliusSearchBundle::filter_form.html.twig' #}
 				{% include 'AcmeWebBundle::planning.html.twig' %}
-                {{ render(url('sylius_partial_product_latest', {'limit': 5, 'template': 'SyliusWebBundle:Frontend/Product:latestSidebar.html.twig'})) }}
+                {# render(url('sylius_partial_product_latest', {'limit': 5, 'template': 'SyliusWebBundle:Frontend/Product:latestSidebar.html.twig'})) #}
+                <div class="panel panel-warning">
+				  <div class="panel-heading">
+				    <h2 class="panel-title"><span class="glyphicon glyphicon-heart"></span> {{ 'sylius.frontend.avantage.title'|trans }}</h2>
+				  </div>
+				  <div class="panel-body">
+				    
+				    <div class="row planning_row">
+				    	<div class="col-md-3">
+				    		<img src="/bundles/syliusweb/img/logo_euro.png">
+				    	</div>
+				    	
+				    	<div class="col-md-9">
+				    		<h5>{{ 'sylius.frontend.avantage.service3'|trans }}</h5>
+				    		<p class="small">{{ 'sylius.frontend.avantage.service4'|trans }}</p>
+				    	</div>
+				    </div>
+				    <hr>
+				    <div class="row planning_row">
+				    	<div class="col-md-3">
+				    		<img src="/bundles/syliusweb/img/logo_pouce.png">
+				    	</div>
+				    	
+				    	<div class="col-md-9">
+				    		<h5>{{ 'sylius.frontend.avantage.service1'|trans }}</h5>
+				    		<p class="small">{{ 'sylius.frontend.avantage.service2'|trans }}</p>
+				    	</div>
+				    </div>
+				  </div>
+				</div>
+                
+                {{ render(url('sylius_partial_product_promotions5')) }}
+                
                 
                 {% endblock %}
             </div>
@@ -70,11 +90,12 @@
         <div class="container row">
         	<h2 class="title"><span class='glyphicon glyphicon-cutlery'></span> {{ 'sylius.frontend.homepage.banteau_3'|trans }}</h2>
         	<div class="col-md-3">
-                    {{ sonata_block_render({'name': '/cms/blocks/recettes'}) }}
+                    {{ sonata_block_render({'name': '/cms/blocks/recettess'}) }}
             </div>
             <div class="col-md-9">
         		{{ render(url('sylius_partial_recette_latest', {'limit': 3, 'template': 'SyliusWebBundle:Frontend/Recette:latest.html.twig'})) }}
         	</div>
         </div>
+        <br>
 </div>
 {% endblock %}

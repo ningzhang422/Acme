@@ -93,6 +93,7 @@ class Creneau
     /**
    	* @ORM\ManyToOne(targetEntity="Acme\Bundle\PeriodBundle\Entity\Period")
    	* @ORM\JoinColumn(nullable=false)
+   	* @ORM\OrderBy({"startTime" = "ASC"})
    	* @Assert\NotBlank()
    	*/
     protected $period;

@@ -5,16 +5,31 @@ sylius:
         rayons: Rayons
         topic: Actualités
         promotion: Promotions
+        magasin: ?
       sous_topic:
         title: Nos boutiques
+        top_vente: Top Ventes
+        new_product: Nouveautés
+        nos_select: Nos selections
+      sous_promo:
+        title: Promotions
     panier:
       popover:
         contenu: 1 article a été ajouté dans le panier.
+      less5: Attention, vous n'avez pas atteint le minimum de commande de 5,00 €
+      less50: Attention, vous n'avez pas atteint le minimum de commande de 50,00 €
     planning:
       title: Planning de commande
       drive: DRIVE PIETON
       livraison: LIVRAISON A DOMICILE
       c_tarif: >> Consultez le planning et les tarifs
+      planning_start_end: Planning du %start_at% au %end_at%
+    avantage:
+      title: Mes avantages
+      service2: SuperAsie s'engage sur la fraîcheur de vos produits
+      service1: Vos courses entre de bonnes mains
+      service3: Les prix et promotions
+      service4: SuperAsie s'engage à vous proposer un large choix de produits et de promotions à prix magasin 
     homepage:
       banteau_1: Je découvre les sélections
       banteau_2: J'en profite
@@ -23,6 +38,32 @@ sylius:
       people: Personnes
       preparation: Pour préparer
       cuisson: Pour le faire cuire
+      search_value: Saisissez vos mots clés pour une recherche produit...
+    shipping:
+      disabled: Complet
+      active: Disponible
+      disabled_short: Complet
+      active_short: Dispo.
+      livraison:
+        address_bill: Mon adresse de facturation
+        address_ship: Mon adresse de livraison
+        description: Je sélectionne le jour et l'heure de ma livraison en cliquant sur l'un des créneaux disponibles ci-dessous
+        creneautitle: Mon créneau de livraison
+      retrait:
+        title: Votre retrait : 
+        address_bill: Mon adresse de facturation
+        description: Je sélectionne le jour et l'heure de mon retrait en cliquant sur l'un des créneaux disponibles ci-dessous
+        creneautitle: Mon créneau de retrait
+    recette: Nos recettes asiatique
+    product:
+      weight: Poid :
+      from: Origine :
+    footer:
+      societe: Super Asia
+      security: Paiement Sécurisé
+      s_description: Nos paiements en ligne sont sécurisés par le Crédit Agricole
+      livraison: Livraison/Drive Pieton
+      aide: Nos services
   form:
     recette:
       name: Nom de la recette
@@ -48,3 +89,47 @@ acme:
   form:
     address:
       addresstitle: Nom d'adresse
+# Security
+security:
+    login:
+        email: "Email"
+        header: <h1>Connexion <small>Supermarché asiatique en ligne</small></h1>
+        info: ''
+        forgot_password: Mot de passe oublié ?
+        no_account: Pas encore de compte ?
+        username: "Nom d'utilisateur"
+        password: "Mot de passe"
+        remember_me: Se souvenir de moi ?
+        submit: Connexion
+        already: Déjà client ? Connexion
+        firstName: Prénom
+        lastName: Nom
+        email: Adresse e-mail
+        plainpassword: Mot de passe
+        plainpasswords: Comfirmation
+
+# Registration
+registration:
+    register_header: <h1>Enregistrement <small>Créer votre compte</small></h1>
+    confirmed_header: <h1>Bienvenue <small>Votre compte a été créé avec succès</small></h1>
+    submit: Enregistrer
+    or: OU
+
+# Form field labels
+form:
+    group_name: "Nom du groupe"
+    username: "Nom d'utilisateur"
+    email: "Adresse e-mail"
+    current_password: "Mot de passe actuel"
+    password: "Mot de passe"
+    password_confirmation: "Vérification"
+    new_password: "Nouveau mot de passe"
+    new_password_confirmation: "Vérification"
+
+# Password resetting
+resetting:
+    request:
+        header: <h1>Demande de réinitialisation de mot de passe</h1>
+    reset:
+        header: <h1>Réinitialiser votre mot de passe</h1>
+      

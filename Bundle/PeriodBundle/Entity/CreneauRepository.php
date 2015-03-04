@@ -32,4 +32,25 @@ class CreneauRepository extends EntityRepository
 	    ->getResult()
 	  ;
 	}
+	
+	public function findInSevenDaysByCurrentDateAllPeriod()
+	{
+	  $qb = $this->createQueryBuilder('a');
+	  
+	  $now = date('Y-m-d');
+	  $start_date = strtotime($now);
+	  $end_date = date('Y-m-d',strtotime("+7 day", $start_date));
+	
+	  $qb->innerJoin('a.period','p')
+	  	->andWhere('a.performedAt >= :date1 and a.performedAt <= :date2')
+	       ->setParameter('date1', $now)
+	       ->setParameter('date2', $end_date)
+	       ->orderBy('p.startTime', 'ASC')
+	  ;
+	
+	  return $qb
+	    ->getQuery()
+	    ->getResult()
+	  ;
+	}
 }

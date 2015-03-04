@@ -1,0 +1,4 @@
+sylius_creneau:
+    path:     /
+    methods: [GET]
+    defaults: { _controller: AcmePeriodBundle:Creneau:index }

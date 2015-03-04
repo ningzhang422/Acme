@@ -1,0 +1,7 @@
+parameters:
+    # acme.entity.user.class: Acme\Bundle\ShopBundle\Entity\User
+    
+services:
+    authentication_handler:
+        class: Acme\Bundle\UserBundle\Handler\AuthenticationHandler
+        arguments:    [@router, @security.context, @fos_user.user_manager, @service_container,@translator]

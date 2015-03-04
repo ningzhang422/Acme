@@ -1,4 +1,4 @@
-{% extends 'SyliusWebBundle:Frontend:layout.html.twig' %}
+{% extends 'SyliusWebBundle:Frontend:layout_checkout.html.twig' %}
 
 {% block content %}
 <div class="page-header">
@@ -6,7 +6,8 @@
 </div>
 
 {% include 'SyliusWebBundle:Frontend/Checkout:_progressBar.html.twig' %}
-
+<div class="row nopadding">
+<div class="row form-vertical col-md-9 nopadding">
 {{ form_errors(form) }}
 
 <form method="post" action="{{ path('sylius_checkout_forward', {'stepName': context.currentStep.name}) }}" class="form-horizontal" novalidate>
@@ -17,8 +18,7 @@
 
 
 {% set shipmentForm = form.shipments[loop.index0] %}
-
-{{ form_row(shipmentForm.method) }}
+{{ form_widget(shipmentForm.method) }}
 {{ form_widget(shipmentForm.creneau) }}
 {% endfor %}
 
@@ -33,4 +33,9 @@
 </div>
 
 </form>
+</div>
+
+{{ parent() }}
+</div>
+
 {% endblock %}

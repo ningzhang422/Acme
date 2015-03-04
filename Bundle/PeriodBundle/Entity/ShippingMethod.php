@@ -17,8 +17,16 @@ class ShippingMethod extends BaseShippingMethod
 {
     /**
    	 * @ORM\OneToMany(targetEntity="Acme\Bundle\PeriodBundle\Entity\Period", mappedBy="method")
+   	 * @ORM\OrderBy({"startTime" = "ASC"})
    	 */
     protected $periods;
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="isdrive", type="boolean")
+     */
+    protected $isdrive;
     
 	/**
      * Constructor.
@@ -46,4 +54,28 @@ class ShippingMethod extends BaseShippingMethod
 	  {
 	    return $this->periods;
 	  }
+	  
+	  
+/**
+     * Set isdrive
+     *
+     * @param boolean $isdrive
+     * @return Creneau
+     */
+    public function setIsdrive($isdrive)
+    {
+        $this->isdrive = $isdrive;
+
+        return $this;
+    }
+
+    /**
+     * Get isdrive
+     *
+     * @return boolean 
+     */
+    public function getIsdrive()
+    {
+        return $this->isdrive;
+    }
 }

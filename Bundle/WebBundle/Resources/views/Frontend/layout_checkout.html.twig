@@ -1,0 +1,30 @@
+{% extends 'SyliusWebBundle:Frontend:centerLaylout.html.twig' %}
+{% block centercontrainer %}
+<div class="container" id="container_contenu">
+    {% block topbar %}
+    <ol class="breadcrumb">
+    {% if context is defined %}
+	  <li><a href="/">Accueil</a></li><li><span>{{ context.currentStep.name }}</span></li>
+	{% endif %}
+	</ol>
+	{% endblock %}
+	
+        <div class="row">
+            
+            <div class="col-md-12">
+                {% block content %}
+                
+                	<div class="col-md-3 nopadding" id="sidebar">
+		                {% block sidebar %}
+		                
+		                {{ knp_menu_render('sylius.frontend.cart.sidebar', {'template': 'SyliusWebBundle:Frontend:menu_cart.html.twig'}) }}
+		
+		                {% endblock %}
+		            </div>
+                {% endblock %}
+            </div>
+        </div>
+        
+       
+</div>       
+{% endblock %}

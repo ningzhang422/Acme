@@ -6,11 +6,15 @@
 {% from 'SyliusWebBundle:Frontend/Product:macros.html.twig' import grid4 %}
 
 {% block container %}
-<div class="container-fluid" style='background: url("{{ asset('bundles/syliusweb/img/' ~ app.request.locale ~ '_' ~ app.request.get('permalink')|split('/')[1] ~'.jpg') }}") no-repeat scroll center top #988799; float:left; width:100%;margin:176px auto;'>
+<div class="container-fluid" style='background: url("{{ asset('bundles/syliusweb/img/' ~ app.request.locale ~ '_' ~ app.request.get('permalink')|split('/')[1] ~'.jpg') }}") no-repeat scroll center top #988799; float:left; width:100%;margin:176px auto 0;'>
 
 	<div class="container" id="container_contenu_home" style="margin-top:290px;">
-      
-        <div class="row">
+      {% block topbar %}
+    <ol class="breadcrumb">
+	  <li><a href="/">Accueil</a></li><li><span>{{ taxon.parent.name }}</span></li><li><span>{{ taxon.name }}</span></li>
+	</ol>
+	{% endblock %}
+        <div class="row nopadding">
 			{% block content %}
 			<div class="page-header">
 			    <h1>{{ 'sylius.product.index_by_taxon_header'|trans({'%taxon%': taxon.name})|raw }}</h1>

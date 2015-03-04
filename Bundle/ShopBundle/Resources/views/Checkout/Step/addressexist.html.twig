@@ -1,8 +1,12 @@
-{% extends 'SyliusWebBundle:Frontend:layout.html.twig' %}
+{% extends 'SyliusWebBundle:Frontend:layout_checkout.html.twig' %}
 
 {% block javascripts %}
 {{ parent() }}
-
+{% javascripts output='assets/compiled/frontend_province.js'
+    'bundles/syliusweb/js/province-choices.js'
+%}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
 {% endblock %}
 
 {% block content %}
@@ -11,7 +15,8 @@
 </div>
 
 {% include 'SyliusWebBundle:Frontend/Checkout:_progressBar.html.twig' %}
-
+<div class="row nopadding">
+<div class="row form-vertical col-md-9 nopadding">
 <form method="post" action="{{ path('sylius_checkout_forward', {'stepName': context.currentStep.name}) }}" class="form-horizontal" novalidate>
 
 {{ form_errors(form) }}
@@ -22,7 +27,7 @@
     	
     	<div class="col-md-6 address-container">
             <div class="well">
-                <h4>{{ 'sylius.checkout.finalize.order.shipping_address'|trans }}</h4>
+                <h2 class="title">{{ 'sylius.checkout.finalize.order.shipping_address'|trans }}</h2>
                 {% set address = app.user.shippingAddress %}
                 <table id="addresses" class="table">
                 <tbody>
@@ -38,7 +43,7 @@
         </div>
         <div class="col-md-6 address-container">
             <div class="well">
-                <h4>{{ 'sylius.checkout.finalize.order.billing_address'|trans }}</h4>
+                <h2 class="title">{{ 'sylius.checkout.finalize.order.billing_address'|trans }}</h2>
                 {% set address = app.user.billingAddress %}
                 <table id="addresses" class="table">
                 <tbody>
@@ -61,7 +66,7 @@
                 {{ form_row(form.differentBillingAddress, {'attr': {'class': 'sylius-different-billing-address-trigger'}}) }}
             </div>
         </div>
-        <div class="col-md-6 hidden address-container" id="sylius-billing-address-container">
+        <div class="col-md-6 address-container hidden" id="sylius-billing-address-container">
             <div class="well">
                 <h4>{{ 'sylius.checkout.finalize.order.billing_address'|trans }}</h4>
                 {% include 'SyliusWebBundle:Frontend/Address:_form.html.twig' with {'form': form.billingAddress} %}
@@ -79,4 +84,8 @@
 </div>
 
 </form>
+</div>
+
+{{ parent() }}
+</div>
 {% endblock %}

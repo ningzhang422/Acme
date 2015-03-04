@@ -24,7 +24,7 @@
 
 {% block form_label %}
 {% spaceless %}
-    {% set label_attr = label_attr|merge({'class': label_attr.class|default('') ~ ' control-label col-lg-2'}) %}
+    {% set label_attr = label_attr|merge({'class': label_attr.class|default('') ~ ' control-label'}) %}
     {{ parent() }}
 {% endspaceless %}
 {% endblock form_label %}
@@ -89,7 +89,7 @@
 {% spaceless %}
     <div class="form-group{% if errors|length > 0 %} has-error{% endif %}">
         {{ form_label(form) }}
-        <div class="col-lg-10">
+        <div class="col-lg-12">
         {{ form_widget(form) }}
         {% for error in errors %}
             <span class="help-block form-error">
@@ -117,49 +117,120 @@
 
 {% block sylius_shipping_method_choice_widget %}
     {% spaceless %}
-        <div {{ block('widget_container_attributes') }}>
+        <div {{ block('widget_container_attributes') }} class='row'>
             {% for child in form %}
             {% set div_id = 'method_id_'~shipment_category_ids[child.vars.value] %}
-                <div id='{{div_id}}'>
-                    {% if shipping_costs[child.vars.value] is defined %}
-                        <span class="pull-right text-muted">{{ shipping_costs[child.vars.value]|sylius_price }}</span>
-                    {% endif %}
+                <div id='{{div_id}}' class='method_option col-md-4'>
                     <label{% for attrname, attrvalue in child.vars.label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+                        
+                        {% if 'Livraison' in child.vars.label|trans({}, translation_domain) %}
+                        {# if cart.total < 5000 #}
+					    {#	<i><span class="glyphicon glyphicon-info-sign"></span> {{ 'sylius.frontend.panier.less50'|trans }}</i>#}
+					    {# else #}
+					    	{{ form_widget(child, { 'attr': {'class': 'shipping_method'} }) }}
+					    {# endif #}
+                        
+                        {{ child.vars.label|trans({}, translation_domain) }}<br>
+                        	<img src="{{ asset('bundles/syliusweb/img/picto_livraison_n.png') }}" />
+                        	<br>
+                        	{# if cart.total >= 5000 #}
+	                        {% if shipping_costs[child.vars.value] is defined %}
+		                        <span class="pull-right text-muted">{{ shipping_costs[child.vars.value]|sylius_price }}</span>
+		                    {% endif %}
+		                    {# endif #}
+                        {% else %}
                         {{ form_widget(child, { 'attr': {'class': 'shipping_method'} }) }}
-                        {{ child.vars.label|trans({}, translation_domain) }}
+                        {{ child.vars.label|trans({}, translation_domain) }}<br>
+                        	<img src="{{ asset('bundles/syliusweb/img/picto_retraitMagasin.png') }}" />
+                        	<br>
+	                        {% if shipping_costs[child.vars.value] is defined %}
+		                        <span class="pull-right text-muted">{{ shipping_costs[child.vars.value]|sylius_price }}</span>
+		                    {% endif %}
+                        {% endif %}
+                        
                     </label>
                 </div>
             {% endfor %}
         </div>
+       
+            {% for child in form %}
+            {% set table_id = 'address_table_'~shipment_category_ids[child.vars.value] %}
+                {% if shipment_method_types[child.vars.value] == '1' %}
+                	
+                	<table width="90%" border=2 style="table-layout: fixed;display:none;" class="fixed-width weekly address_table" id="{{table_id}}">
+	                	<thead>
+	                		<tr>
+	                		<th><p><b><span class="glyphicon glyphicon-map-marker"></span>  {{ 'sylius.frontend.shipping.retrait.title'|trans }}</b></p></th>
+	                		<th><p><b><span class="glyphicon glyphicon-file"></span>  {{ 'sylius.frontend.shipping.retrait.address_bill'|trans }}</b></p></th></tr>
+	                	</thead>
+	                	<tbody>
+	                	<tr><td>
+						{% include 'SyliusWebBundle:Frontend/Address:_show.html.twig' with {'address': magasin} %}
+						</td><td>
+	                	{% include 'SyliusWebBundle:Frontend/Address:_show.html.twig' with {'address': app.user.billingAddress} %}
+	                	</td></tr>
+	                	</tbody>
+	                </table>
+                {% else %}
+                	<table width="90%" border=2 style="table-layout: fixed;display:none;" class="fixed-width weekly address_table" id="{{table_id}}">
+	                	<thead>
+	                		<tr>
+	                		<th><p><b><span class="glyphicon glyphicon-plane"></span>  {{ 'sylius.frontend.shipping.livraison.address_ship'|trans }}</b></p></th>
+	                		<th><p><b><span class="glyphicon glyphicon-file"></span>  {{ 'sylius.frontend.shipping.livraison.address_bill'|trans }}</b></p></th></tr>
+	                	</thead>
+	                	<tbody>
+	                	<tr><td>
+						{% include 'SyliusWebBundle:Frontend/Address:_show.html.twig' with {'address': app.user.shippingAddress} %}
+						</td><td>
+	                	{% include 'SyliusWebBundle:Frontend/Address:_show.html.twig' with {'address': app.user.billingAddress} %}
+	                	</td></tr>
+	                	</tbody>
+	                </table>
+                {% endif %}
+            {% endfor %}
     {% endspaceless %}
 {% endblock %}
 
 {% block sylius_shipping_creneau_choice_widget %}
     {% spaceless %}
-        <div {{ block('widget_container_attributes') }}>
+        <div {{ block('widget_container_attributes') }} class="btn-group" data-toggle="buttons">
+        {% for key,value in shipment_method_types %}
+        {% set message_id = 'planning_message_'~key%}
+        	{% if not value %}
+        		<p id="{{message_id}}" style="display:none;"><b><span class="glyphicon glyphicon-time"></span>  {{ 'sylius.frontend.shipping.livraison.creneautitle'|trans }}</b><br><i>{{ 'sylius.frontend.shipping.livraison.description'|trans }}</i></p>
+        	{% else %}
+        		<p id="{{message_id}}" style="display:none;"><b><span class="glyphicon glyphicon-time"></span>  {{ 'sylius.frontend.shipping.retrait.creneautitle'|trans }}</b><br><i>{{ 'sylius.frontend.shipping.retrait.description'|trans }}</i></p>
+        	{% endif %}
+        {% endfor %}
         {% for key, table in creneau_tables %}
         	{% set table_id = 'planning_table_'~key%}
-        	<table width="100%" border=2 style="table-layout: fixed;" class="fixed-width weekly" id="{{table_id}}">
+        	<table width="100%" border=2 style="table-layout: fixed; display:none;" class="fixed-width weekly" id="{{table_id}}">
 				<thead>
 				    <tr>
 				    	<th class="week_th"></th>
-				    	<th>{{ "now"|date("d/m/Y") }}</th>
+				    	<th class="week_th">{{ 'now' | localizeddate('full', 'none')|split(' ')[0] }}<br> {{ "now"|date("d/m") }}</th>
 				    	{% for i in 1..6 %}
-				    		<th>{{ "now"|date("Y-m-d")|date_modify("+"~i~" day")|date("d/m/Y") }}</th>
+				    		<th class="week_th">{{ "now"|date("Y-m-d")|date_modify("+"~i~" day") | localizeddate('full', 'none')|split(' ')[0] }} <br>{{ "now"|date("Y-m-d")|date_modify("+"~i~" day")|date("d/m") }}</th>
 				        {% endfor %}
 				    </tr>
 				</thead>
 				<tbody>
 					{% for key, value in table %}
 						<tr>
-							<td>{{key}}</td>
+							<td class="creneau_td">{{key|replace({ (':'): 'h' })|replace({ ('-'): ' / ' }) }}</td>
 							<td>
 								{% for child in form %}
 									{% if child.vars.label == value["now"|date("d/m/Y")]|default('') %}
 										{% if shipment_creneau_valide[child.vars.value] %}
-											{{ form_widget(child) }}
+											{% set time_creneau = key|split('-')[1]|split(':')[0] %}
+											{% set time_now = 'now' | localizeddate('none', 'short')|split(':')[0] %}
+											{% if time_now < time_creneau %}
+												<label class="btn btn-primary">{{ form_widget(child, { 'attr': {'autocomplete': 'off'} }) }}{{ 'sylius.frontend.shipping.active'|trans }}</label>
+											{% else %}
+												<label class="btn btn-primary disabled">{{ form_widget(child, { 'attr': {'autocomplete': 'off'} }) }}{{ 'sylius.frontend.shipping.disabled'|trans }}</label>
+											{% endif %}
 										{% else %}
-											{{ form_widget(child, { 'attr': {'class': 'indisponible'} }) }}
+											<label class="btn btn-primary disabled">{{ form_widget(child, { 'attr': {'autocomplete': 'off'} }) }}{{ 'sylius.frontend.shipping.disabled'|trans }}</label>
 										{% endif %}
 									{% endif %}
 								{% endfor %}
@@ -168,7 +239,11 @@
 				    		<td>
 				    			{% for child in form %}
 									{% if child.vars.label == value["now"|date("Y-m-d")|date_modify("+"~i~" day")|date("d/m/Y")]|default('') %}
-										{{ form_widget(child) }}
+										{% if shipment_creneau_valide[child.vars.value] %}
+											<label class="btn btn-primary">{{ form_widget(child, { 'attr': {'autocomplete': 'off'} }) }}{{ 'sylius.frontend.shipping.active'|trans }}</label>
+										{% else %}
+											<label class="btn btn-primary disabled">{{ form_widget(child, { 'attr': {'autocomplete': 'off'} }) }}{{ 'sylius.frontend.shipping.disabled'|trans }}</label>
+										{% endif %}
 									{% endif %}
 								{% endfor %}
 					        </td>

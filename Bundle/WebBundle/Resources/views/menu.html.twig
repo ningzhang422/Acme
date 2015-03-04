@@ -15,5 +15,5 @@
     {% endif %}
     
     
-    {% if item.labelAttribute('data-image') %}<img src="{{ item.labelAttribute('data-image')|imagine_filter('sylius_small', true) }}" alt="{{ item.name }}" class="menu-thumbnail"/>{% endif %}
+    {% if item.labelAttribute('data-image') %}<img src="{{ item.labelAttribute('data-image')|imagine_filter('sylius_small') }}" alt="{{ item.name }}" class="menu-thumbnail"/>{% endif %}
 {% endblock %}

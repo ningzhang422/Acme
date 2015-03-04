@@ -1,0 +1,111 @@
+<div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"><span class='glyphicon glyphicon-calendar'></span> {{'sylius.frontend.planning.planning_start_end'|trans({'%start_at%': start_at|date("d/m/Y"),'%end_at%': end_at|date("d/m/Y")})|raw}}</h4>
+            </div>
+
+            <div class="modal-body">
+            
+				<div role="tabpanel" class="popup_planning">
+				
+				
+				  <!-- Nav tabs -->
+				  <ul class="nav nav-tabs nav-justified" role="tablist">
+				    <li role="presentation" class="planning_li {% if app.request.uri|split('=')[1] == 'l' %}active{% endif %}"><a href="#livraison" aria-controls="livraison" role="tab" data-toggle="tab"><img src="{{ asset('bundles/syliusweb/img/picto_livraison_n.png') }}" />{{ 'sylius.frontend.planning.livraison'|trans }}</a></li>
+				    <li role="presentation" class="planning_li {% if app.request.uri|split('=')[1] == 'd' %}active{% endif %}"><a href="#drive" aria-controls="drive" role="tab" data-toggle="tab"><img src="{{ asset('bundles/syliusweb/img/picto_retraitMagasin.png') }}" />{{ 'sylius.frontend.planning.drive'|trans }}</a></li>
+				  </ul>
+				  
+				  
+				
+				  <!-- Tab panes -->
+				  <div class="tab-content popup_planning">
+				    {% for key, table in creneau_tables %}
+			        	{% set table_id = 'planning_table_'~key%}
+			        	{% if key == 'livraison' %}
+			        		<div role="tabpanel" class="tab-pane {% if app.request.uri|split('=')[1] == 'l' %}active{% endif %}" id="{{key}}">
+			        		<table border="0" style="width:100%;" class="{% if app.request.uri|split('=')[1] == 'l' %}active{% endif %}">
+        <tbody>
+            <tr>
+                <td colspan="2">
+                    Montant minimum de commande :
+                </td>
+                <td>50,00 euros</td>
+            </tr>
+        </tbody>
+    </table>
+			        	{% else %}
+			        		<div role="tabpanel" class="tab-pane {% if app.request.uri|split('=')[1] == 'd' %}active{% endif %}" id="{{key}}">
+			        		<table border="0" style="width:100%;" class="class="{% if app.request.uri|split('=')[1] == 'd' %}active{% endif %}"">
+        <tbody>
+            <tr>
+                <td colspan="2">
+                    Montant minimum de commande :
+                </td>
+                <td>5,00 euros</td>
+            </tr>
+        </tbody>
+    </table>
+			        	{% endif %}
+			        	<table width="100%" border=2 style="table-layout: fixed;" class="fixed-width weekly" id="{{table_id}}">
+							<thead>
+							    <tr>
+							    	<th class="week_th"></th>
+							    	<th class="week_th">{{ 'now' | localizeddate('full', 'none')|split(' ')[0] }}<br> {{ "now"|date("d/m") }}</th>
+							    	{% for i in 1..6 %}
+							    		<th class="week_th">{{ "now"|date("Y-m-d")|date_modify("+"~i~" day") | localizeddate('full', 'none')|split(' ')[0] }} <br>{{ "now"|date("Y-m-d")|date_modify("+"~i~" day")|date("d/m") }}</th>
+							        {% endfor %}
+							    </tr>
+							</thead>
+							<tbody>
+								{% for key, value in table %}
+									<tr>
+										<td class="creneau_td">{{key|replace({ (':'): 'h' })|replace({ ('-'): ' / ' }) }}</td>
+										<td>
+											{% for key2,value in value %}
+												{% if key2 == "now"|date("d/m/Y") %}
+													{% if shipment_creneau_valide[value] %}
+														{% set time_creneau = key|split('-')[1]|split(':')[0] %}
+														{% set time_now = 'now' | localizeddate('none', 'short')|split(':')[0] %}
+														{% if time_now < time_creneau %}
+															<label class="btn btn-primary">{{ 'sylius.frontend.shipping.active_short'|trans }}</label>
+														{% else %}
+															<label class="btn btn-primary disabled">{{ 'sylius.frontend.shipping.disabled_short'|trans }}</label>
+														{% endif %}
+													{% else %}
+														<label class="btn btn-primary disabled">{{ 'sylius.frontend.shipping.disabled_short'|trans }}</label>
+													{% endif %}
+												{% endif %}
+											{% endfor %}
+										</td>
+										{% for i in 1..6 %}
+							    		<td>
+							    			{% for key,value in value %}
+												{% if key == "now"|date("Y-m-d")|date_modify("+"~i~" day")|date("d/m/Y") %}
+													{% if shipment_creneau_valide[value] %}
+														<label class="btn btn-primary">{{ 'sylius.frontend.shipping.active_short'|trans }}</label>
+													{% else %}
+														<label class="btn btn-primary disabled">{{ 'sylius.frontend.shipping.disabled_short'|trans }}</label>
+													{% endif %}
+												{% endif %}
+											{% endfor %}
+								        </td>
+								        {% endfor %}
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+						
+
+						</div>
+			        {% endfor %}
+				    
+				  </div>
+				
+				</div>
+				
+				
+			</div>
+			
+    	</div>
+</div>

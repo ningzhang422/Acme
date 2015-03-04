@@ -50,6 +50,7 @@ class ProductController extends BaseProductController
                 throw new NotFoundHttpException('Requested taxon does not exist.');
             }
         }
+        //var_dump($this->get('sylius.repository.taxon')->getTaxonsAsListByParent($taxon));
 
         $paginator = $this
             ->getRepository()
@@ -63,12 +64,47 @@ class ProductController extends BaseProductController
         }
 		return $reponseALL;
     }
+    
+    public function promotionsAction(){
+    	$taxonomie = $this->get('sylius.repository.taxonomy')->find(4);
+    	$products = $this->get('sylius.repository.product')->findPromotions($taxonomie,12);
+    	
+    	return $this->render('SyliusWebBundle:Frontend/Product:latest.html.twig', array(
+    		'products' => $products,
+        ));
+    }
+    
+	public function promotions5Action(){
+    	$taxonomie = $this->get('sylius.repository.taxonomy')->find(4);
+    	$products = $this->get('sylius.repository.product')->findPromotions($taxonomie,5);
+    	
+    	return $this->render('SyliusWebBundle:Frontend/Product:latestSidebar.html.twig', array(
+    		'products' => $products,
+        ));
+    }
+    
+	public function topVentesAction(){
+    	$taxon = $this->get('sylius.repository.taxon')->find(25);
+    	$products = $this->get('sylius.repository.product')->findTaxon($taxon,12);
+    	
+    	return $this->render('SyliusWebBundle:Frontend/Product:latest.html.twig', array(
+    		'products' => $products,
+        ));
+    }
+    
+	public function newProductsAction(){
+    	$taxon = $this->get('sylius.repository.taxon')->find(24);
+    	$products = $this->get('sylius.repository.product')->findTaxon($taxon,12);
+    	
+    	return $this->render('SyliusWebBundle:Frontend/Product:latest.html.twig', array(
+    		'products' => $products,
+        ));
+    }
 
 	private function renderResults(TaxonInterface $taxon, Pagerfanta $results, $template, $page)
     {
         $results->setCurrentPage($page, true, true);
         $results->setMaxPerPage($this->config->getPaginationMaxPerPage());
-//die(var_dump($this->config->getTemplate($template)));
         $view = $this
             ->view()
             ->setTemplate($template)
@@ -85,5 +121,7 @@ class ProductController extends BaseProductController
 	{
 	    return $needle === "" || strpos($haystack, $needle) === 0;
 	}
+	
+	
     
 }
