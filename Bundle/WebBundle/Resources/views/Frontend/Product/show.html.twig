@@ -14,42 +14,43 @@
 
 <div class="row">
     <div class="col-md-3">
-        <a href="{{ path(product) }}" class="thumbnail">
-            <img src="{{ product.image ? product.image.path|imagine_filter('sylius_medium') : 'http://placehold.it/200x200' }}" alt="{{ product.name }}" />
-        </a>
+        
+        <img id="medium_image" data-zoom-image="{{ product.image.path|imagine_filter('sylius_large') }}" src="{{ product.image ? product.image.path|imagine_filter('sylius_medium') : 'http://placehold.it/200x200' }}" alt="{{ product.name }}" />
+        
         {% for taxon in product.taxons %}
-		{% if taxon.getPermalink()|split('/')[1] == 'top-des-ventes' %}
-			<img src="{{ asset('bundles/syliusweb/img/top-des-ventes.png') }}" alt="Asia 06" style="position:absolute; top:1px;left:1px;" />
-		{% elseif taxon.getPermalink()|split('/')[1] == 'toutes-nos-nouveautes' %}
-			<img src="{{ asset('bundles/syliusweb/img/toutes-nos-nouveautes.png') }}" alt="Asia 06" style="position:absolute; top:1px;left:1px;" />
-		{% elseif taxon.getPermalink()|split('/')[1] == '50' %}
-			<img src="{{ asset('bundles/syliusweb/img/50.png') }}" alt="Asia 06" style="position:absolute; top:1px;right:1px;" />
-			
-		{% elseif taxon.getPermalink()|split('/')[1] == '70' %}
-			<img src="{{ asset('bundles/syliusweb/img/70.png') }}" alt="Asia 06" style="position:absolute; top:1px;right:1px;" />
-			
-		{% elseif taxon.getPermalink()|split('/')[1] == '30' %}
-			<img src="{{ asset('bundles/syliusweb/img/30.png') }}" alt="Asia 06" style="position:absolute; top:1px;right:1px;" />
-		{% else %}
-	
+			{% if taxon.getPermalink()|split('/')[1] == 'top-des-ventes' %}
+				<img src="{{ asset('bundles/syliusweb/img/top-des-ventes.png') }}" alt="Asia 06" style="position:absolute; top:1px;left:1px;" />
+			{% elseif taxon.getPermalink()|split('/')[1] == 'toutes-nos-nouveautes' %}
+				<img src="{{ asset('bundles/syliusweb/img/toutes-nos-nouveautes.png') }}" alt="Asia 06" style="position:absolute; top:1px;left:1px;" />
+			{% elseif taxon.getPermalink()|split('/')[1] == '50' %}
+				<img src="{{ asset('bundles/syliusweb/img/50.png') }}" alt="Asia 06" style="position:absolute; top:1px;right:1px;" />
+				
+			{% elseif taxon.getPermalink()|split('/')[1] == '70' %}
+				<img src="{{ asset('bundles/syliusweb/img/70.png') }}" alt="Asia 06" style="position:absolute; top:1px;right:1px;" />
+				
+			{% elseif taxon.getPermalink()|split('/')[1] == '30' %}
+				<img src="{{ asset('bundles/syliusweb/img/30.png') }}" alt="Asia 06" style="position:absolute; top:1px;right:1px;" />
+			{% else %}
+		
+			{% endif %}
+		{% endfor %}
+		{% if product.images|length > 0 %}
+		<hr>
+		<div id="gallery">
+		    {% for image in product.images %}
+		        <a class="small_image" data-image="{{ image.path|imagine_filter('sylius_medium') }}" data-zoom-image="{{ image.path|imagine_filter('sylius_large') }}" href="#" title="{{ product.name }}" alt="{{ product.name }}">
+		            <img class="img-rounded" src="{{ image.path|imagine_filter('sylius_small') }}" alt="{{ product.name }}" />
+		        </a>
+		    {% endfor %}
+		</div>
 		{% endif %}
-	{% endfor %}
     </div>
     <div class="col-md-9">
         <a href="{{ path(product) }}" class="btn btn-link"><h3>{{ product.name }}</h3></a>
         <p>{{ product.shortDescription|default('sylius.product.no_description')|trans|raw }}</p>
     </div>
 </div>
-{% if product.images|length > 0 %}
-<hr>
-<div id="gallery">
-    {% for image in product.images %}
-        <a href="{{ image.path|imagine_filter('sylius_large') }}" title="{{ product.name }}">
-            <img class="img-rounded" src="{{ image.path|imagine_filter('sylius_small') }}" alt="{{ product.name }}" />
-        </a>
-    {% endfor %}
-</div>
-{% endif %}
+
 <hr>
 <div class="row">
     <div class="col-md-6">
@@ -168,7 +169,14 @@ $(document).ready(function() {
     	});
     	
     	initAddRemoveClic('modal');
-    	
+ /*   	
+    	$('.small_image').each(function(index,el) {
+    		$(el).on('click', function (e) {
+    			e.preventDefault();
+    			$('#medium_image').attr( "src", $(el).attr('href') );
+    		});
+    	});
+   */ 	
         $('.modal .add_item_into_cart').each(function(index,el) {
             //alert( this.id );
         	$(this).submit(function(e) {
@@ -197,6 +205,8 @@ $(document).ready(function() {
         	});
         });
 });
+
+ $("#medium_image").elevateZoom({gallery:'gallery', cursor: 'pointer', galleryActiveClass: 'active', imageCrossfade: true, loadingIcon: 'http://www.elevateweb.co.uk/spinner.gif'}); 
 
 })( jQuery );
 </script>
