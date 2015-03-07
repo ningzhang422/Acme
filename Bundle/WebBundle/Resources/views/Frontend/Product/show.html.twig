@@ -39,7 +39,7 @@
 		<div id="gallery">
 		    {% for image in product.images %}
 		        <a class="small_image" data-image="{{ image.path|imagine_filter('sylius_medium') }}" data-zoom-image="{{ image.path|imagine_filter('sylius_large') }}" href="#" title="{{ product.name }}" alt="{{ product.name }}">
-		            <img class="img-rounded" src="{{ image.path|imagine_filter('sylius_small') }}" alt="{{ product.name }}" />
+		            <img class="img-rounded" src="{{ image.path|imagine_filter('sylius_small') }}" alt="{{ product.name }}" height="58" wight="52" />
 		        </a>
 		    {% endfor %}
 		</div>
