@@ -58,12 +58,16 @@ sylius:
     product:
       weight: Poid :
       from: Origine :
+      you_like_also: Vous aimez aussi
     footer:
       societe: Super Asia
       security: Paiement Sécurisé
       s_description: Nos paiements en ligne sont sécurisés par le Crédit Agricole
       livraison: Livraison/Drive Pieton
       aide: Nos services
+  product:
+    attributes: Ingrédients
+    nutrition: Nutrition
   form:
     recette:
       name: Nom de la recette

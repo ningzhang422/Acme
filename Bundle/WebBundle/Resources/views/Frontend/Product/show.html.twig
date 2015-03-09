@@ -1,9 +1,18 @@
 {# extends 'SyliusWebBundle:Frontend:layout.html.twig' #}
 <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header" style=" padding-bottom:0;">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">{# 'sylius.confirmation.title'|trans #}</h4>
+            	{% if product.images|length > 0 %}
+				
+					<div id="gallery">
+					    {% for image in product.images %}
+					        <a class="small_image" data-image="{{ image.path|imagine_filter('sylius_medium') }}" data-zoom-image="{{ image.path|imagine_filter('sylius_large') }}" href="#" title="{{ product.name }}" alt="{{ product.name }}">
+					            <img class="img-rounded" src="{{ image.path|imagine_filter('sylius_small') }}" alt="{{ product.name }}" height="58" wight="52" />
+					        </a>
+					    {% endfor %}
+					</div>
+				{% endif %}
             </div>
 
             <div class="modal-body">
@@ -12,7 +21,7 @@
 
 {% block content %}
 
-<div class="row">
+<div class="row" id="quantity_show">
     <div class="col-md-3">
         
         <img id="medium_image" data-zoom-image="{{ product.image.path|imagine_filter('sylius_large') }}" src="{{ product.image ? product.image.path|imagine_filter('sylius_medium') : 'http://placehold.it/200x200' }}" alt="{{ product.name }}" />
@@ -34,50 +43,68 @@
 		
 			{% endif %}
 		{% endfor %}
-		{% if product.images|length > 0 %}
-		<hr>
-		<div id="gallery">
-		    {% for image in product.images %}
-		        <a class="small_image" data-image="{{ image.path|imagine_filter('sylius_medium') }}" data-zoom-image="{{ image.path|imagine_filter('sylius_large') }}" href="#" title="{{ product.name }}" alt="{{ product.name }}">
-		            <img class="img-rounded" src="{{ image.path|imagine_filter('sylius_small') }}" alt="{{ product.name }}" height="58" wight="52" />
-		        </a>
-		    {% endfor %}
-		</div>
-		{% endif %}
+		
     </div>
-    <div class="col-md-9">
-        <a href="{{ path(product) }}" class="btn btn-link"><h3>{{ product.name }}</h3></a>
+    <div class="col-md-6 row">
+        <h3>{{ product.name }}</h3>
         <p>{{ product.shortDescription|default('sylius.product.no_description')|trans|raw }}</p>
     </div>
+    {% if not product.hasOptions %}
+	            <div class="col-md-3 pull-right cart_botton">
+		            {% if not sylius_inventory_is_available(product.masterVariant) %}
+		                <br />
+		                <span class="label label-important">{{ 'sylius.out_of_stock'|trans }}</span>
+		            {% else %}
+		            	{% if acme_product_is_in_cart(product) %}
+		            		{% include 'AcmeWebBundle:Frontend/Product:_form_product_update.html.twig'%}
+		            	{% else %}
+			                <form action="{{ path('dp_ajax_add', {'id': product.id}) }}" method="post" class="clearfix add_item_into_cart {{ 'form_product_' ~ product.id }}" id="{{ 'form_product_' ~ product.id }}">
+			                    {% set form = sylius_cart_form({'product': product}) %}
+			                    {{ form_widget(form.quantity, {'attr': {'class': 'center-text hide'}, 'empty_value': '1'}) }}
+			                    {{ form_widget(form._token) }}
+			                    {#<button type="submit" class="btn btn-success"><i class="icon-shopping-cart icon-white"></i> </button>#}
+			                	{#<input type='image' src='{{ asset('/bundles/syliusweb/img/picto_panier.png') }}' />#}
+			                	<button type="submit" class="btn pull-right btn-danger"><i class="icon-shopping-cart icon-white"></i> </button>
+			                </form>
+			            {% endif %}
+		            {% endif %}
+	            </div>
+	        {% else %}
+	        	<div class="col-md-3 pull-right">
+		            <img src='{{ asset('/bundles/syliusweb/img/picto_blank.png') }}' />
+	            </div>
+	        {% endif %}
 </div>
 
-<hr>
-<div class="row">
-    <div class="col-md-6">
-        {% if product.attributes|length > 0 %}
-        <table class="table table-condensed">
-            <thead>
-                <tr>
-                    <th colspan="2">{{ 'sylius.product.attributes'|trans }}</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for attribute in product.attributes %}
-                <tr>
-                    <td>{{ attribute.presentation }}</td>
-                    <td>{{ attribute.value }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        {% endif %}
-    </div>
-    <div class="col-md-6">
-        <h4>{{ 'sylius.product.description'|trans }}</h4>
-        <p>{{ product.description|default('sylius.product.no_description')|trans|raw }}</p>
-    </div>
-</div>
-<hr>
+				<ul class="nav nav-tabs" role="tablist" id="myTab">
+				  <li role="presentation" class="active"><a href="#youlikealso" aria-controls="youlikealso" role="tab" data-toggle="tab">{{'sylius.frontend.product.you_like_also'|trans}}</a></li>
+				  <li role="presentation"><a href="#attributes" aria-controls="attributes" role="tab" data-toggle="tab">{{ 'sylius.product.attributes'|trans }}</a></li>
+				  <li role="presentation"><a href="#description" aria-controls="description" role="tab" data-toggle="tab">{{ 'sylius.product.description'|trans }}</a></li>
+				  
+				</ul>
+				
+				<div class="tab-content padding-top5">
+				  <div role="tabpanel" class="tab-pane active" id="youlikealso">{{ render(url('sylius_partial_product_latest', {'limit': 4, 'template': 'SyliusWebBundle:Frontend/Product:grid4.html.twig'})) }}</div>
+				  <div role="tabpanel" class="tab-pane" id="attributes">
+					<table class="table table-condensed">
+			            <thead>
+			                <tr>
+			                    <th colspan="2">{# 'sylius.product.attributes'|trans #}</th>
+			                </tr>
+			            </thead>
+			            <tbody>
+			                {% for attribute in product.attributes %}
+			                <tr>
+			                    <td>{{ attribute.presentation }}</td>
+			                    <td>{{ attribute.value }}</td>
+			                </tr>
+			                {% endfor %}
+			            </tbody>
+			        </table>
+				  </div>
+				  <div role="tabpanel" class="tab-pane" id="description">{{ product.description|default('sylius.product.no_description')|trans|raw }}</div>
+				  
+				</div>
 <div class="row">
     {#<form action="{{ path('sylius_cart_item_add', {'id': product.id}) }}" method="post" class="clearfix form-horizontal">#}
     {% if product.hasVariants %}
@@ -126,31 +153,7 @@
             {% endif %}
         </div>
     {% endif %}
-    {% if not product.hasOptions %}
-	            <div class="col-md-6 pull-right cart_botton">
-		            {% if not sylius_inventory_is_available(product.masterVariant) %}
-		                <br />
-		                <span class="label label-important">{{ 'sylius.out_of_stock'|trans }}</span>
-		            {% else %}
-		            	{% if acme_product_is_in_cart(product) %}
-		            		{% include 'AcmeWebBundle:Frontend/Product:_form_product_update.html.twig'%}
-		            	{% else %}
-			                <form action="{{ path('dp_ajax_add', {'id': product.id}) }}" method="post" class="clearfix add_item_into_cart {{ 'form_product_' ~ product.id }}" id="{{ 'form_product_' ~ product.id }}">
-			                    {% set form = sylius_cart_form({'product': product}) %}
-			                    {{ form_widget(form.quantity, {'attr': {'class': 'center-text hide'}, 'empty_value': '1'}) }}
-			                    {{ form_widget(form._token) }}
-			                    {#<button type="submit" class="btn btn-success"><i class="icon-shopping-cart icon-white"></i> </button>#}
-			                	{#<input type='image' src='{{ asset('/bundles/syliusweb/img/picto_panier.png') }}' />#}
-			                	<button type="submit" class="btn btn-danger"><i class="icon-shopping-cart icon-white"></i> </button>
-			                </form>
-			            {% endif %}
-		            {% endif %}
-	            </div>
-	        {% else %}
-	        	<div class="col-md-6 pull-right">
-		            <img src='{{ asset('/bundles/syliusweb/img/picto_blank.png') }}' />
-	            </div>
-	        {% endif %}
+    
 {#</form>#}
 </div>
 {% endblock %}
@@ -205,6 +208,17 @@ $(document).ready(function() {
         	});
         });
 });
+
+ $('.popup_a').click(function(e){
+        	e.preventDefault();
+            var thehref = this.href;
+
+            // load the url and show modal on success
+            $("#modal_product").load(thehref, function() { 
+                 $("#modal_product").modal("show"); 
+            });
+            
+        });
 
  $("#medium_image").elevateZoom({gallery:'gallery', cursor: 'pointer', galleryActiveClass: 'active', imageCrossfade: true, loadingIcon: 'http://www.elevateweb.co.uk/spinner.gif'}); 
 
