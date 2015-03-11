@@ -1,8 +1,8 @@
 <div class="product-box">
-    <a href="{{ path(product) }}" class="popup_a">
-        <img class="img-rounded img-responsive" src="{{ product.image ? product.image.path|imagine_filter('sylius_medium') : 'http://placehold.it/262x255' }}" alt="{{ product.name }}" />
-    </a>
-    <a href="{{ path(product) }}" class="popup_a"><h6 style="padding:0 0 0 3px;">{{ product.name|truncate(18) }}</h6></a>
+    
+        <img class="img-rounded img-responsive popup_a" src="{{ product.image ? product.image.path|imagine_filter('sylius_medium') : 'http://placehold.it/262x255' }}"  alt="{{ path(product) }}" />
+   
+    <h6 style="padding:0 0 0 3px;">{{ product.name|truncate(18) }}</h6>
     <p class="small" style="padding:0 0 0 3px;">
 	{% for attribute in product.attributes %}
                 <b>{{ attribute.presentation }}

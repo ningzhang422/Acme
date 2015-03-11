@@ -84,7 +84,7 @@
 	{% else %}
 		{% set class_a = ''%}
 	{% endif %}
-	<a class="{{class_a}}"  href="{{ item.uri }}"{{ _self.attributes(item.linkAttributes) }}>{{ block('label') }}</a>{% endblock %}
+	<a class="{{class_a}}" rel="{{ item.uri }}"  href="#"{{ _self.attributes(item.linkAttributes) }}>{{ block('label') }}</a>{% endblock %}
 
 {% block spanElement %}<span{{ _self.attributes(item.labelAttributes) }}>{{ block('label') }}</span>{% endblock %}
 
