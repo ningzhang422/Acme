@@ -84,8 +84,12 @@
 	{% else %}
 		{% set class_a = ''%}
 	{% endif %}
-	<a class="{{class_a}}" rel="{{ item.uri }}"  href="#"{{ _self.attributes(item.linkAttributes) }}>{{ block('label') }}</a>{% endblock %}
-
+	{% if class_a == '' %}
+		<a class="{{class_a}}"  href="{{ item.uri }}" {{ _self.attributes(item.linkAttributes) }}>{{ block('label') }}</a>
+	{% else %}
+		<a class="{{class_a}}" rel="{{ item.uri }}"  href="#"{{ _self.attributes(item.linkAttributes) }}>{{ block('label') }}</a>
+	{% endif %}
+{% endblock %}
 {% block spanElement %}<span{{ _self.attributes(item.labelAttributes) }}>{{ block('label') }}</span>{% endblock %}
 
 {% block labelElement %}<label{{ _self.attributes(item.labelAttributes) }}>{{ block('label') }}</label>{% endblock %}
