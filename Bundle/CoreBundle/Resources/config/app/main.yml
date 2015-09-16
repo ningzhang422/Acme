@@ -8,6 +8,9 @@ imports:
     - { resource: @SyliusInventoryBundle/Resources/config/state-machine.yml }
     - { resource: @SyliusCoreBundle/Resources/config/state-machine.yml }
 
+twig:
+    exception_controller: 'FOS\RestBundle\Controller\ExceptionController::showAction'
+
 doctrine_cache:
     providers:
         sylius_settings: %sylius.cache%
@@ -105,3 +108,8 @@ hwi_oauth:
             client_id:     %sylius.oauth.google.clientid%
             client_secret: %sylius.oauth.google.clientsecret%
             scope:         "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
+a2lix_translation_form:
+    locale_provider: sylius.locale_provider
+    manager_registry: doctrine
+    templating: "A2lixTranslationFormBundle::default.html.twig"
+    #locales: [fr, zh_CN]       # [1]

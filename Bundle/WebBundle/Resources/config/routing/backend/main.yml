@@ -2,14 +2,14 @@
 # (c) Paweł Jędrzejewski
 
 sylius_backend_index:
-    pattern: /
+    path: /
     defaults:
         _controller: FrameworkBundle:Redirect:redirect
         route: sylius_backend_dashboard
         permanent: true
 
 sylius_backend_dashboard:
-    pattern: /dashboard
+    path: /dashboard
     defaults: { _controller: sylius.controller.backend.dashboard:mainAction }
 
 sylius_backend_user:
@@ -40,9 +40,9 @@ sylius_backend_product_attribute:
     resource: @SyliusWebBundle/Resources/config/routing/backend/product_attribute.yml
     prefix: /product-attributes
 
-sylius_backend_product_prototype:
-    resource: @SyliusWebBundle/Resources/config/routing/backend/product_prototype.yml
-    prefix: /product-prototypes
+sylius_backend_product_archetype:
+    resource: @SyliusWebBundle/Resources/config/routing/backend/product_archetype.yml
+    prefix: /product-archetypes
 
 sylius_backend_taxonomy:
     resource: @SyliusWebBundle/Resources/config/routing/backend/taxonomy.yml
@@ -162,3 +162,6 @@ sylius_backend_content:
 sylius_backend_recette:
     resource: @AcmeWebBundle/Resources/config/routing/backend/recette.yml
     prefix: /recettes
+sylius_backend_email:
+    resource: @SyliusWebBundle/Resources/config/routing/backend/email.yml
+    prefix: /emails

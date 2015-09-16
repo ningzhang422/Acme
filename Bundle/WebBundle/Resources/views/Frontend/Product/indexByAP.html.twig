@@ -6,7 +6,7 @@
 {% from 'SyliusWebBundle:Frontend/Product:macros.html.twig' import grid4 %}
 
 {% block container %}
-<div class="container-fluid" style='background: url("{{ asset('bundles/syliusweb/img/' ~ app.request.locale ~ '_' ~ app.request.get('permalink')|split('/')[1] ~'.jpg') }}") no-repeat scroll center top #988799; float:left; width:100%;margin:176px auto 0;'>
+<div class="container-fluid" style='background: url("{{ asset('bundles/syliusweb/img/' ~ app.request.locale ~ '_' ~ app.request.get('permalink') ~'.jpg') }}") no-repeat scroll center top #988799; float:left; width:100%;margin:176px auto 0;'>
 
 	<div class="container" id="container_contenu_home" style="margin-top:290px;">
       {% block topbar %}

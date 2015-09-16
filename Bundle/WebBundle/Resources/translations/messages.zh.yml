@@ -28,53 +28,53 @@ sylius:
   frontend:
     menu:
       main:
-        rayons: Rayons
-        topic: Actualités
-        promotion: Promotions
+        rayons: 产品分类
+        topic: 活动中心
+        promotion: 折扣区
         magasin: ?
       sous_topic:
-        title: Nos boutiques
-        top_vente: Top Ventes
-        new_product: Nouveautés
-        nos_select: Nos selections
+        title: 我们的店铺
+        top_vente: 明星产品
+        new_product: 新品上市
+        nos_select: 店铺推荐
       sous_promo:
-        title: Promotions
+        title: 折扣
     panier:
       popover:
-        contenu: 1 article a été ajouté dans le panier.
-      less5: Attention, vous n'avez pas atteint le minimum de commande de 5,00 €
-      less50: Attention, vous n'avez pas atteint le minimum de commande de 50,00 €
+        contenu: 1 产品已加入购物框
+      less5: 注意, 您的购物金额小于 5,00 €
+      less50: 注意, 您的购物金额小于 50,00 €
     planning:
-      title: Planning de commande
-      drive: DRIVE PIETON
-      livraison: LIVRAISON A DOMICILE
-      c_tarif: >> Consultez le planning et les tarifs
-      planning_start_end: Planning du %start_at% au %end_at%
+      title: 送货取货时间表
+      drive: 来店取货
+      livraison: 送货上门
+      c_tarif: >> 了解时间表和价格
+      planning_start_end: 从 %start_at% 到 %end_at% 的送货取货时间表
     avantage:
-      title: Mes avantages
-      service2: SuperAsie s'engage sur la fraîcheur de vos produits
-      service1: Vos courses entre de bonnes mains
-      service3: Les prix et promotions
-      service4: SuperAsie s'engage à vous proposer un large choix de produits et de promotions à prix magasin 
+      title: 我们的优势
+      service2: 大亚超确保产品的质量，生鲜产品绝对新鲜。
+      service1: 我们的柜台经理亲自为您挑选您所选购的产品。
+      service3: 价格公道，优惠多多
+      service4: 大亚超保证价格和我们实体店的柜台价格对等。
     homepage:
-      banteau_1: Je découvre les sélections
-      banteau_2: J'en profite
-      banteau_3: De la chaleur à votre table
-      difficulte: Difficulté
-      people: Personnes
-      preparation: Pour préparer
-      cuisson: Pour le faire cuire
-      search_value: Saisissez vos mots clés pour une recherche produit..
+      banteau_1: 我来看看
+      banteau_2: 我来享受
+      banteau_3: 教你做菜
+      difficulte: 难易度
+      people: 人数
+      preparation: 准备时间
+      cuisson: 烹饪时间
+      search_value: 填写您想要搜索的产品关键字
     search:
-      resault: Résultats
-      keywords: Mot clé est
-      home: Accueil
-      search: Rechercher
+      resault: 查询结果
+      keywords: 关键字是
+      home: 首页
+      search: 查询
     shipping:
-      disabled: Complet
-      active: Disponible
-      disabled_short: Complet
-      active_short: Dispo.
+      disabled: 客满
+      active: 尚可
+      disabled_short: 客
+      active_short: 尚可
       livraison:
         address_bill: Mon adresse de facturation
         address_ship: Mon adresse de livraison
@@ -87,15 +87,15 @@ sylius:
         creneautitle: Mon créneau de retrait
     recette: Nos recettes asiatique
     product:
-      weight: Poid :
-      from: Origine :
-      you_like_also: Vous aimez aussi
+      weight: 重量 :
+      from: 产地 :
+      you_like_also: 您有可能喜欢
     footer:
-      societe: Super Asia
-      security: Paiement Sécurisé
-      s_description: Nos paiements en ligne sont sécurisés par le Crédit Agricole
-      livraison: Livraison/Drive Pieton
-      aide: Nos services
+      societe: 超级亚洲市场
+      security: 在线支付
+      s_description: 我们的在线支付系统是被xx银行认证过的。
+      livraison: 送货上门
+      aide: 售后服务
   product:
     attributes: Ingrédients
     nutrition: Nutrition
@@ -112,25 +112,13 @@ sylius:
       preparation: Combien de minutes pour préparer ?
       cuisson: Combien de minutes pour cuire ?
       difficulte: Difficulté(1-5)
-    email:
-      code: Code
-      enabled: Enabled?
-      subject: Subject
-      updated_at: Last update
-      create: Add new Email
-      create_header: Adding new Email
-      index_header: Email Templates
-      manage: Manage Emails
-      no_results: There are no emails configured.
-      update_header: Editing Email
-      sender_name: Sendeur
   recette:
     create: Créer une recette
     index_header: Recette n°
     create_header: Créer une recette ici
     index_by_recette_header: Nous vous proposons %nb_recette% recettes asiatiques
-    banteau_1: INGRÉDIENTS PRINCIPAUX
-    banteau_2: PRÉPARATION
+    banteau_1: 原材料
+    banteau_2: 准备工作
     retour: Tous les recette
   cart:
     empty: Votre panier est vide
@@ -145,7 +133,7 @@ sylius:
       total: Total
       unit_price: Prix
     summary_header: Récapitulatif du panier
-    total_items: '%count% produits'
+    total_items: '%count% 产品'
 acme:
   form:
     address:

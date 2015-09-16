@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Sylius\Bundle\WebBundle\Controller\Frontend;
+namespace Acme\Bundle\WebBundle\Controller\Frontend;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,11 +28,13 @@ class HomepageController extends Controller
      */
     public function mainAction()
     {
+    	
 		$repository = $this->container->get('sylius.repository.magasin');
-
-		$magasin = $repository->find($this->container->get('sylius.context.magasin')->getMagasin())->getName();
+		$sylius_locale = $this->container->get('sylius.context.locale');
+		//$magasin = $repository->find($this->container->get('sylius.context.magasin')->getMagasin())->getName();
         return $this->render('SyliusWebBundle:Frontend/Homepage:main.html.twig',array(
-						'magasin' => $magasin,
+						//'magasin' => $magasin,
+        				'sylius_locale' => $sylius_locale->getLocale(),
 					)
 				);
     }

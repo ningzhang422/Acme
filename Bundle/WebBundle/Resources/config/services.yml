@@ -3,10 +3,11 @@ parameters:
     #sylius.form.frontend.registration.type.class: Acme\Bundle\ShopBundle\Form\RegistrationFormType
     #sylius.form.frontend.profile.type.class: Acme\Bundle\ShopBundle\Form\ProfileFormType
     fos_user.model.user.class: Acme\Bundle\ShopBundle\Entity\User
-    sylius.form.type.address.class: Acme\Bundle\ShopBundle\Form\Type\AddressType
+    #sylius.form.type.address.class: Acme\Bundle\ShopBundle\Form\Type\AddressType
     sylius.form.type.shipping_method_choice.class: Acme\Bundle\ShopBundle\Form\Type\ShippingMethodChoiceType
     sylius.menu_builder.frontend.class: Acme\Bundle\WebBundle\Menu\FrontendMenuBuilder
-
+    sylius.controller.frontend.homepage.class: Acme\Bundle\WebBundle\Controller\Frontend\HomepageController
+    sylius.controller.cart_item.class: Acme\Bundle\CartBundle\Controller\CartItemController
 services:
     acme_reports.menu_builder:
         class: Acme\Bundle\WebBundle\EventListener\MenuBuilderListener
@@ -58,3 +59,9 @@ services:
         scope: request
         tags:
             - { name: knp_menu.menu, alias: sylius.frontend.topic }
+    
+    sylius.menu_builder.frontend:
+        class: Acme\Bundle\WebBundle\Menu\FrontendMenuBuilder
+        arguments:  [@knp_menu.factory,@security.context,@translator,@event_dispatcher,@sylius.currency_provider,@sylius.repository.taxonomy,@sylius.repository.promotion,@sylius.cart_provider,@sylius.templating.helper.currency]
+        calls:
+            - [ setRequest, [ @request= ] ] 

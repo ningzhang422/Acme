@@ -51,9 +51,6 @@
 					<div class="masthead pull-right cartmenu">
 						{{ knp_menu_render('sylius.frontend.cart', {'template': 'SyliusWebBundle::menu.html.twig'}) }}
 					</div>
-					<div class="locale-menu masthead pull-right">
-		                {{ knp_menu_render('sylius.frontend.locale', {'template': 'SyliusWebBundle::menu.html.twig'}) }}
-		            </div>
 					{#
 					<div class="locale-menu masthead pull-right">
 						{{ knp_menu_render('sylius.frontend.locale', {'template': 'SyliusWebBundle:Frontend:menu.html.twig'}) }}
@@ -163,7 +160,7 @@
             			<div class="col-md-3" style="background:#fff;height:150px;">
             				<h3><span class="glyphicon glyphicon-map-marker"></span> {{ 'sylius.frontend.footer.societe'|trans }}</h3>
 							<p>Adresse xxx xxx xxx xxx xxxx</p><br>
-            				{# knp_menu_render({'name': '/cms/menus/superasia-'~app.request.locale}) #}
+            				{{ knp_menu_render({'name': '/cms/menus/SuperAsia'}) }}
             			</div>
             			<div class="col-md-3" style="background:#fff;height:150px;">
             				<h3><span class="glyphicon glyphicon-lock"></span> {{ 'sylius.frontend.footer.security'|trans }}</h3>

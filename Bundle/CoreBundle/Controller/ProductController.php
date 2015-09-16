@@ -3,7 +3,7 @@
 /*
  * This file is part of the Sylius package.
  *
- * (c) Paweł Jędrzejewski
+ * (c) Pawe≈Ç Jƒôdrzejewski
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -23,7 +23,7 @@ use Sylius\Bundle\CoreBundle\Controller\ProductController as BaseProductControll
 /**
  * Product controller.
  *
- * @author Paweł Jędrzejewski <pawel@sylius.org>
+ * @author Pawe≈Ç Jƒôdrzejewski <pawel@sylius.org>
  */
 class ProductController extends BaseProductController
 {
@@ -57,7 +57,8 @@ class ProductController extends BaseProductController
             ->createByTaxonPaginator($taxon)
         ;
         
-        if($this->startsWith($permalink,'category')){
+        
+        if($taxon->getTaxonomy()->getId() == 2){
         	$reponseALL = $this->renderResults($taxon, $paginator, 'SyliusWebBundle:Frontend/Product:indexByTaxon.html.twig', $request->get('page', 1));
         }else{
         	$reponseALL = $this->renderResults($taxon, $paginator, 'SyliusWebBundle:Frontend/Product:indexByAP.html.twig', $request->get('page', 1));

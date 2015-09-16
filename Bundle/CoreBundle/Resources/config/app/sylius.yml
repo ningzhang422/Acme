@@ -1,7 +1,5 @@
 sylius_core:
     driver: doctrine/orm
-    emails:
-        enabled: false
     routing:
         %sylius.model.product.class%:
             field: slug
@@ -34,7 +32,10 @@ sylius_money:
     currency: %sylius.currency%
     locale: %sylius.locale%
 
-sylius_locale: ~
+sylius_locale:
+    classes:
+        locale:
+            controller: Acme\Bundle\CoreBundle\Controller\LocaleController
 
 sylius_currency: ~
 
@@ -65,10 +66,17 @@ sylius_taxonomy:
     classes:
         taxonomy:
             model: Acme\Bundle\ShopBundle\Entity\Taxonomy
+            repository: Sylius\Bundle\ResourceBundle\Doctrine\ORM\TranslatableEntityRepository
             form: Sylius\Bundle\CoreBundle\Form\Type\TaxonomyType
+            translatable:
+                targetEntity: Sylius\Component\Taxonomy\Model\TaxonomyTranslation
+        taxonomy_translation: ~
         taxon:
             model: Sylius\Component\Core\Model\Taxon
             form: Sylius\Bundle\CoreBundle\Form\Type\TaxonType
+            translatable:
+                targetEntity: Sylius\Component\Taxonomy\Model\TaxonTranslation
+        taxon_translation: ~
 
 sylius_product:
     driver: doctrine/orm
@@ -77,7 +85,27 @@ sylius_product:
             model: Sylius\Component\Core\Model\Product
             controller: Acme\Bundle\CoreBundle\Controller\ProductController #Sylius\Bundle\CoreBundle\Controller\ProductController
             repository: Acme\Bundle\ShopBundle\Repository\ProductRepository #Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductRepository
-            form: Sylius\Bundle\CoreBundle\Form\Type\ProductType
+            form:
+                default: Sylius\Bundle\CoreBundle\Form\Type\ProductType
+            translatable:
+                targetEntity: Sylius\Component\Core\Model\ProductTranslation
+        product_translation:
+            model: Sylius\Component\Core\Model\ProductTranslation
+
+
+sylius_archetype:
+    classes:
+        product:
+            subject: Sylius\Component\Core\Model\Product
+            attribute: Sylius\Component\Product\Model\Attribute
+            option: Sylius\Component\Product\Model\Option
+            archetype:
+                model: Sylius\Component\Product\Model\Archetype
+                repository: Sylius\Bundle\ResourceBundle\Doctrine\ORM\TranslatableEntityRepository
+                translatable:
+                    targetEntity: Sylius\Component\Product\Model\ArchetypeTranslation
+            archetype_translation:
+                model: Sylius\Component\Product\Model\ArchetypeTranslation
 
 sylius_attribute: ~
 
@@ -104,7 +132,11 @@ sylius_shipping:
             model: Sylius\Component\Core\Model\InventoryUnit
         shipping_method:
             model: Acme\Bundle\PeriodBundle\Entity\ShippingMethod #Sylius\Component\Core\Model\ShippingMethod
+            repository: Sylius\Bundle\ResourceBundle\Doctrine\ORM\TranslatableEntityRepository
             form: Sylius\Bundle\CoreBundle\Form\Type\ShippingMethodType
+            translatable:
+                targetEntity: Sylius\Component\Shipping\Model\ShippingMethodTranslation
+        shipping_method_translation: ~
 
 sylius_promotion:
     classes:
@@ -254,3 +286,39 @@ sylius_search:
                 display_name: 'marque'
                 type: terms
                 value: ~
+                
+sylius_translation:
+    default_mapping:
+        translatable:
+            field: translations
+            currentLocale: currentLocale
+            fallbackLocale: fallbackLocale
+        translation:
+            field: translatable
+            locale: locale
+            
+sylius_mailer:
+    driver: doctrine/orm
+    templates:
+        sylius.email.order_confirmation.name: SyliusWebBundle:Email:orderConfirmation.html.twig
+        sylius.email.order_comment.name: SyliusWebBundle:Email:orderComment.html.twig
+        sylius.email.shipment_confirmation.name: SyliusWebBundle:Email:shipmentConfirmation.html.twig
+        sylius.email.user_confirmation.name: SyliusWebBundle:Email:userConfirmation.html.twig
+    sender:
+        name: Example.com
+        address: no-reply@example.com
+    emails:
+        order_confirmation:
+            subject: sylius.emails.order_confirmation.subject
+            template: SyliusWebBundle:Email:orderConfirmation.html.twig
+        order_comment:
+            subject: sylius.emails.order_comment.subject
+            template: SyliusWebBundle:Email:orderComment.html.twig
+        shipment_confirmation:
+            subject: sylius.emails.shipment_confirmation.subject
+            template: SyliusWebBundle:Email:shipmentConfirmation.html.twig
+        user_confirmation:
+            subject: sylius.emails.user_confirmation.subject
+            template: SyliusWebBundle:Email:userConfirmation.html.twig
+        user_confirmation_custom:
+            template: SyliusWebBundle:Email:userConfirmationCustom.html.twig

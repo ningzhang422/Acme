@@ -1,0 +1,52 @@
+
+{% block block %}
+
+    {% if block is defined and block.children %}
+
+        <div class="carousel">
+            <div id="gallery-{{ block.name }}" style="display:none;">
+                {% for item in block.children %}
+                    {{ sonata_block_render(item, {'template': 'AcmeWebBundle:Frontend:block_image.html.twig'}) }}
+                     	
+                {% endfor %}
+            </div>
+            <div id="blueimp-gallery-{{ block.name }}" class="blueimp-gallery blueimp-gallery-carousel">
+                <div class="slides"></div>
+                <h3 class="title"> {{ block.name }}</h3>
+                <a class="prev">‹</a>
+                <a class="next">›</a>
+                <a class="play-pause"></a>
+                <ol class="indicator"></ol>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", init, false);
+
+            function init() {
+            	links = document.getElementById('gallery-{{ block.name }}').getElementsByTagName('a');
+            	
+                blueimp.Gallery(
+                    links,
+                    {
+                        container: '#blueimp-gallery-{{ block.name }}',
+                        carousel: true,
+                        stretchImages: "contain",
+                        continuous: true,
+			            onslide: function (index, slide) {
+			               
+					        	var link = links[index].getAttribute('data-link');
+					        	var image = links[index].getAttribute('href');
+                				//$(slide).children().attr('href', link);
+                				//console.log($(slide).children());
+                				$(slide).children().html('<a class="slide-content" title="slide" href="'+link+'"><img style="margin-left:70%;margin-top:16%;" src="{{ asset('bundles/syliusweb/img/profitez.png') }}"/></a>');
+			            }
+                    },
+        			{clearSlides: true}
+                );
+            };
+        </script>
+    {% endif %}
+
+{% endblock %}
+

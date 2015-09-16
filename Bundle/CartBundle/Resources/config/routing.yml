@@ -1,0 +1,53 @@
+# This file is part of the Sylius package.
+# (c) Paweł Jędrzejewski
+
+sylius_cart_summary:
+    pattern: /
+    defaults: { _controller: sylius.controller.cart:summaryAction, type: notAjax }
+
+dp_cart_summary:
+    pattern: /ajax/
+    defaults: { _controller: sylius.controller.cart:summaryAction, type: ajax}
+
+sylius_cart_save:
+    pattern: /save
+    defaults: { _controller: sylius.controller.cart:saveAction, type: notAjax }
+
+dp_ajax_save:
+    pattern: /ajax/save
+    defaults: { _controller: sylius.controller.cart:saveAction, type: ajax }
+
+sylius_cart_clear:
+    pattern: /clear
+    defaults: { _controller: sylius.controller.cart:clearAction, type: notAjax }
+
+dp_cart_clear:
+    pattern: /ajax/clear
+    defaults: { _controller: sylius.controller.cart:clearAction, type: ajax }
+
+sylius_cart_item_add:
+    pattern: /add
+    defaults: { _controller: sylius.controller.cart_item:addAction, type: notAjax }
+
+dp_ajax_add:
+    pattern: /ajax/add
+    defaults: { _controller: sylius.controller.cart_item:addAction, type: ajax }
+    
+sylius_cart_item_update:
+    pattern: /{id}/edit
+    methods: [GET, POST]
+    defaults: { _controller: sylius.controller.cart_item:modifAction, type: notAjax }
+
+dp_ajax_update:
+    pattern: /ajax/update/{id}/edit
+    methods: [GET, POST]
+    defaults: { _controller: sylius.controller.cart_item:modifAction, type: ajax }
+
+sylius_cart_item_remove:
+    pattern: /{id}/remove
+    defaults: { _controller: sylius.controller.cart_item:removeAction, type: notAjax }
+
+dp_ajax_remove:
+    pattern: /ajax/{id}/remove
+    methods: [GET, POST]
+    defaults: { _controller: sylius.controller.cart_item:removeAction, type: ajax }

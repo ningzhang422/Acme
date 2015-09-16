@@ -45,4 +45,23 @@ class ProductRepository extends BaseProductRepository
             ->getQuery()
             ->getResult();
     }
+    
+public function createByTaxonPaginator(TaxonInterface $taxon, array $criteria = array())
+    {
+        $queryBuilder = $this->getCollectionQueryBuilder();
+        $queryBuilder
+            ->innerJoin('product.taxons', 'taxon')
+            ->andWhere('taxon = :taxon OR taxon.parent = :taxon')
+            ->setParameter('taxon', $taxon)
+        ;
+
+        foreach ($criteria as $attributeName => $value) {
+            $queryBuilder
+                ->andWhere('product.' . $attributeName . ' IN (:' . $attributeName . ')')
+                ->setParameter($attributeName, $value)
+            ;
+        }
+
+        return $this->getPaginator($queryBuilder);
+    }
 }

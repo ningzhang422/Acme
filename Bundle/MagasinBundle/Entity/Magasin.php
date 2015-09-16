@@ -44,7 +44,6 @@ class Magasin
     
     /**
    	* @ORM\OneToOne(targetEntity="Acme\Bundle\ShopBundle\Entity\Address", cascade={"persist"})
-   	* @ORM\JoinColumn(nullable=false)
    	*/
   	private $address;
   	

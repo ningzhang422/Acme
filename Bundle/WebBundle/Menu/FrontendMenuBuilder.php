@@ -302,7 +302,7 @@ class FrontendMenuBuilder extends MenuBuilder
             'labelAttributes'    => array('class' => 'nav-header'),
         );
 
-        $taxonomies = $this->taxonomyRepository->findByName('Category');
+        $taxonomies = $this->taxonomyRepository->findById(2);
 
         foreach ($taxonomies as $taxonomy) {
             $child = $menu->addChild('child', $childOptions);
@@ -375,7 +375,7 @@ class FrontendMenuBuilder extends MenuBuilder
             'labelAttributes'    => array('class' => 'nav-header'),
         );
 
-        $taxonomies = $this->taxonomyRepository->findByName('Actualites');
+        $taxonomies = $this->taxonomyRepository->findById(3);
 
         foreach ($taxonomies as $taxonomy) {
             $child = $menu->addChild($taxonomy->getName(), $childOptions);
@@ -459,7 +459,7 @@ class FrontendMenuBuilder extends MenuBuilder
             'labelAttributes'    => array('class' => 'nav-header'),
         );
 
-        $taxonomies = $this->taxonomyRepository->findByName('Promotion');
+        $taxonomies = $this->taxonomyRepository->findById(4);
 
         foreach ($taxonomies as $taxonomy) {
             $child = $menu->addChild($taxonomy->getName(), $childOptions);
@@ -499,7 +499,7 @@ class FrontendMenuBuilder extends MenuBuilder
             'labelAttributes'    => array('class' => 'nav-header'),
         );
 
-        $taxonomies = $this->taxonomyRepository->findByName('Category');
+        $taxonomies = $this->taxonomyRepository->findById(2);
 
         foreach ($taxonomies as $taxonomy) {
         	
